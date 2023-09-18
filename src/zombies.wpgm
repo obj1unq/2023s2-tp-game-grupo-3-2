@@ -1,0 +1,21 @@
+import wollok.game.*
+import personajes.*
+import direcciones.*
+
+program zombies {
+    game.title("zombies")
+    game.height(20)
+    game.width(20)
+    game.boardGround("fondillo.png")
+    game.cellSize(30)
+    
+    game.addVisual(soldado)
+    game.addVisual(zombie)
+    
+    keyboard.up().onPressDo({soldado.mover(arriba) })
+    keyboard.down().onPressDo({ soldado.mover(abajo) })
+    keyboard.left().onPressDo({soldado.mover(izquierda ) })
+    keyboard.right().onPressDo ({soldado.mover(derecha) })
+    
+    game.start()
+}
