@@ -4,6 +4,15 @@ import direcciones.*
 object soldado {
 	var property position = game.origin()
 	
+	var property vida = 100
+	
+	var property danio = 5
+	
+	var property rangoAtacarNorte = position.y()+1
+	var property rangoAtacarEste  = position.x()+1
+	var property rangoAtacarSur   = position.y()-1
+	var property rangoAtacarOeste = position.x()-1
+	
 	method image() = "soldado.png"
 	
 	method irA(nuevaPosicion) {
@@ -12,10 +21,31 @@ object soldado {
 	method mover(direccion) {
 		self.irA(direccion.siguiente(self.position()) )
 	}
+	method atacar(enemigo){
+		if (self.zombieEnSuRango(enemigo)){
+			enemigo.perderVida(danio)
+		}
+	}
+	method zombieEnSuRango(enemigo){
+		return enemigo.position().y() == rangoAtacarNorte ||
+			   enemigo.position().x() == rangoAtacarEste ||
+			   enemigo.position().y() == rangoAtacarSur ||
+			   enemigo.position().x() == rangoAtacarOeste 
+			   
+	}
+	method perderVida(){
+		if ((vida - 2) < 0 ){
+			game.stop()
+		}else{ vida -= 2 }
+	}
 }
-object zombie {
+object zombie1 {
 	
-	var property position = game.at(17,17)
+	var property position = game.at(10,10)
+	
+	var property vida = 10
+	
+	var property danio = 2 
 	
 	method image() = "zombie.png"
 	
@@ -52,4 +82,12 @@ object zombie {
 			self.position().left(1)
 		}
 	}
-}
+	method perderVida(_danio){
+		if (vida - _danio < 0){
+			game.removeVisual(self)
+		}else {vida -= danio}
+	}
+	method morder(personaje){
+		personaje.perderVida()
+	}
+}	

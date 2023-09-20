@@ -10,14 +10,16 @@ program zombies {
     game.cellSize(30)
     
     game.addVisual(soldado)
-    game.addVisual(zombie)
+    game.addVisual(zombie1)
     
     keyboard.up().onPressDo({soldado.mover(arriba) })
     keyboard.down().onPressDo({ soldado.mover(abajo) })
     keyboard.left().onPressDo({soldado.mover(izquierda ) })
     keyboard.right().onPressDo ({soldado.mover(derecha) })
+    keyboard.z().onPressDo({soldado.atacar(zombie1)})
     
-    game.onTick(250, "Perseguir", {zombie.mover(soldado)})
-    
+    game.onTick(300, "Perseguir", {zombie1.mover(soldado)})
+    game.onCollideDo(soldado, {zombies => zombie.morder(soldado)})
+    // como lograr que ejecute por tiempo esta accion 
     game.start()
 }
