@@ -20,6 +20,6 @@ program zombies {
     
     game.onTick(300, "Perseguir", {zombie1.mover(soldado)})
     game.onCollideDo(soldado, {zombies => zombie.morder(soldado)})
-    // como lograr que ejecute por tiempo esta accion 
+    // como lograr que ejecute por tiempo esta accion o utilizar un bloque dentro del zombie 
     game.start()
 }

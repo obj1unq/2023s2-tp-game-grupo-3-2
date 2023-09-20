@@ -4,7 +4,7 @@ import direcciones.*
 object soldado {
 	var property position = game.origin()
 	
-	var property vida = 100
+	var property vida = 100 // Falta mostrar la vida del soldado
 	
 	var property danio = 5
 	
@@ -31,7 +31,7 @@ object soldado {
 			   enemigo.position().x() == rangoAtacarEste ||
 			   enemigo.position().y() == rangoAtacarSur ||
 			   enemigo.position().x() == rangoAtacarOeste 
-			   
+			   // hacer un between con una lista del rango del soldado 
 	}
 	method perderVida(){
 		if ((vida - 2) < 0 ){
@@ -43,7 +43,7 @@ object zombie1 {
 	
 	var property position = game.at(10,10)
 	
-	var property vida = 10
+	var property vida = 10 // Falta mostrar la vida del zombie
 	
 	var property danio = 2 
 	
