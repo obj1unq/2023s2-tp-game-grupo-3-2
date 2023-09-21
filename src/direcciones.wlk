@@ -1,6 +1,7 @@
 import wollok.game.*
 import personajes.*
-
+import zombies.*
+import elementos.*
 
 object derecha {
 	method siguiente(posicion) {
