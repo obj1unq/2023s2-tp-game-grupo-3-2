@@ -1,6 +1,8 @@
 import wollok.game.*
 import personajes.*
 import direcciones.*
+import zombies.*
+import elementos.*
 
 program zombies {
     game.title("zombies")
@@ -9,17 +11,22 @@ program zombies {
     game.boardGround("fondillo.png")
     game.cellSize(30)
     
-    game.addVisual(soldado)
     game.addVisual(zombie1)
+    game.addVisual(soldado)
+    game.addVisual(antidoto)
+    
+    game.showAttributes(soldado)
+    
     
     keyboard.up().onPressDo({soldado.mover(arriba) })
     keyboard.down().onPressDo({ soldado.mover(abajo) })
     keyboard.left().onPressDo({soldado.mover(izquierda ) })
     keyboard.right().onPressDo ({soldado.mover(derecha) })
-    keyboard.z().onPressDo({soldado.atacar(zombie1)})
+    keyboard.z().onPressDo({soldado.atacarZombie()})
+    keyboard.a().onPressDo({antidoto.usado(soldado)})
     
-    game.onTick(300, "Perseguir", {zombie1.mover(soldado)})
-    game.onCollideDo(soldado, {zombies => zombie.morder(soldado)})
+    game.onTick(700, "Perseguir", {zombie1.mover(soldado)})
+    game.onCollideDo(zombie1, {personaje => zombie1.atacar(personaje)})
     // como lograr que ejecute por tiempo esta accion o utilizar un bloque dentro del zombie 
     game.start()
 }
