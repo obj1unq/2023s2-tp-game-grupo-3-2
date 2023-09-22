@@ -7,7 +7,7 @@ object zombie1 {
 
 	var property position = game.at(10, 10)
 	var property vida = 100
-	var property danio = 20
+	var property danio = 5
 	const property rojo = "FF0000FF" // Color rojo
 
 	method text() = self.vida().toString() + "/100"
@@ -62,6 +62,7 @@ object zombie1 {
 
 	method morir() {
 		game.removeVisual(self)
+		game.removeTickEvent("Morder")
 	}
 
 	method estaMuerto() {
@@ -77,8 +78,12 @@ object zombie1 {
 
 	method atacar(enemigo) {
 		if (self.mismaPosicion(enemigo)) {
-			enemigo.perderVida(self)
+	        enemigo.perderVida(self)	
 		}
+	}
+	method atacarSoldado() { 
+		const soldaditos = game.colliders(self)
+	    soldaditos.forEach({soldadillo => self.atacar(soldadillo) }) 
 	}
 
 }
