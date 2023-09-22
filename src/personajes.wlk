@@ -55,11 +55,15 @@ object soldado {
 		}
 	}
 
-	method tomarPocion(vidaDePocion) { // Funciona pero falta mejorar y crear metodo de validación
+	method tomarPocion(vidaDePocion) { // Funciona pero falta mejorar
 		vida += vidaDePocion
-        if (vida > vidaMaxima) {
-            vida = vidaMaxima
-        }
+		self.validarVidaMaxima()
+	}
+
+	method validarVidaMaxima() {
+		if (vida > vidaMaxima) {
+			vida = vidaMaxima
+		}
 	}
 
 }
