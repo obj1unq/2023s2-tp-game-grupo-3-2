@@ -8,7 +8,7 @@ object zombie1 {
 	var property position = game.at(10, 10)
 	var property vida = 100
 	var property danio = 20
-	const property rojo = "FF0000FF"// Color rojo
+	const property rojo = "FF0000FF" // Color rojo
 
 	method text() = self.vida().toString() + "/100"
 
