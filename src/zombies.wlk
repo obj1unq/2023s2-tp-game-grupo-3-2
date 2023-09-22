@@ -4,66 +4,82 @@ import direcciones.*
 import elementos.*
 
 object zombie1 {
-	
-	var property position = game.at(10,10)
-	
-	var property vida = 10 // Falta mostrar la vida del zombie
-	
-	var property danio = 20 
-	
+
+	var property position = game.at(10, 10)
+	var property vida = 100
+	var property danio = 20
+	const property rojo = "FF0000FF"// Color rojo
+
+	method text() = self.vida().toString() + "/100"
+
+	method textColor() = paletaColores.rojo()
+
 	method image() = "zombie.png"
-	
-	method mover(personaje){
-		if (not (self.mismoEjeY(personaje))){
-		 self.irACeldaY(personaje)
-		}else if (not (self.mismoEjeX(personaje))){
-			self.irACeldaX(personaje) 
-		} 
-	} 
-	method mismoEjeY(personaje){
+
+	method mover(personaje) {
+		if (not (self.mismoEjeY(personaje))) {
+			self.irACeldaY(personaje)
+		} else if (not (self.mismoEjeX(personaje))) {
+			self.irACeldaX(personaje)
+		}
+	}
+
+	method mismoEjeY(personaje) {
 		return self.position().y() == personaje.position().y()
 	}
-	method irACeldaY(personaje){
+
+	method irACeldaY(personaje) {
 		position = self.subirOBajar(personaje)
 	}
-	method subirOBajar(personaje){
-		return if (personaje.position().y() > self.position().y()){
-			self.position().up(1)			
+
+	method subirOBajar(personaje) {
+		return if (personaje.position().y() > self.position().y()) {
+			self.position().up(1)
 		} else {
 			self.position().down(1)
 		}
 	}
-	method mismoEjeX(personaje){
+
+	method mismoEjeX(personaje) {
 		return self.position().x() == personaje.position().x()
 	}
+
 	method mismaPosicion(personaje) {
 		return self.position() == personaje.position()
 	}
-	method irACeldaX(personaje){
+
+	method irACeldaX(personaje) {
 		position = self.izqODerecha(personaje)
 	}
-	method izqODerecha(personaje){
-		return if (personaje.position().x() > self.position().x()){
-			self.position().right(1)			
+
+	method izqODerecha(personaje) {
+		return if (personaje.position().x() > self.position().x()) {
+			self.position().right(1)
 		} else {
 			self.position().left(1)
 		}
 	}
-	method morir(){
+
+	method morir() {
 		game.removeVisual(self)
 	}
+
 	method estaMuerto() {
-		return (vida <= 0) 
+		return (vida <= 0)
 	}
+
 	method perderVida(personaje) {
 		vida -= personaje.danio()
 		if (self.estaMuerto()) {
 			self.morir()
 		}
 	}
-	method atacar(enemigo){
-		if (self.mismaPosicion(enemigo)){
+
+	method atacar(enemigo) {
+		if (self.mismaPosicion(enemigo)) {
 			enemigo.perderVida(self)
 		}
 	}
+
 }
+

@@ -6,13 +6,13 @@ import elementos.*
 object soldado {
 
 	var property position = game.origin()
-	var property vida = 100 
-	var property danio = 5
-	const property posicionVida = game.origin()
+	var property vida = 100
+	var property danio = 20
+	const property verde = "00FF00FF" // Color verde
 
-	method text() = ("100/" + self.vida().toString())
+	method text() = self.vida().toString() + "/100"
 
-	method textColor() = "00FF00FF" // Color verde
+	method textColor() = paletaColores.verde()
 
 	method image() = "soldado.png"
 
@@ -62,6 +62,13 @@ object soldado {
 	method tomar(pocion) {
 		vida += pocion.vidaOtorgada().min(100)
 	}
+
+}
+
+object paletaColores {
+
+	const property verde = "00FF00FF"
+	const property rojo = "FF0000FF"
 
 }
 
