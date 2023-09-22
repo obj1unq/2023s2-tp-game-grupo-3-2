@@ -4,49 +4,71 @@ import zombies.*
 import elementos.*
 
 object soldado {
+
 	var property position = game.origin()
-	
-	var property vida = 100 // Falta mostrar la vida del soldado
-	var property danio = 5
-	
+	var property vida = 100
+	var property danio = 20
+	const property verde = "00FF00FF" // Color verde
+
+	method text() = self.vida().toString() + "/100"
+
+	method textColor() = paletaColores.verde()
+
 	method image() = "soldado.png"
-	
+
 	method irA(nuevaPosicion) {
-		    position = nuevaPosicion
+		position = nuevaPosicion
 	}
+
 	method mover(direccion) {
-		self.irA(direccion.siguiente(self.position()) )
+		self.irA(direccion.siguiente(self.position()))
 	}
-	method atacarZombie() {  //esto tendria que estar en el objeto arma 
+
+	method atacarZombie() { // esto tendria que estar en el objeto arma 
 		const zombies = game.colliders(self)
-		zombies.forEach({zombie => self.atacar(zombie)})
+		zombies.forEach({ zombie => self.atacar(zombie)})
 	}
+
 	method mismaPosicion(personaje) {
 		return self.position() == personaje.position()
 	}
-	method atacar(enemigo){
-		if (self.mismaPosicion(enemigo)){
+
+	method atacar(enemigo) {
+		if (self.mismaPosicion(enemigo)) {
 			enemigo.perderVida(self)
 		}
 	}
-	method morir(){
+
+	method morir() {
 		game.stop()
 	}
+
 	method estaMuerto() {
-		return (vida <= 0) 
+		return (vida <= 0)
 	}
+
 	method perderVida(personaje) {
 		vida -= personaje.danio()
 		if (self.estaMuerto()) {
 			self.morir()
 		}
 	}
+
 	method tomarPocion() {
 		const pociones = game.colliders(self)
-		pociones.forEach({pocion => self.tomar(pocion)})
+		pociones.forEach({ pocion => self.tomar(pocion)})
 	}
+
 	method tomar(pocion) {
 		vida += pocion.vidaOtorgada().min(100)
-    }
+	}
+
 }
-	
+
+object paletaColores {
+
+	const property verde = "00FF00FF"
+	const property rojo = "FF0000FF"
+
+}
+
