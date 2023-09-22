@@ -65,7 +65,6 @@ object soldado {
 			vida = vidaMaxima
 		}
 	}
-
 }
 
 object paletaColores {
