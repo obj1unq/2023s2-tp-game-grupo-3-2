@@ -9,7 +9,7 @@ object zombie1 {
 	
 	var property vida = 10 // Falta mostrar la vida del zombie
 	
-	var property danio = 50 
+	var property danio = 20 
 	
 	method image() = "zombie.png"
 	
