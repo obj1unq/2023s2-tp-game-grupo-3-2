@@ -26,7 +26,7 @@ program zombies {
     keyboard.a().onPressDo({antidoto.usado(soldado)})
     
     game.onTick(700, "Perseguir", {zombie1.mover(soldado)})
-    game.onCollideDo(zombie1, {personaje => zombie1.atacar(personaje)})
-    // como lograr que ejecute por tiempo esta accion o utilizar un bloque dentro del zombie 
+    // game.onCollideDo(zombie1, {personaje => zombie1.atacar(personaje)})
+    game.onTick(500, "Moder", {zombie1.atacar(soldado)})
     game.start()
 }
