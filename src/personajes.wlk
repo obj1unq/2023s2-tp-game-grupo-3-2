@@ -7,6 +7,7 @@ object soldado {
 
 	var property position = game.origin()
 	var property vida = 100
+	const property vidaMaxima = 100
 	var property danio = 20
 	const property verde = "00FF00FF" // Color verde
 
@@ -54,13 +55,11 @@ object soldado {
 		}
 	}
 
-	method tomarPocion() {
-		const pociones = game.colliders(self)
-		pociones.forEach({ pocion => self.tomar(pocion)})
-	}
-
-	method tomar(pocion) {
-		vida += pocion.vidaOtorgada().min(100)
+	method tomarPocion(vidaDePocion) { // Funciona pero falta mejorar y crear metodo de validación
+		vida += vidaDePocion
+        if (vida > vidaMaxima) {
+            vida = vidaMaxima
+        }
 	}
 
 }
