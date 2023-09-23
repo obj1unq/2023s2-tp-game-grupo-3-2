@@ -26,8 +26,8 @@ program zombies {
     keyboard.left().onPressDo({soldado.mover(izquierda ) })
     keyboard.right().onPressDo ({soldado.mover(derecha) })
     keyboard.z().onPressDo({soldado.atacarZombie()})
-    keyboard.a().onPressDo({antidoto.usado(soldado)})
-       
+    keyboard.a().onPressDo({soldado.tomarPosion()})
+         
     game.onTick(700, "Perseguir", {zombie1.mover(soldado)})
     game.onTick(5000, "Morder", { => zombie1.atacarSoldado()})
     game.start()
