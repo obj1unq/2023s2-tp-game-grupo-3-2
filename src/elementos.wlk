@@ -10,8 +10,11 @@ object antidoto {
 	method position() = game.center()
 	
 	method usado(personaje) {
-		personaje.tomarPocion(vidaOtorgada)
-		game.removeVisual(self)
+		    personaje.tomarPocion(self)
+		    game.removeVisual(self)
+	}
+	method mismaPosicion(personaje) {
+		return self.position() == personaje.position()
 	}
 }
 object espada {

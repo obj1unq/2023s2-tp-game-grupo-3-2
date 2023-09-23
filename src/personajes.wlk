@@ -55,11 +55,16 @@ object soldado {
 		}
 	}
 
-	method tomarPocion(vidaDePocion) { // Funciona pero falta mejorar
-		vida += vidaDePocion
+	method tomarPocion(pocion) { // Funciona pero falta mejorar
+	    if (self.mismaPosicion(pocion)) {
+		    vida += pocion.vidaOtorgada()
+		}
 		self.validarVidaMaxima()
 	}
-
+    method tomarPosion() {
+    	const pocion = game.uniqueCollider(self)
+	    pocion.usado(self) 
+    }
 	method validarVidaMaxima() {
 		if (vida > vidaMaxima) {
 			vida = vidaMaxima
