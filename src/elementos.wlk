@@ -29,6 +29,10 @@ object arma {
 	var property position = game.at(3,9)
 	
 	method image() = "arma.png"
+	
+	method nuevo(){
+		
+	}
 }
 object bomba {
 	const property danio = 10
