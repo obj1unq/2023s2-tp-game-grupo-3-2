@@ -39,3 +39,15 @@ object arriba {
 		}
 	}
 }
+object rangoAtaqueEspada {
+	const property rangoX = ((positionPersonaje - 2) .. (positionPersonaje + 2)) 
+	const property rangoY = ((positionPersonaje - 2) .. (positionPersonaje + 2))
+	
+	const property positionPersonaje = soldado.position()
+	const property rangoFijo = 2 
+	
+	method nuevoRango(position){
+		return rangoX.any({celda => celda == position.x() }) || 
+				rangoY.any({celda => celda == position.x() })
+	}
+}
