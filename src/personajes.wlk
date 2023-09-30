@@ -6,14 +6,9 @@ import elementos.*
 object soldado {
 
 	var property position = game.origin()
-	var property vida = 100
-	const property vidaMaxima = 100
+	var property salud = 5
+	const property saludMaxima = 5
 	var property danio = 20
-	const property verde = "00FF00FF" // Color verde
-
-	method text() = self.vida().toString() + "/100"
-
-	method textColor() = paletaColores.verde()
 
 	method image() = "soldado.png"
 
@@ -45,37 +40,42 @@ object soldado {
 	}
 
 	method estaMuerto() {
-		return (vida <= 0)
+		return (salud <= 0)
 	}
 
 	method perderVida(personaje) {
-		vida -= personaje.danio()
+		salud -= personaje.danio()
 		if (self.estaMuerto()) {
 			self.morir()
 		}
 	}
 
 	method tomarPocion(pocion) { // Funciona pero falta mejorar
-	    if (self.mismaPosicion(pocion)) {
-		    vida += pocion.vidaOtorgada()
+		if (self.mismaPosicion(pocion)) {
+			salud += pocion.vidaOtorgada()
 		}
 		self.validarVidaMaxima()
 	}
-    method tomarPosion() {
-    	const pocion = game.uniqueCollider(self)
-	    pocion.usado(self) 
-    }
+
+	method tomarPosion() {
+		const pocion = game.uniqueCollider(self)
+		pocion.usado(self)
+	}
+
 	method validarVidaMaxima() {
-		if (vida > vidaMaxima) {
-			vida = vidaMaxima
+		if (salud > saludMaxima) {
+			salud = saludMaxima
 		}
 	}
+
 }
 
-object paletaColores {
+object corazonesSoldado {
 
-	const property verde = "00FF00FF"
-	const property rojo = "FF0000FF"
+// Achicar tamaño de corazones
+	const property position = game.at(1, 0)
+
+	method image() = "corazon" + soldado.salud().toString() + ".png"
 
 }
 
