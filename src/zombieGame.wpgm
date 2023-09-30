@@ -3,6 +3,7 @@ import personajePrincipal.*
 import direcciones.*
 import zombies.*
 import elementos.*
+import randomizer.*
 
 program zombies {
     game.title("zombies")
@@ -11,7 +12,7 @@ program zombies {
     game.boardGround("fondillo.png")
     game.cellSize(30)
     
-    game.addVisual(zombie1)
+    //game.addVisual(zombie1)	
     game.addVisual(soldado)
     game.addVisual(antidoto)
     game.addVisual(bomba)
@@ -32,7 +33,9 @@ program zombies {
     keyboard.a().onPressDo({soldado.agarrar(arma)})
     
          
-    game.onTick(700, "Perseguir", {zombie1.mover(soldado)})
-    game.onTick(2000, "Morder", { => zombie1.atacarSoldado()})
+    game.onTick(700, "HORDA", {ataqueZombie.generarZombies()})
+    game.onTick(2000, "PERSEGUIR", {ataqueZombie.moverALosZombies(soldado)})
+    game.onTick(2000, "MORDER", {ataqueZombie.ataqueZombie(soldado)})
+    
     game.start()
 }

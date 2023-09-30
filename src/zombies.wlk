@@ -2,10 +2,11 @@ import wollok.game.*
 import personajePrincipal.*
 import direcciones.*
 import elementos.*
+import randomizer.*
 
-object zombie1 {
+class Zombie {
 
-	var property position = game.at(10, 10)
+	var property position 
 	var property vida = 100
 	var property danio = 1
 	const property rojo = "FF0000FF" // Color rojo
@@ -91,3 +92,25 @@ object zombie1 {
 
 }
 
+object ataqueZombie {
+	var property zombies = []
+	const cantidadMaxima = 5
+
+	method generarZombies() {
+		if (zombies.size() <= cantidadMaxima) {
+			const nuevoZombi = new Zombie(position = game.at(18,randomizer.yCualquiera() ) )
+			game.addVisual(nuevoZombi)
+			zombies.add(nuevoZombi)
+		}
+	}
+	method moverALosZombies(personaje) {
+		if (zombies.size() > 0) {
+			zombies.forEach({ zombie => zombie.mover(personaje)})
+		}
+	}
+	method ataqueZombie(personaje) {
+		if (zombies.size() > 0) {
+			zombies.forEach({ zombie => zombie.atacar(personaje)})
+		}
+	}
+}
