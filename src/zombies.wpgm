@@ -17,6 +17,7 @@ program zombies {
     game.addVisual(bomba)
     game.addVisual(espada)
     game.addVisual(arma)
+    game.addVisual(corazonesSoldado)
     
     game.showAttributes(soldado)
     
@@ -29,6 +30,6 @@ program zombies {
     keyboard.a().onPressDo({soldado.tomarPosion()})
          
     game.onTick(700, "Perseguir", {zombie1.mover(soldado)})
-    game.onTick(5000, "Morder", { => zombie1.atacarSoldado()})
+    game.onTick(2000, "Morder", { => zombie1.atacarSoldado()})
     game.start()
 }

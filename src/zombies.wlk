@@ -7,12 +7,12 @@ object zombie1 {
 
 	var property position = game.at(10, 10)
 	var property vida = 100
-	var property danio = 5
+	var property danio = 1
 	const property rojo = "FF0000FF" // Color rojo
 
 	method text() = self.vida().toString() + "/100"
 
-	method textColor() = paletaColores.rojo()
+	method textColor() = self.rojo()
 
 	method image() = "zombie.png"
 
