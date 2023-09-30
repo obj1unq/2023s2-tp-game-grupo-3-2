@@ -1,6 +1,5 @@
 import wollok.game.*
-import personajes.*
-import zombies.*
+import personajePrincipal.*
 import elementos.*
 
 object derecha {
