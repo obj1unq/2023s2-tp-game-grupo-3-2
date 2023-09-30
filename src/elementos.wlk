@@ -1,6 +1,8 @@
+
 import wollok.game.*
 import personajePrincipal.*
 import direcciones.*
+import randomizer.*
 
 object antidoto {
 	const property vidaOtorgada = 25

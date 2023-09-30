@@ -1,6 +1,8 @@
 import wollok.game.*
 import direcciones.*
 import elementos.*
+import zombies.*
+import randomizer.*
 
 object soldado {
 
