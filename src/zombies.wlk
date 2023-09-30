@@ -1,5 +1,5 @@
 import wollok.game.*
-import personajes.*
+import personajePrincipal.*
 import direcciones.*
 import elementos.*
 
