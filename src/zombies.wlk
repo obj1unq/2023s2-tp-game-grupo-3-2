@@ -85,6 +85,9 @@ object zombie1 {
 		const soldaditos = game.colliders(self)
 	    soldaditos.forEach({soldadillo => self.atacar(soldadillo) }) 
 	}
+	method impactoDeBala(bala) {
+    	self.perderVida(bala)
+    }
 
 }
 

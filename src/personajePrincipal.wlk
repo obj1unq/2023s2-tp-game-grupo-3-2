@@ -66,6 +66,19 @@ object soldado {
 			salud = saludMaxima
 		}
 	}
+	method impactoDeBala(bala) {
+		
+	}
+	method agarrar(elemento) {
+		self.validarPosition(elemento)
+		elemento.serLlevada(self)
+	}
+	method validarPosition(algo) {
+		if(position != algo.position()) {
+			self.error("No estoy donde puedo hacerlo")
+		}
+	}
+	
 
 }
 
