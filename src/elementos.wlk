@@ -24,6 +24,7 @@ object antidoto {
 object espada {
 	const property danio = 10
 	var property position = game.at(3,3)
+	const property rango = 2
 	
 	method image() = "espada.png"
 	
