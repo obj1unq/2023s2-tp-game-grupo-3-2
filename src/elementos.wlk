@@ -39,8 +39,17 @@ object arma {
 	method image() = "arma.png"
 	
 	method generarBalacera() {
+			self.validarEstado()
 			const nuevaBala = new Bala(position = self.position().right(1))
 			nuevaBala.disparar()
+	}
+	method validarEstado(){
+		if (self.esLibre()){
+			self.error("no esta en posicion de nadie")
+		}
+	}
+	method esLibre(){
+		return estado === libre
 	}
 	method position(_position) {
 		estado.position(_position)
