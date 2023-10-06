@@ -6,13 +6,13 @@ import randomizer.*
 
 object soldado {
 
-	var property clase = arquero
+	var property clase = guerrero // Falta automatizar la selección de clase al inicio del juego
 	var property position = game.origin()
 	var property salud = clase.salud()
 	var property danio = clase.danio()
 	var property saludMaxima = clase.saludMaxima()
 
-	method image() = "soldado.png" // buscar imagenes de guerrero, mago y arquero 
+	method image() = "soldado.png" // Buscar imagenes de guerrero, mago y arquero 
 
 	method irA(nuevaPosicion) {
 		position = nuevaPosicion
@@ -114,8 +114,8 @@ object arquero {
 }
 
 object corazonesSoldado {
+// Falta agregar 10 corazones para el guerrero
 
-// Achicar tamaño de corazones
 	const property position = game.at(1, 0)
 
 	method image() = "corazon" + soldado.salud().toString() + ".png"
