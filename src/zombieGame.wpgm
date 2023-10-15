@@ -9,7 +9,7 @@ program zombies {
     game.title("zombies")
     game.height(20)
     game.width(20)
-    game.boardGround("fondillo.png")
+    game.boardGround("Battleground1.png")
     game.cellSize(30)
     
     //game.addVisual(zombie1)	
