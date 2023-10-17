@@ -5,9 +5,9 @@ import direcciones.*
 import randomizer.*
 
 object antidoto {
-	const property vidaOtorgada = 25
+	const property vidaOtorgada = 5
 	
-	method image() = "antidoto.png"
+	method image() = "pocion_salud.png"
 	
 	method position() = game.center()
 	
