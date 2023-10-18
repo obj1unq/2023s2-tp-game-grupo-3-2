@@ -6,13 +6,13 @@ import randomizer.*
 
 object soldado {
 
-	var property clase = arquero // Falta automatizar la selección de clase al inicio del juego
+	var property clase = mago // Falta automatizar la selección de clase al inicio del juego
 	var property position = game.origin()
 	var property salud = clase.salud()
 	var property danio = clase.danio()
 	var property saludMaxima = clase.saludMaxima()
 
-	method image() = clase.image() // Buscar imagenes de guerrero, mago y arquero 
+	method image() = clase.image()
 
 	method irA(nuevaPosicion) {
 		position = nuevaPosicion

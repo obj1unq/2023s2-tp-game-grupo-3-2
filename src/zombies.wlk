@@ -15,7 +15,7 @@ class Zombie {
 
 	method textColor() = self.rojo()
 
-	method image() = "zombie.png"
+	method image() = "esqueleto1.png"
 
 	method mover(personaje) {
 		if (not (self.mismoEjeY(personaje))) {
