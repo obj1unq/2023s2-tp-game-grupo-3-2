@@ -1,0 +1,23 @@
+import wollok.game.*
+import nuevoPersonaje.*
+import nuevoDirecciones.*
+
+program zombies {
+    game.title("Demo1")
+    game.height(20)
+    game.width(20)
+    game.boardGround("Battleground1.png")
+    game.cellSize(30)
+    
+    game.addVisual(arquero)
+ 
+    
+    
+    keyboard.w().onPressDo({arquero.mover(arriba) })
+    keyboard.s().onPressDo({arquero.mover(abajo)})
+    keyboard.a().onPressDo({arquero.mover(izquierda)})
+    keyboard.d().onPressDo({arquero.mover(derecha)})
+  	keyboard.j().onPressDo({arquero.atacarCuerpoACuerpo()})
+    
+    game.start()
+}
