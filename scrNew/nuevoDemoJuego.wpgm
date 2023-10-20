@@ -1,16 +1,17 @@
 import wollok.game.*
 import nuevoPersonaje.*
 import nuevoDirecciones.*
+import nuevoEnemigo.*
 
 program zombies {
     game.title("Demo1")
     game.height(20)
     game.width(20)
-    game.boardGround("Battleground1.png")
+    game.boardGround("BattlegroundDemo.png")
     game.cellSize(30)
     
     game.addVisual(arquero)
- 
+ 	
     
     
     keyboard.w().onPressDo({arquero.mover(arriba) })
@@ -18,6 +19,11 @@ program zombies {
     keyboard.a().onPressDo({arquero.mover(izquierda)})
     keyboard.d().onPressDo({arquero.mover(derecha)})
   	keyboard.j().onPressDo({arquero.atacarCuerpoACuerpo()})
+  	keyboard.k().onPressDo({arquero.atacar()})
     
+    
+    game.onTick(700, "HORDA", {hordaEnemiga.generarEnemigos()})
+    game.onTick(2000, "PERSEGUIR", {hordaEnemiga.moverALosEnemigos(arquero)})
+    game.onTick(2000, "MORDER", {hordaEnemiga.ataqueEnemigo(arquero)})
     game.start()
 }
