@@ -39,17 +39,52 @@ class Personaje {
 		enemigo.perderVida(danioCuerpo)
 	}
 
+	method atacar()
+
 }
 
 object guerrero inherits Personaje (limiteSalud = 10, salud = 5, danio = 40) {
+
+	override method atacar() {
+	}
 
 }
 
 object arquero inherits Personaje (limiteSalud = 5, salud = 5, danio = 35) {
 
+	override method atacar() {
+		const nuevaBala = new Flecha(position = self.position().right(1))
+		nuevaBala.disparar()
+	}
+
 }
 
 object mago inherits Personaje (limiteSalud = 5, salud = 5, danio = 30) {
+
+	override method atacar() {
+	}
+
+}
+
+class Flecha {
+
+	const property danio = 5
+	var property position
+
+	method image() =  "Flecha.png"
+
+	method disparar() {
+		game.addVisual(self)
+		game.onTick(150, "disparar", { self.avanzar()})
+		game.onCollideDo(self, { enemigo => enemigo.impacto(self)})
+		
+	}
+
+	method avanzar() {
+		position = self.position().right(1)
+	}
+
+	
 
 }
 
