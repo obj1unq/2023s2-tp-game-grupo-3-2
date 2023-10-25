@@ -4,22 +4,26 @@ import personajePrincipal.*
 import direcciones.*
 import randomizer.*
 
-object antidoto {
+class Elemento {
+	method image()
+	
+	method usado() {}
+	
+	method chocasteCon(elemento) {
+		   
+	}
+}
+class Antidoto inherits Elemento {
+	var property position
 	const property vidaOtorgada = 5
 	
-	method image() = "pocion_salud.png"
-	
-	method position() = game.center()
+	override method image() = "pocion_salud.png"
 	
 	method usado(personaje) {
 		    personaje.tomarPocion(self)
 		    game.removeVisual(self)
 	}
-	method mismaPosicion(personaje) {
-		return self.position() == personaje.position()
-	}
-	method impactoDeBala(bala) {	
-	}
+	
 }
 object espada {
 	const property danio = 10
@@ -31,12 +35,12 @@ object espada {
 	}
 	
 }
-object arma {
+object arma inherits Elemento {
 	const property danio = 10
 	var property position = game.at(3,9)
 	var estado = libre
 	
-	method image() = "arma.png"
+	override method image() = "arma.png"
 	
 	method generarBalacera() {
 			self.validarEstado()
@@ -65,6 +69,7 @@ object arma {
 	method position() {
 		return estado.position()
 	}
+	
 } 
 object llevada {
 	var property personaje = null
@@ -79,24 +84,23 @@ object llevada {
 object libre {
 	var property position = game.at(3,9)
 }
-class Bala {
+class Bala inherits Elemento {
 	const property danio = 5
 	var property position 
 	
-	method image() = "bala.png"
+	override method image() = "bala.png"
 	
 	method disparar() {
       game.addVisual(self)
       game.onTick(300, "disparar",{self.avanzar()} )
-      game.onCollideDo(self, { zombie => zombie.impactoDeBala(self) })	
+      game.onCollideDo(self, { zombie => zombie.chocasteCon(self) })	
 	}
 	method avanzar() {
 		position = self.position().right(1)
 	}
-	method impactoDeBala(personaje) {
-		   
-	}
+	
 }
+
 object bomba {
 	const property danio = 10
 	var property position = game.at(5,17)
@@ -105,4 +109,12 @@ object bomba {
 	
 	method impactoDeBala(bala) {	
 	}
+}
+object corazonesSoldado inherits Elemento {
+
+// Falta agregar 10 corazones para el guerrero
+	const property position = game.at(1, 0)
+
+	override method image() = "corazon" + soldado.vida().toString() + ".png"
+	
 }

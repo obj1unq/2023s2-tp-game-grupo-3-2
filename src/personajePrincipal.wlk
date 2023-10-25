@@ -4,69 +4,41 @@ import elementos.*
 import zombies.*
 import randomizer.*
 
-object soldado {
-
-	var property clase = mago // Falta automatizar la selección de clase al inicio del juego
-	var property position = game.origin()
-	var property salud = clase.salud()
-	var property danio = clase.danio()
-	var property saludMaxima = clase.saludMaxima()
-
-	method image() = clase.image()
+object soldado inherits Personaje {
+	
+    var property position = game.at(1,0)
+	const  saludMaxima = 5
+	var property monedas = 0
+	
+	override method image() = "mago1.png"
 
 	method irA(nuevaPosicion) {
 		position = nuevaPosicion
 	}
 
-	method mover(direccion) {
+     override method mover(direccion) {
 		self.irA(direccion.siguiente(self.position()))
 	}
 
-	method atacarZombie() { // esto tendria que estar en el objeto arma 
-		const zombies = game.colliders(self)
-		zombies.forEach({ zombie => self.atacar(zombie)})
-	}
+	//method atacarZombie() { // esto tendria que estar en el objeto espada 
+	//	const zombies = game.colliders(self)
+		//zombies.forEach({ zombie => self.atacar(zombie)})
+	//}
 
-	method mismaPosicion(personaje) {
-		return self.position() == personaje.position()
-	}
-
-	method atacar(enemigo) {
-		if (self.mismaPosicion(enemigo)) {
-			enemigo.perderVida(self)
-		}
-	}
-
-	method morir() {
+	
+	override method morir() {
 		game.stop()
 	}
-
-	method estaMuerto() {
-		return (salud <= 0)
-	}
-
-	method perderVida(personaje) {
-		salud -= personaje.danio()
-		if (self.estaMuerto()) {
-			self.morir()
-		}
-	}
-
-	method tomarPocion(pocion) {
-		if (self.mismaPosicion(pocion)) {
-			salud += pocion.vidaOtorgada()
-		}
+    method tomarPocion(pocion) {
+		vida += pocion.vidaOtorgada()
 		self.validarVidaMaxima()
 	}
-
-	method tomarPosion() {
-		const pocion = game.uniqueCollider(self)
-		pocion.usado(self)
+	method agarrarElemento(){
+		 game.onCollideDo(self, { elemento => elemento.usado(self) })
 	}
-
 	method validarVidaMaxima() {
-		if (salud > self.saludMaxima()) {
-			salud = self.saludMaxima()
+		if (vida > saludMaxima) {
+			vida = saludMaxima
 		}
 	}
 
@@ -131,12 +103,5 @@ object arquero inherits Clase {
 
 }
 
-object corazonesSoldado {
 
-// Falta agregar 10 corazones para el guerrero
-	const property position = game.at(1, 0)
-
-	method image() = "corazon" + soldado.salud().toString() + ".png"
-
-}
 
