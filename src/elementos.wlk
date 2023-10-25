@@ -112,3 +112,30 @@ object corazonesSoldado inherits Elemento {
 	override method image() = "corazon" + soldado.vida().toString() + ".png"
 	
 }
+class Moneda inherits Elemento {
+    var property position
+
+    override method usado(personaje) {
+		personaje.sumarMoneda()
+		monedero.removerMoneda(self)
+	}
+
+	override method image() = "moneda.png"
+	
+}
+object monedero {
+	var monedas = []
+
+	method generarMoneda( _position) {
+		const monedaNueva = new Moneda(position = _position)
+	    self.agregarMoneda(monedaNueva)
+	}
+	method agregarMoneda(moneda) {
+		game.addVisual(moneda)
+		monedas.add(moneda)
+	}
+	method removerMoneda(moneda)	{
+		monedas.remove(moneda)
+		game.removeVisual(moneda)
+	}
+}

@@ -24,7 +24,7 @@ program zombies {
     keyboard.left().onPressDo({soldado.mover(izquierda ) })
     keyboard.right().onPressDo ({soldado.mover(derecha) })
    // keyboard.z().onPressDo({soldado.atacarZombie()})
-    keyboard.a().onPressDo({soldado.agarrarElemento()})
+    keyboard.z().onPressDo({soldado.agarrarElemento()})
     keyboard.w().onPressDo({arma.generarBalacera()})
     keyboard.a().onPressDo({soldado.agarrar(arma)})
     
