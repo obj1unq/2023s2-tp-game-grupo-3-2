@@ -55,6 +55,9 @@ object soldado inherits Personaje {
 			self.error("No estoy donde puedo hacerlo")
 		}
 	}
+	method sumarMoneda() {
+		monedas += 1
+	}
 
 }
 

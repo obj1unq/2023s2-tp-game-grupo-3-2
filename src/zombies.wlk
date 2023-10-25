@@ -61,6 +61,7 @@ class Zombie inherits Personaje {
 
 	override method morir() {
 		game.removeVisual(self)
+		self.soltarMoneda()
 	}
 	
 	method atacarSoldado() { 
@@ -70,6 +71,9 @@ class Zombie inherits Personaje {
 	override method chocasteCon(elemento) {
     	self.perderVida(elemento)
     }
+     method soltarMoneda() {
+		monedero.generarMoneda(self.position())
+	}
    
 }
 class ZombieNormal inherits Zombie {
