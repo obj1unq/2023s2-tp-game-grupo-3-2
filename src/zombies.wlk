@@ -61,7 +61,6 @@ class Zombie inherits Personaje {
 
 	override method morir() {
 		game.removeVisual(self)
-		game.removeTickEvent("MORDER")
 	}
 	
 	method atacarSoldado() { 

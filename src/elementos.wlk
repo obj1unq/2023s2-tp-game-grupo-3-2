@@ -10,6 +10,9 @@ class Elemento {
 	method chocasteCon(elemento) {
 		   
 	}
+	method usado(personaje) {
+		
+	}
 }
 class Antidoto inherits Elemento {
 	var property position
@@ -17,13 +20,24 @@ class Antidoto inherits Elemento {
 	
 	override method image() = "pocion_salud.png"
 	
-	method usado(personaje) {
+	override method usado(personaje) {
 		    personaje.tomarPocion(self)
 		    game.removeVisual(self)
 	}
 	
 }
+object generadorAntidotos {
+	var property antidotos = []
+	const cantidadMaxima = 1
 
+	method generarAntidotos() {
+		if (antidotos.size() < cantidadMaxima) {
+			const antidoto = new Antidoto(position = game.at(randomizer.xCualquiera(),randomizer.yCualquiera()) )
+			game.addVisual(antidoto)
+			antidotos.add(antidoto)
+		}
+	}
+}
 object arma inherits Elemento {
 	const property danio = 10
 	var property position = game.at(3,9)
