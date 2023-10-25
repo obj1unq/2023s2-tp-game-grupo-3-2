@@ -58,50 +58,5 @@ object soldado inherits Personaje {
 
 }
 
-class Clase {
-
-	method image()
-
-}
-
-object guerrero inherits Clase {
-
-	// Ataque a corta distancia
-	var property saludMaxima = 10
-	var property salud = 10
-	var property danio = 40
-
-	override method image() {
-		return "guerrero1.png"
-	}
-
-}
-
-object mago inherits Clase {
-
-	// Ataque a media distancia
-	var property saludMaxima = 5
-	var property salud = 5
-	var property danio = 30
-
-	override method image() {
-		return "mago1.png"
-	}
-
-}
-
-object arquero inherits Clase {
-
-	// Ataque a distancia
-	var property saludMaxima = 5
-	var property salud = 5
-	var property danio = 35
-
-	override method image() {
-		return "arquero1.png"
-	}
-
-}
-
 
 
