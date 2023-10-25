@@ -7,8 +7,6 @@ import randomizer.*
 class Elemento {
 	method image()
 	
-	method usado() {}
-	
 	method chocasteCon(elemento) {
 		   
 	}
@@ -25,16 +23,7 @@ class Antidoto inherits Elemento {
 	}
 	
 }
-object espada {
-	const property danio = 10
-	var property position = game.at(3,3)
-	
-	method image() = "espada.png"
-	
-	method impactoDeBala(bala) {	
-	}
-	
-}
+
 object arma inherits Elemento {
 	const property danio = 10
 	var property position = game.at(3,9)
@@ -101,15 +90,6 @@ class Bala inherits Elemento {
 	
 }
 
-object bomba {
-	const property danio = 10
-	var property position = game.at(5,17)
-	
-	method image() = "bomba.png"
-	
-	method impactoDeBala(bala) {	
-	}
-}
 object corazonesSoldado inherits Elemento {
 
 // Falta agregar 10 corazones para el guerrero

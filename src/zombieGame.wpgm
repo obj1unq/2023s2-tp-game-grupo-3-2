@@ -13,7 +13,7 @@ program zombies {
     game.cellSize(30)
     
     game.addVisual(soldado)
-    game.addVisual(antidoto)
+    game.addVisual(arma)
     game.addVisual(corazonesSoldado)
     
     game.showAttributes(soldado)
@@ -23,15 +23,15 @@ program zombies {
     keyboard.down().onPressDo({ soldado.mover(abajo) })
     keyboard.left().onPressDo({soldado.mover(izquierda ) })
     keyboard.right().onPressDo ({soldado.mover(derecha) })
-    keyboard.z().onPressDo({soldado.atacarZombie()})
-    keyboard.a().onPressDo({soldado.tomarPosion()})
+   // keyboard.z().onPressDo({soldado.atacarZombie()})
+    keyboard.a().onPressDo({soldado.agarrarElemento()})
     keyboard.w().onPressDo({arma.generarBalacera()})
     keyboard.a().onPressDo({soldado.agarrar(arma)})
     
          
-    game.onTick(700, "HORDA", {ataqueZombie.generarZombies()})
+    game.onTick(700, "HORDA", {ataqueZombie.generarZombiesNormales()})
     game.onTick(2000, "PERSEGUIR", {ataqueZombie.moverALosZombies(soldado)})
-    game.onTick(2000, "MORDER", {ataqueZombie.ataqueZombie(soldado)})
+    game.onTick(2000, "MORDER", {ataqueZombie.ataqueZombie()})
     
     game.start()
 }
