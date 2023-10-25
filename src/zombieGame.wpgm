@@ -32,6 +32,7 @@ program zombies {
     game.onTick(700, "HORDA", {ataqueZombie.generarZombiesNormales()})
     game.onTick(2000, "PERSEGUIR", {ataqueZombie.moverALosZombies(soldado)})
     game.onTick(2000, "MORDER", {ataqueZombie.ataqueZombie()})
+    game.onTick(2000, "ANTIDOTOS", {generadorAntidotos.generarAntidotos()})
     
     game.start()
 }
