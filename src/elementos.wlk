@@ -22,13 +22,13 @@ class Antidoto inherits Elemento {
 	
 	override method usado(personaje) {
 		    personaje.tomarPocion(self)
-		    game.removeVisual(self)
+	        generadorAntidotos.quitar(self)
 	}
 	
 }
 object generadorAntidotos {
 	var property antidotos = []
-	const cantidadMaxima = 1
+	const cantidadMaxima = 2
 
 	method generarAntidotos() {
 		if (antidotos.size() < cantidadMaxima) {
@@ -37,6 +37,11 @@ object generadorAntidotos {
 			antidotos.add(antidoto)
 		}
 	}
+	method quitar(elemento) {
+		antidotos.remove(elemento)
+		game.removeVisual(elemento)
+	}
+	
 }
 object arma inherits Elemento {
 	const property danio = 10
@@ -114,7 +119,7 @@ object corazonesSoldado inherits Elemento {
 }
 class Moneda inherits Elemento {
     var property position
-
+ 
     override method usado(personaje) {
 		personaje.sumarMoneda()
 		monedero.removerMoneda(self)
@@ -126,7 +131,7 @@ class Moneda inherits Elemento {
 object monedero {
 	var monedas = []
 
-	method generarMoneda( _position) {
+	method generarMoneda( _position) { // con probabilidad 
 		const monedaNueva = new Moneda(position = _position)
 	    self.agregarMoneda(monedaNueva)
 	}

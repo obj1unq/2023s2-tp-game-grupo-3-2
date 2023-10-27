@@ -8,7 +8,7 @@ object soldado inherits Personaje {
 	
     var property position = game.at(1,0)
 	const  saludMaxima = 5
-	var property monedas = 0
+	var property monedas = 0 // CANTIDAD MAXIMA DE MONEDA
 	
 	override method image() = "mago1.png"
 
