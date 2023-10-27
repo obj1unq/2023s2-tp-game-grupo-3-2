@@ -60,8 +60,8 @@ class Zombie inherits Personaje {
 	method irACeldaX(personaje) 
 
 	override method morir() {
-		game.removeVisual(self)
 		self.soltarMoneda()
+		ataqueZombie.quitar(self)
 	}
 	
 	method atacarSoldado() { 
@@ -121,5 +121,9 @@ object ataqueZombie {
 		if (zombies.size() > 0) {
 			zombies.forEach({ zombie => zombie.atacarSoldado()})
 		}
+	}
+	method quitar(zombie) {
+		zombies.remove(zombie)
+		game.removeVisual(zombie)
 	}
 }
