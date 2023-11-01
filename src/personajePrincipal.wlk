@@ -5,37 +5,35 @@ import zombies.*
 import randomizer.*
 
 object soldado inherits Personaje {
-	
-    var property position = game.at(1,0)
-	const  saludMaxima = 5
-	var property monedas = 0 // CANTIDAD MAXIMA DE MONEDA
-	
-	override method image() = "mago1.png"
+
+	var property position = game.at(1, 0)
+	const saludMaxima = 10
+	var moneda = 0
+	var imagenPersonaje = 0
+
+	override method image() = "mago" + imagenPersonaje.toString() + ".png"
 
 	method irA(nuevaPosicion) {
 		position = nuevaPosicion
 	}
 
-     override method mover(direccion) {
+	override method mover(direccion) {
 		self.irA(direccion.siguiente(self.position()))
 	}
 
-	//method atacarZombie() { // esto tendria que estar en el objeto espada 
-	//	const zombies = game.colliders(self)
-		//zombies.forEach({ zombie => self.atacar(zombie)})
-	//}
-
-	
 	override method morir() {
 		game.stop()
 	}
-    method tomarPocion(pocion) {
+
+	method tomarPocion(pocion) {
 		vida += pocion.vidaOtorgada()
 		self.validarVidaMaxima()
 	}
-	method agarrarElemento(){
-		 game.onCollideDo(self, { elemento => elemento.usado(self) })
+
+	method agarrarElemento() {
+		game.onCollideDo(self, { elemento => elemento.usado(self)})
 	}
+
 	method validarVidaMaxima() {
 		if (vida > saludMaxima) {
 			vida = saludMaxima
@@ -55,11 +53,14 @@ object soldado inherits Personaje {
 			self.error("No estoy donde puedo hacerlo")
 		}
 	}
+
+	method imagenPersonaje(numeroImagen) {
+		imagenPersonaje = numeroImagen
+	}
+	
 	method sumarMoneda() {
-		monedas += 1
+		moneda += 1
 	}
 
 }
-
-
 
