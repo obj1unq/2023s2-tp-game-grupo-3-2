@@ -14,7 +14,8 @@ program zombies {
     
     game.addVisual(soldado)
     game.addVisual(arma)
-    game.addVisual(corazonesSoldado)
+    game.addVisual(corazon)
+    game.addVisual(monedero)
     
     game.showAttributes(soldado)
     
