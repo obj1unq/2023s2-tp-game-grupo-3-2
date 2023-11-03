@@ -31,7 +31,7 @@ object soldado inherits Personaje {
 	}
 
 	method agarrarElemento() {
-		
+		game.onCollideDo(self,{elemento => elemento.usado(self)})
 	}
 
 	method validarVidaMaxima() {

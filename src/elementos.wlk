@@ -67,7 +67,7 @@ object generadorAntidotos {
 	var property pociones = []
 	const cantidadMaxima = 5
 	const pocionesDisponibles = [pocionFactory,pocionAzulFactory,pocionAmarillaFactory]
-	
+	// Esto sirve para que genere nuevas pociones que nosotros definamos.
 	method generarPocion(){
 		return pocionesDisponibles.anyOne()
 	}
