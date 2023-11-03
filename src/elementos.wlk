@@ -12,7 +12,9 @@ class Elemento {
 
 	method usado(personaje) {
 	}
-
+	method contacto(personaje){
+		// por el momento sirve para a la hora de estar en la misma posicion agarre la moneda.
+	}
 }
 
 class Antidoto inherits Elemento {
@@ -70,7 +72,7 @@ object arma inherits Elemento {
 	}
 
 	method esLibre() {
-		return estado === libre
+		return estado === libre // Esto es mal, hay que cambiarlo.
 	}
 
 	method position(_position) {
@@ -149,14 +151,14 @@ object corazon inherits Elemento {
 class Moneda inherits Elemento {
 
 	var property position
-
-	override method usado(personaje) {
-		personaje.sumarMoneda()
-		monedero.removerMoneda(self)
-	}
+	const property valorMoneda
 
 	override method image() = "moneda.png"
-
+	
+	override method contacto(personaje){
+		personaje.sumarMoneda(valorMoneda)
+		monedero.removerMoneda(self)
+	}
 }
 
 object monedero {
@@ -167,12 +169,12 @@ object monedero {
 
 	method image() = "monedero.png"
 
-	method text() = self.cantidadMonedas().toString() + "/10"
+	method text() = self.cantidadMonedas().toString() + "/100"
 
 	method textColor() = "FFFFFF"
 
-	method generarMoneda(_position) { // con probabilidad 
-		const monedaNueva = new Moneda(position = _position)
+	method generarMoneda(_position) { // con probabilidad simple de 1 a 10 de valor 
+		const monedaNueva = new Moneda(position = _position, valorMoneda = (1..10).anyOne())
 		self.agregarMoneda(monedaNueva)
 	}
 
@@ -182,8 +184,8 @@ object monedero {
 	}
 
 	method removerMoneda(moneda) {
+		cantidadMonedas +=  moneda.valorMoneda()
 		monedas.remove(moneda)
-		cantidadMonedas += 1
 		game.removeVisual(moneda)
 	}
 

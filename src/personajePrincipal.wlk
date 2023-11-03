@@ -58,8 +58,8 @@ object soldado inherits Personaje {
 		imagenPersonaje = numeroImagen
 	}
 	
-	method sumarMoneda() {
-		moneda += 1
+	method sumarMoneda(valor) {
+		moneda += valor
 	}
 
 }
