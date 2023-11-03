@@ -12,12 +12,14 @@ class Elemento {
 
 	method usado(personaje) {
 	}
-	method contacto(personaje){
-		// por el momento sirve para a la hora de estar en la misma posicion agarre la moneda.
+
+	method contacto(personaje) {
+	// por el momento sirve para a la hora de estar en la misma posicion agarre la moneda.
 	}
+
 }
 
-class Antidoto inherits Elemento {
+class Pocion inherits Elemento {
 
 	var property position
 	const property vidaOtorgada = 5
@@ -31,21 +33,54 @@ class Antidoto inherits Elemento {
 
 }
 
+class PocionAzul inherits Pocion {
+
+	// Elejir que otorga esta pocion ademas de salud
+	override method image() = "pocion_azul.png"
+
+}
+
+class PocionAmarilla inherits Pocion {
+
+	// Elejir que otorga esta pocion ademas de salud
+	override method image() = "pocion_amarilla.png"
+
+}
+
+object pocionFactory{
+	method nuevaPocion(){
+		return new Pocion(position = game.at(randomizer.xCualquiera(), randomizer.yCualquiera()))
+	}
+}
+object pocionAzulFactory{
+	method nuevaPocion(){
+		return new PocionAzul(position = game.at(randomizer.xCualquiera(), randomizer.yCualquiera()))
+	}
+}
+object pocionAmarillaFactory{
+	method nuevaPocion(){
+		return new PocionAmarilla(position = game.at(randomizer.xCualquiera(), randomizer.yCualquiera()))
+	}
+}
 object generadorAntidotos {
 
-	var property antidotos = []
-	const cantidadMaxima = 2
-
+	var property pociones = []
+	const cantidadMaxima = 5
+	const pocionesDisponibles = [pocionFactory,pocionAzulFactory,pocionAmarillaFactory]
+	
+	method generarPocion(){
+		return pocionesDisponibles.anyOne()
+	}
 	method generarAntidotos() {
-		if (antidotos.size() < cantidadMaxima) {
-			const antidoto = new Antidoto(position = game.at(randomizer.xCualquiera(), randomizer.yCualquiera()))
+		if (pociones.size() < cantidadMaxima) {
+			const antidoto = self.generarPocion().nuevaPocion()
 			game.addVisual(antidoto)
-			antidotos.add(antidoto)
+			pociones.add(antidoto)
 		}
 	}
 
 	method quitar(elemento) {
-		antidotos.remove(elemento)
+		pociones.remove(elemento)
 		game.removeVisual(elemento)
 	}
 
@@ -154,11 +189,12 @@ class Moneda inherits Elemento {
 	const property valorMoneda
 
 	override method image() = "moneda.png"
-	
-	override method contacto(personaje){
+
+	override method contacto(personaje) {
 		personaje.sumarMoneda(valorMoneda)
 		monedero.removerMoneda(self)
 	}
+
 }
 
 object monedero {
@@ -174,7 +210,7 @@ object monedero {
 	method textColor() = "FFFFFF"
 
 	method generarMoneda(_position) { // con probabilidad simple de 1 a 10 de valor 
-		const monedaNueva = new Moneda(position = _position, valorMoneda = (1..10).anyOne())
+		const monedaNueva = new Moneda(position = _position, valorMoneda = (1 .. 10).anyOne())
 		self.agregarMoneda(monedaNueva)
 	}
 
@@ -184,7 +220,7 @@ object monedero {
 	}
 
 	method removerMoneda(moneda) {
-		cantidadMonedas +=  moneda.valorMoneda()
+		cantidadMonedas += moneda.valorMoneda()
 		monedas.remove(moneda)
 		game.removeVisual(moneda)
 	}
