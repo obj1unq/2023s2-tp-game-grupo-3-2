@@ -14,8 +14,13 @@ class Personaje inherits Elemento {
 	method mover(personaje)
 
 	method morir()
-
-	method perderVida(personaje) {
+    
+    override method impactoDeBala(elemento) {
+    	self.perderVida(elemento)
+    	game.removeVisual(elemento)
+    }
+    
+	override method perderVida(personaje) {
 		vida -= personaje.danio()
 		if (self.estaMuerto()) {
 			self.morir()
@@ -74,9 +79,6 @@ class Zombie inherits Personaje {
 		soldaditos.forEach({ soldadillo => self.atacar(soldadillo)})
 	}
 
-	override method chocasteCon(elemento) {
-		self.perderVida(elemento)
-	}
 
 	method soltarMoneda() {
 		monedero.generarMoneda(self.position())
@@ -113,11 +115,26 @@ class ZombieNormal inherits Zombie {
 	}
 
 }
+class ZombieGrande inherits ZombieNormal(position = game.at(16, randomizer.yCualquiera()) ) {
+	
+	override method image() = "guerrero1.png"
+	
+	override method mover(personaje) {
+		if (not (self.mismoEjeY(personaje)) ) {
+			self.irACeldaY(personaje)
+		}
+	}
+	override method atacarSoldado() {
+		const nuevaBala = new Bala(position = self.position().left(1))
+		nuevaBala.disparar(izquierda)
+	}
+}
 
 object ataqueZombie {
 
 	var property zombies = []
 	const cantidadMaxima = 3
+	const cantidadZombieGrande = []
 
 	method generarZombiesNormales() {
 		if (zombies.size() < cantidadMaxima) {
@@ -126,16 +143,24 @@ object ataqueZombie {
 			zombies.add(nuevoZombi)
 		}
 	}
-
+    method generarZombieGrande() {
+    	if (monedero.cantidadMonedas() > 10 and cantidadZombieGrande.size() < 1) {
+    		const zombiGrande = new ZombieGrande()
+			game.addVisual(zombiGrande)
+			cantidadZombieGrande.add(zombiGrande)
+    	}
+    }
 	method moverALosZombies(personaje) {
 		if (zombies.size() > 0) {
 			zombies.forEach({ zombie => zombie.mover(personaje)})
+			cantidadZombieGrande.forEach({ zombie => zombie.mover(personaje)})
 		}
 	}
 
 	method ataqueZombie() {
 		if (zombies.size() > 0) {
 			zombies.forEach({ zombie => zombie.atacarSoldado()})
+			cantidadZombieGrande.forEach({ zombie => zombie.atacarSoldado()})
 		}
 	}
 

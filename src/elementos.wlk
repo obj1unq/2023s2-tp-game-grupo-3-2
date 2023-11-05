@@ -7,14 +7,18 @@ class Elemento {
 
 	method image()
 
-	method chocasteCon(elemento) {
+	method impactoDeBala(elemento) {
+		
 	}
 
 	method usado(personaje) {
 	}
 
-	method contacto(personaje) {
+	method contacto(personaje) { 
 	// por el momento sirve para a la hora de estar en la misma posicion agarre la moneda.
+	}
+	method perderVida(personaje) {
+		
 	}
 
 }
@@ -62,6 +66,7 @@ object pocionAmarillaFactory{
 		return new PocionAmarilla(position = game.at(randomizer.xCualquiera(), randomizer.yCualquiera()))
 	}
 }
+// las pociones factory repiten codigo, tratemos de evitar porque a medida que metamos mas cosas se va hacer un choclo.
 object generadorAntidotos {
 
 	var property pociones = []
@@ -94,10 +99,10 @@ object arma inherits Elemento {
 
 	override method image() = "fire.png"
 
-	method generarBalacera() {
+	method generarBalacera(direccion) {
 		self.validarEstado()
 		const nuevaBala = new Bala(position = self.position().right(1))
-		nuevaBala.disparar()
+		nuevaBala.disparar(direccion)
 	}
 
 	method validarEstado() {
@@ -163,15 +168,15 @@ class Bala inherits Elemento {
 
 	override method image() = "fireball1.png"
 
-	method disparar() {
+	method disparar(direccion) {
 		game.addVisual(self)
-		game.onTick(300, "disparar", { self.avanzar()})
-		game.onCollideDo(self, { zombie => zombie.chocasteCon(self)})
+		game.onTick(300, "disparar", { self.avanzar(direccion)})
+		game.onCollideDo(self, { zombie => zombie.impactoDeBala(self)})
 	}
 
-	method avanzar() {
-		position = self.position().right(1)
-	}
+	method avanzar(direccion) {
+		position = direccion.siguiente(self.position())
+	} 
 
 }
 
