@@ -28,7 +28,7 @@ program zombies {
    // keyboard.z().onPressDo({soldado.atacarZombie()})
     keyboard.z().onPressDo({soldado.agarrarElemento()})
     keyboard.w().onPressDo({arma.generarBalacera(derecha)})
-    keyboard.a().onPressDo({soldado.agarrar(arma)})
+    keyboard.a().onPressDo({soldado.agarrar()})
     
     // Este codigo sirve para cuando esta la moneda la agarre automaticamente.
     game.onCollideDo(soldado, { elemento => elemento.contacto(soldado)})

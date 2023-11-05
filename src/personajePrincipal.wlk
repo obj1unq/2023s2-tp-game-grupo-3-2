@@ -10,11 +10,14 @@ object soldado inherits Personaje {
 	const saludMaxima = 10
 	var moneda = 0
 	var imagenPersonaje = 0
+	var property llevando = libre
+	var property armaDePersonaje = arma
 
 	override method image() = "mago" + imagenPersonaje.toString() + ".png"
 
 	method irA(nuevaPosicion) {
 		position = nuevaPosicion
+		llevando.moverElemento(self)
 	}
 
 	override method mover(direccion) {
@@ -41,13 +44,13 @@ object soldado inherits Personaje {
 	}
 
 
-	method agarrar(elemento) {
-		self.validarPosition(elemento)
-		elemento.serLlevada(self)
+	method agarrar() {
+		self.validarPosition()
+		llevando.cambiarEstado(self)
 	}
 
-	method validarPosition(algo) {
-		if (position != algo.position()) {
+	method validarPosition() {
+		if (position != armaDePersonaje.position()) {
 			self.error("No estoy donde puedo hacerlo")
 		}
 	}
