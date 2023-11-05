@@ -95,58 +95,26 @@ object arma inherits Elemento {
 
 	const property danio = 10
 	var property position = game.at(3, 9)
-	var estado = libre
 
 	override method image() = "fire.png"
 
 	method generarBalacera(direccion) {
-		self.validarEstado()
 		const nuevaBala = new Bala(position = self.position().right(1))
 		nuevaBala.disparar(direccion)
-	}
-
-	method validarEstado() {
-		if (self.esLibre()) {
-			self.error("no esta en posicion de nadie")
-		}
-	}
-
-	method esLibre() {
-		return estado === libre // Esto es mal, hay que cambiarlo.
-	}
-
-	method position(_position) {
-		estado.position(_position)
-	}
-
-	method serLlevada(_personaje) {
-		estado = llevada
-		estado.personaje(_personaje)
-		estado.removerImagenFuego(self)
-		_personaje.imagenPersonaje(1) // Crear estado para cambiar imagen y no hardcodear metodo
-	}
-
-	method dejarLlevada() {
-		estado = libre
-		estado.position(self.position())
-	}
-
-	method position() {
-		return estado.position()
 	}
 
 }
 
 object llevada {
+    const cambioEstado= libre
+ 
 
-	var property personaje = null
-
-	method position() {
-		return personaje.position()
+	method moverElemento(personaje) {
+		return personaje.armaDePersonaje().position(personaje.position() )
 	}
 
-	method position(_position) {
-		self.error("me estan llevando")
+	method cambiarEstado(personaje) {
+		personaje.llevando(cambioEstado)
 	}
 
 	method removerImagenFuego(arma) {
@@ -156,8 +124,14 @@ object llevada {
 }
 
 object libre {
+    const cambioEstado = llevada
+    
+    method moverElemento(personaje) {
 
-	var property position = game.at(3, 9)
+	} 
+	method cambiarEstado(personaje) {
+		personaje.llevando(cambioEstado)
+	}
 
 }
 
@@ -179,6 +153,7 @@ class Bala inherits Elemento {
 	} 
 
 }
+
 
 object corazon inherits Elemento {
 
