@@ -40,8 +40,6 @@ object soldado inherits Personaje {
 		}
 	}
 
-	method impactoDeBala(bala) {
-	}
 
 	method agarrar(elemento) {
 		self.validarPosition(elemento)

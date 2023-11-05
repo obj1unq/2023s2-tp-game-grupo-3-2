@@ -16,6 +16,7 @@ program zombies {
     game.addVisual(arma)
     game.addVisual(corazon)
     game.addVisual(monedero)
+   
     
     game.showAttributes(soldado)
     
@@ -26,7 +27,7 @@ program zombies {
     keyboard.right().onPressDo ({soldado.mover(derecha) })
    // keyboard.z().onPressDo({soldado.atacarZombie()})
     keyboard.z().onPressDo({soldado.agarrarElemento()})
-    keyboard.w().onPressDo({arma.generarBalacera()})
+    keyboard.w().onPressDo({arma.generarBalacera(derecha)})
     keyboard.a().onPressDo({soldado.agarrar(arma)})
     
     // Este codigo sirve para cuando esta la moneda la agarre automaticamente.
@@ -36,6 +37,7 @@ program zombies {
     game.onTick(2000, "PERSEGUIR", {ataqueZombie.moverALosZombies(soldado)})
     game.onTick(2000, "MORDER", {ataqueZombie.ataqueZombie()})
     game.onTick(2000, "ANTIDOTOS", {generadorAntidotos.generarAntidotos()})
+    game.onTick(2000, "ZOMBIEGRANDE", {ataqueZombie.generarZombieGrande()} )
     
     game.start()
 }
