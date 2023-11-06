@@ -12,8 +12,8 @@ program zombies {
     game.boardGround("Battleground1.png")
     game.cellSize(30)
     
-    game.addVisual(soldado)
     game.addVisual(arma)
+    game.addVisual(soldado)
     game.addVisual(corazon)
     game.addVisual(monedero)
    
