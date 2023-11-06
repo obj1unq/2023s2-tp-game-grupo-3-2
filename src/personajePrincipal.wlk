@@ -42,12 +42,24 @@ object soldado inherits Personaje {
 			vida = saludMaxima
 		}
 	}
-
+    method lanzar() {
+    	armaDePersonaje.disparar(derecha)
+    }
 
 	method agarrar() {
 		self.validarPosition()
 		llevando.cambiarEstado(self)
 	}
+	/*
+	 method llevarLaPelota(pelota) {
+    self.validarTieneLaPelota(pelota)
+    if (pelotaEnMano != null) {
+      self.soltarPelota(pelotaEnMano)
+    }
+    llevando.cambiarEstado(self, pelota)
+    pelotaEnMano = pelota
+  }
+	 */
 
 	method validarPosition() {
 		if (position != armaDePersonaje.position()) {

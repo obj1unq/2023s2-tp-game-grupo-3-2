@@ -104,7 +104,6 @@ object arma inherits Elemento {
 	}
 
 }
-
 object llevada {
     const cambioEstado= libre
  
@@ -153,7 +152,6 @@ class Bala inherits Elemento {
 	} 
 
 }
-
 
 object corazon inherits Elemento {
 

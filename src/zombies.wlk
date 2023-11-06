@@ -39,8 +39,8 @@ class Personaje inherits Elemento {
 
 }
 
-class Zombie inherits Personaje {
-
+class Zombie inherits Personaje  {
+    const enemigo = soldado
 	const property rojo = "FF0000FF" // Color rojo
 
 	method text() = self.vida().toString() + "/10"
@@ -75,10 +75,8 @@ class Zombie inherits Personaje {
 	}
 
 	method atacarSoldado() {
-		const soldaditos = game.colliders(self)
-		soldaditos.forEach({ soldadillo => self.atacar(soldadillo)})
-	}
-
+		 self.atacar(enemigo) 
+    }
 
 	method soltarMoneda() {
 		monedero.generarMoneda(self.position())
