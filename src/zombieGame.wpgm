@@ -25,7 +25,6 @@ program zombies {
     keyboard.down().onPressDo({ soldado.mover(abajo) })
     keyboard.left().onPressDo({soldado.mover(izquierda ) })
     keyboard.right().onPressDo ({soldado.mover(derecha) })
-   // keyboard.z().onPressDo({soldado.atacarZombie()})
     keyboard.z().onPressDo({soldado.agarrarElemento()})
     keyboard.w().onPressDo({arma.generarBalacera(derecha)})
     keyboard.a().onPressDo({soldado.agarrar()})
@@ -35,6 +34,7 @@ program zombies {
     
     game.onTick(700, "HORDA", {ataqueZombie.generarZombiesNormales()})
     game.onTick(2000, "PERSEGUIR", {ataqueZombie.moverALosZombies(soldado)})
+    game.onTick(2000, "SEGUIR", {ataqueZombie.moverAZombieGrande(soldado)})
     game.onTick(2000, "MORDER", {ataqueZombie.ataqueZombie()})
     game.onTick(2000, "ANTIDOTOS", {generadorAntidotos.generarAntidotos()})
     game.onTick(2000, "ZOMBIEGRANDE", {ataqueZombie.generarZombieGrande()} )

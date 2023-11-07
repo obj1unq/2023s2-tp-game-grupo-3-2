@@ -149,7 +149,22 @@ class Bala inherits Elemento {
 
 	method avanzar(direccion) {
 		position = direccion.siguiente(self.position())
+		self.eliminarDelTablero()
 	} 
+	method eliminarDelTablero() {
+		if (self.position().x() > 17 or self.position().x() < 1 ) {
+			self.eliminarSiEstoy()
+		}
+	}
+	method estoyEnElTablero() {
+		return game.hasVisual(self)
+	}
+	method eliminarSiEstoy() {
+		if ( self.estoyEnElTablero() ) {
+			game.removeTickEvent("disparar")
+			game.removeVisual(self)
+		}
+	}
 
 }
 

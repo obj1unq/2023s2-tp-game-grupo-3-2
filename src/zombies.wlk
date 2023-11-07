@@ -126,6 +126,10 @@ class ZombieGrande inherits ZombieNormal(position = game.at(16, randomizer.yCual
 		const nuevaBala = new Bala(position = self.position().left(1))
 		nuevaBala.disparar(izquierda)
 	}
+	override method morir() {
+		super()
+		game.removeTickEvent("MORDER")
+	}
 }
 
 object ataqueZombie {
@@ -143,6 +147,7 @@ object ataqueZombie {
 	}
     method generarZombieGrande() {
     	if (monedero.cantidadMonedas() > 10 and cantidadZombieGrande.size() < 1) {
+    		game.removeTickEvent("HORDA")
     		const zombiGrande = new ZombieGrande()
 			game.addVisual(zombiGrande)
 			cantidadZombieGrande.add(zombiGrande)
@@ -151,12 +156,16 @@ object ataqueZombie {
 	method moverALosZombies(personaje) {
 		if (zombies.size() > 0) {
 			zombies.forEach({ zombie => zombie.mover(personaje)})
+		}
+	}
+	method moverAZombieGrande(personaje) {
+		if ( cantidadZombieGrande.size() > 0) {
 			cantidadZombieGrande.forEach({ zombie => zombie.mover(personaje)})
 		}
 	}
 
 	method ataqueZombie() {
-		if (zombies.size() > 0) {
+		if (zombies.size() > 0 or cantidadZombieGrande.size() > 0 ) {
 			zombies.forEach({ zombie => zombie.atacarSoldado()})
 			cantidadZombieGrande.forEach({ zombie => zombie.atacarSoldado()})
 		}
