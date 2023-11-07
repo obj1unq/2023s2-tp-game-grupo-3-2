@@ -28,4 +28,5 @@ object randomizer {
 	method xCualquiera() {
 		return (0..  (game.width()-2) ).anyOne()
 	}
+
 }

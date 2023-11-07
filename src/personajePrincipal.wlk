@@ -42,9 +42,9 @@ object soldado inherits Personaje {
 			vida = saludMaxima
 		}
 	}
-    method lanzar() {
-    	armaDePersonaje.disparar(derecha)
-    }
+//    method lanzar() {
+//    	armaDePersonaje.disparar(derecha)
+//    }
 
 	method agarrar() {
 		self.validarPosition()
