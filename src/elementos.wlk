@@ -53,7 +53,7 @@ class PocionAmarilla inherits Pocion {
 object pocionFactory {
 
 	method nuevaPocion() {
-		return new Pocion(position = game.at(randomizer.xCualquiera(), randomizer.yCualquiera()))
+		return new Pocion(position = randomizer.position())
 	}
 
 }
@@ -61,7 +61,7 @@ object pocionFactory {
 object pocionAzulFactory {
 
 	method nuevaPocion() {
-		return new PocionAzul(position = game.at(randomizer.xCualquiera(), randomizer.yCualquiera()))
+		return new PocionAzul(position = randomizer.position())
 	}
 
 }
@@ -69,7 +69,7 @@ object pocionAzulFactory {
 object pocionAmarillaFactory {
 
 	method nuevaPocion() {
-		return new PocionAmarilla(position = game.at(randomizer.xCualquiera(), randomizer.yCualquiera()))
+		return new PocionAmarilla(position = randomizer.position())
 	}
 
 }
@@ -201,7 +201,7 @@ class Bala inherits Elemento {
 
 object corazon inherits Elemento {
 
-	const property position = game.at(1, 1)
+	const property position = game.at(1, 0)
 
 	override method image() = "corazon" + soldado.vida().toString() + ".png"
 
@@ -223,7 +223,7 @@ class Moneda inherits Elemento {
 
 object monedero {
 
-	const property position = game.at(10, 1)
+	const property position = game.at(10, 0)
 	var property cantidadMonedas = 0
 	var monedas = []
 

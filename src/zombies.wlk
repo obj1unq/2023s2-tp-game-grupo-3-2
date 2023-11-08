@@ -113,7 +113,7 @@ class ZombieNormal inherits Zombie {
 	}
 
 }
-class ZombieGrande inherits ZombieNormal(position = game.at(16, randomizer.yCualquiera()) ) {
+class ZombieGrande inherits ZombieNormal(position = game.at(17, randomizer.yCualquiera()) ) {
 	
 	override method image() = "guerrero1.png"
 	
