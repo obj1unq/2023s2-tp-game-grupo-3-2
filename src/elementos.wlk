@@ -105,12 +105,20 @@ object arma inherits Elemento {
 
 	const property danio = 10
 	var property position = game.at(3, 9)
+	const propetario = soldado
 
 	override method image() = "fire.png"
 
 	method generarBalacera(direccion) {
+		self.validarEstado(propetario.llevando())
 		const nuevaBala = new Bala(position = self.position().right(1))
 		nuevaBala.disparar(direccion)
+	}
+
+	method validarEstado(estado) {
+		if (not estado.estaLlevandome()) {
+			self.error("No me esta llevando")
+		}
 	}
 
 }
@@ -131,6 +139,10 @@ object llevada {
 		game.removeVisual(arma)
 	}
 
+	method estaLlevandome() {
+		return true
+	}
+
 }
 
 object libre {
@@ -142,6 +154,10 @@ object libre {
 
 	method cambiarEstado(personaje) {
 		personaje.llevando(cambioEstado)
+	}
+
+	method estaLlevandome() {
+		return false
 	}
 
 }
