@@ -111,7 +111,7 @@ object arma inherits Elemento {
 
 	method generarBalacera(direccion) {
 		self.validarEstado(propetario.llevando())
-		const nuevaBala = new Bala(position = self.position().right(1))
+		const nuevaBala = new Bala(position = self.position().right(1).up(1))
 		nuevaBala.disparar(direccion)
 	}
 
@@ -135,12 +135,16 @@ object llevada {
 		personaje.llevando(cambioEstado)
 	}
 
-	method removerImagenFuego(arma) {
+	method imagenFuego(arma) {
 		game.removeVisual(arma)
 	}
 
 	method estaLlevandome() {
 		return true
+	}
+
+	method imagenDePersonaje() {
+		return "mago1"
 	}
 
 }
@@ -158,6 +162,14 @@ object libre {
 
 	method estaLlevandome() {
 		return false
+	}
+
+	method imagenFuego(arma) {
+		game.addVisual(arma)
+	}
+
+	method imagenDePersonaje() {
+		return "mago0"
 	}
 
 }
