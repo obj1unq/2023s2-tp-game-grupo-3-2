@@ -32,11 +32,11 @@ object soldado inherits Personaje {
 		vida += pocion.vidaOtorgada()
 		self.validarVidaMaxima()
 	}
-
+	/*
 	method agarrarElemento() {
 		game.onCollideDo(self,{elemento => elemento.usado(self)})
 	}
-
+	 */
 	method validarVidaMaxima() {
 		if (vida > saludMaxima) {
 			vida = saludMaxima
