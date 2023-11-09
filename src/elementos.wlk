@@ -111,7 +111,7 @@ object arma inherits Elemento {
 
 	method generarBalacera(direccion) {
 		self.validarEstado(propetario.llevando())
-		const nuevaBala = new Bala(position = self.position().right(1).up(1), imagenDisparo = fireball)
+		const nuevaBala = new Bala(position = self.position().up(1), imagenDisparo = fireball)
 		nuevaBala.disparar(direccion)
 	}
 
@@ -184,7 +184,7 @@ class Bala inherits Elemento {
 
 	method disparar(direccion) {
 		game.addVisual(self)
-		game.onTick(300, "disparar", { self.avanzar(direccion)})
+		game.onTick(200, "disparar", { self.avanzar(direccion)})
 		game.onCollideDo(self, { zombie => zombie.impactoDeBala(self)})
 	}
 
