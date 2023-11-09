@@ -4,10 +4,10 @@ import direcciones.*
 import elementos.*
 import randomizer.*
 
-class Personaje inherits Elemento {
+class Personaje inherits Elemento(danio = 1) {
 
 	var property vida = 10
-	var property danio = 1
+
 
 	method position()
 
@@ -115,7 +115,7 @@ class ZombieNormal inherits Zombie {
 
 }
 
-class ZombieGrande inherits ZombieNormal(vida=20,position = game.at(17, randomizer.yCualquiera())) {
+class ZombieGrande inherits ZombieNormal(position = game.at(17, randomizer.yCualquiera())) {
 
 	override method image() = "mago3.png"
 
@@ -126,14 +126,13 @@ class ZombieGrande inherits ZombieNormal(vida=20,position = game.at(17, randomiz
 	}
 
 	override method atacarSoldado() {
-		const nuevaBala = new Bala(position = self.position().left(1).up(1), imagenDisparo = charge)
+		const nuevaBala = new Bala(position = self.position().left(1).up(1), imagenDisparo = charge, danio = 2)
 		nuevaBala.disparar(izquierda)
 	}
 
 	override method morir() {
 		super()
 		game.removeTickEvent("MORDER")
-		game.stop()
 	}
 
 }

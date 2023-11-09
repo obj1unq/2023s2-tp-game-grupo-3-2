@@ -28,21 +28,22 @@ object soldado inherits Personaje {
 	}
 
 	method tomarPocion(pocion) {
-		vida += pocion.vidaOtorgada()
-		self.validarVidaMaxima()
+		pocion.efectoPocion(self)
 	}
 
-	/*
-	 * method agarrarElemento() {
-	 * 	game.onCollideDo(self,{elemento => elemento.usado(self)})
-	 * }
-	 */
 	method validarVidaMaxima() {
 		if (vida > saludMaxima) {
 			vida = saludMaxima
 		}
 	}
 
+	method aumentarVida(_vida) {
+		vida += _vida
+		self.validarVidaMaxima()
+	}
+	method aumentarDanio(danio){
+		armaDePersonaje.aumentarSuDanio(danio)
+	}
 //    method lanzar() {
 //    	armaDePersonaje.disparar(derecha)
 //    }
