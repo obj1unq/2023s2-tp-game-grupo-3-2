@@ -111,7 +111,7 @@ object arma inherits Elemento {
 
 	method generarBalacera(direccion) {
 		self.validarEstado(propetario.llevando())
-		const nuevaBala = new Bala(position = self.position().right(1).up(1))
+		const nuevaBala = new Bala(position = self.position().right(1).up(1), imagenDisparo = fireball)
 		nuevaBala.disparar(direccion)
 	}
 
@@ -178,8 +178,9 @@ class Bala inherits Elemento {
 
 	const property danio = 2
 	var property position
+	const property imagenDisparo
 
-	override method image() = "fireball1.png"
+	override method image() = imagenDisparo.image()
 
 	method disparar(direccion) {
 		game.addVisual(self)
@@ -229,6 +230,22 @@ class Moneda inherits Elemento {
 	override method contacto(personaje) {
 		personaje.sumarMoneda(valorMoneda)
 		monedero.removerMoneda(self)
+	}
+
+}
+
+object fireball {
+
+	method image() {
+		return "fireball1.png"
+	}
+
+}
+
+object charge {
+
+	method image() {
+		return "charge1.png"
 	}
 
 }
