@@ -4,7 +4,10 @@ import direcciones.*
 import randomizer.*
 
 class Elemento {
-
+	
+	// cree esta variable para modificar el danio de la bala
+	var property danio = 0 
+	
 	method image()
 
 	method impactoDeBala(elemento) {
@@ -25,7 +28,7 @@ class Elemento {
 class Pocion inherits Elemento {
 
 	var property position
-	var property vidaOtorgada = 5 // lo cambie a var para que las otras pociones no den tanta vida.
+	var vidaOtorgada = 5 // lo cambie a var para que las otras pociones no den tanta vida.
 
 	override method image() = "pocion_salud.png"
 
@@ -33,7 +36,10 @@ class Pocion inherits Elemento {
 		personaje.tomarPocion(self)
 		generadorAntidotos.quitar(self)
 	}
-
+	// Cada pocion tendra su efecto y por eso se ve asi
+	method efectoPocion(personaje){
+		personaje.aumentarVida(vidaOtorgada)
+	}
 }
 
 class PocionAzul inherits Pocion {
@@ -43,11 +49,18 @@ class PocionAzul inherits Pocion {
 
 }
 
-class PocionAmarilla inherits Pocion {
-
+class PocionAmarilla inherits Pocion(vidaOtorgada = 1) {
+	
+	const danioAdicional = 2
+	
 	// Elejir que otorga esta pocion ademas de salud
 	override method image() = "pocion_amarilla.png"
-
+	
+	// Lo mismo sucede aca,solo que da 1 de vida y aumenta el daño.
+	override method efectoPocion(personaje){
+		super(personaje)
+		personaje.aumentarDanio(danioAdicional)
+	}
 }
 
 object pocionFactory {
@@ -101,9 +114,9 @@ object generadorAntidotos {
 
 }
 
-object arma inherits Elemento {
+object arma inherits Elemento(danio = 2) {
 
-	const property danio = 10
+	const maxDanio = 10
 	var property position = game.at(3, 9)
 	const propetario = soldado
 
@@ -111,13 +124,22 @@ object arma inherits Elemento {
 
 	method generarBalacera(direccion) {
 		self.validarEstado(propetario.llevando())
-		const nuevaBala = new Bala(position = self.position().up(1), imagenDisparo = fireball)
+		const nuevaBala = new Bala(position = self.position().right(1).up(1), imagenDisparo = fireball, danio = danio)
 		nuevaBala.disparar(direccion)
 	}
 
 	method validarEstado(estado) {
 		if (not estado.estaLlevandome()) {
 			self.error("No me esta llevando")
+		}
+	}
+	method aumentarSuDanio(_danio){
+		danio += _danio
+		self.validarDanioMax()
+	}
+	method validarDanioMax(){
+		if (danio > maxDanio){
+			danio = maxDanio
 		}
 	}
 
@@ -173,10 +195,9 @@ object libre {
 	}
 
 }
-
+// Ahora a la balo le asigno el danio desde el arma, pasando el danio que tiene el arma 
 class Bala inherits Elemento {
 
-	const property danio = 2
 	var property position
 	const property imagenDisparo
 
@@ -184,7 +205,7 @@ class Bala inherits Elemento {
 
 	method disparar(direccion) {
 		game.addVisual(self)
-		game.onTick(200, "disparar", { self.avanzar(direccion)})
+		game.onTick(300, "disparar", { self.avanzar(direccion)})
 		game.onCollideDo(self, { zombie => zombie.impactoDeBala(self)})
 	}
 
