@@ -6,7 +6,7 @@ import randomizer.*
 
 object soldado inherits Personaje {
 
-	var property position = game.at(1, 0)
+	var property position = game.at(1, 2)
 	const saludMaxima = 10
 	var moneda = 0
 	var property llevando = libre
