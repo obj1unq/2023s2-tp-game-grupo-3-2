@@ -24,7 +24,7 @@ object randomizer {
 		}
 	}
 	method yCualquiera() {
-		return (1..  (game.height()-2) ).anyOne()
+		return (2..  (game.height()-2) ).anyOne()
 	}
 	method xCualquiera() {
 		return (0..  (game.width()-2) ).anyOne()
