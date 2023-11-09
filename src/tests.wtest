@@ -1,6 +1,19 @@
-
-test "testX" {
-
-	assert.that(true)
-
-}
+import zombies.*
+import elementos.*
+import personajePrincipal.*
+import randomizer.*
+import wollok.game.*
+import direcciones.*
+	
+		const zombie = new ZombieNormal (position=game.at(5,5))
+	    
+        test "movimientos del soldado" {
+           soldado.mover(derecha)
+           assert.equals(game.at(2,2),soldado.position())
+           soldado.mover(izquierda)
+           assert.equals(game.at(1,2),soldado.position())
+           soldado.mover(arriba)
+           assert.equals(game.at(1,3),soldado.position())
+           soldado.mover(abajo)
+           assert.equals(game.at(1,2),soldado.position())
+        }
