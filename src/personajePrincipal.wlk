@@ -10,9 +10,15 @@ object soldado inherits Personaje {
 	const saludMaxima = 10
 	var moneda = 0
 	var property llevando = libre
+	// Meter diferentes tipos de armas polimórficas
 	var property armaDePersonaje = arma
 
 	override method image() = llevando.imagenDePersonaje() + ".png"
+
+
+	method validarBalacera() {
+		llevando.validarBalacera()
+	}
 
 	method irA(nuevaPosicion) {
 		position = nuevaPosicion
@@ -31,16 +37,10 @@ object soldado inherits Personaje {
 		pocion.efectoPocion(self)
 	}
 
-	method validarVidaMaxima() {
-		if (vida > saludMaxima) {
-			vida = saludMaxima
-		}
-	}
-
 	method aumentarVida(_vida) {
-		vida += _vida
-		self.validarVidaMaxima()
+		 vida = (vida + _vida).min(saludMaxima)
 	}
+	
 	method aumentarDanio(danio){
 		armaDePersonaje.aumentarSuDanio(danio)
 	}
@@ -53,16 +53,7 @@ object soldado inherits Personaje {
 		llevando.imagenFuego(armaDePersonaje)
 	}
 
-	/*
-	 *  method llevarLaPelota(pelota) {
-	 *     self.validarTieneLaPelota(pelota)
-	 *     if (pelotaEnMano != null) {
-	 *       self.soltarPelota(pelotaEnMano)
-	 *     }
-	 *     llevando.cambiarEstado(self, pelota)
-	 *     pelotaEnMano = pelota
-	 *   }
-	 */
+
 	method validarPosition() {
 		if (position != armaDePersonaje.position()) {
 			self.error("No estoy donde puedo hacerlo")

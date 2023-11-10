@@ -123,16 +123,11 @@ object arma inherits Elemento(danio = 2) {
 	override method image() = "fire.png"
 
 	method generarBalacera(direccion) {
-		self.validarEstado(propetario.llevando())
+		propetario.validarBalacera()
 		const nuevaBala = new Bala(position = self.position().right(1).up(1), imagenDisparo = fireball, danio = danio)
 		nuevaBala.disparar(direccion)
 	}
 
-	method validarEstado(estado) {
-		if (not estado.estaLlevandome()) {
-			self.error("No me esta llevando")
-		}
-	}
 	method aumentarSuDanio(_danio){
 		danio += _danio
 		self.validarDanioMax()
@@ -157,17 +152,25 @@ object llevada {
 		personaje.llevando(cambioEstado)
 	}
 
+	//No entiendo el nombre de este método
 	method imagenFuego(arma) {
 		game.removeVisual(arma)
 	}
 
-	method estaLlevandome() {
-		return true
-	}
+	//RARO! en general si tenes un estado que modela esto
+	//no necesitarías preguntarle nunca por un booleano
+	//simplemente usás polimorfismo
+//	method estaLlevandome() {
+//		return true
+//	}
 
 	method imagenDePersonaje() {
 		return "mago1"
 	}
+	
+	method validarBalacera() {
+	}
+	
 
 }
 
@@ -182,16 +185,16 @@ object libre {
 		personaje.llevando(cambioEstado)
 	}
 
-	method estaLlevandome() {
-		return false
-	}
-
 	method imagenFuego(arma) {
 		game.addVisual(arma)
 	}
 
 	method imagenDePersonaje() {
 		return "mago0"
+	}
+	
+	method validarBalacera() {
+		self.error("No me esta llevando")
 	}
 
 }
