@@ -4,6 +4,7 @@ import direcciones.*
 import elementos.*
 import randomizer.*
 
+//Revisar esta herencia, no parece estar bien que Personaje sea un Elemento
 class Personaje inherits Elemento(danio = 1) {
 
 	var property vida = 10
@@ -11,6 +12,8 @@ class Personaje inherits Elemento(danio = 1) {
 
 	method position()
 
+	//Esto tiene que estar en los enemigos nada más.
+	//Moverlo a zombie
 	method mover(personaje)
 
 	method morir()
@@ -39,6 +42,26 @@ class Personaje inherits Elemento(danio = 1) {
 
 }
 
+
+
+object movimientoLibre {
+	method mover(enemigo, personaje) {
+		if (not (enemigo.mismoEjeX(personaje))) {
+			enemigo.irACeldaX(personaje)
+		} else if (not (enemigo.mismoEjeY(personaje))) {
+			enemigo.irACeldaY(personaje)
+		}
+	}
+}
+
+object movimientoVertical {
+	method mover(enemigo, personaje) {
+		if (not (enemigo.mismoEjeY(personaje))) {
+			enemigo.irACeldaY(personaje)
+		}
+	}	
+}
+
 class Zombie inherits Personaje {
 
 	const enemigo = soldado
@@ -47,8 +70,12 @@ class Zombie inherits Personaje {
 	method text() = self.vida().toString() + "/10"
 
 	method textColor() = self.rojo()
+	
+	//var movimiento = movimientoLibre
 
+	//No parece ser necesario el paramátro porque ya lo tenés en enemigo
 	override method mover(personaje) {
+		//movimiento.mover(self, personaje)
 		if (not (self.mismoEjeX(personaje))) {
 			self.irACeldaX(personaje)
 		} else if (not (self.mismoEjeY(personaje))) {
@@ -115,10 +142,12 @@ class ZombieNormal inherits Zombie {
 
 }
 
+
 class ZombieGrande inherits ZombieNormal(position = game.at(17, randomizer.yCualquiera())) {
 
 	override method image() = "mago3.png"
 
+	//Este no haria falta sobreesribir, tendrian que inicialiar con un movimiento Vertical como atributo del movimiento
 	override method mover(personaje) {
 		if (not (self.mismoEjeY(personaje))) {
 			self.irACeldaY(personaje)
@@ -148,6 +177,10 @@ object ataqueZombie {
 			const nuevoZombi = new ZombieNormal(position = game.at(18, randomizer.yCualquiera()))
 			game.addVisual(nuevoZombi)
 			zombies.add(nuevoZombi)
+			nuevoZombi.generarOnticks()
+		// dentro de generarOnticks hacer algo así:
+		//	game.onTick((1000..3000).anyOne(), "SEGUIR" + nuevoZombi.identity(), {moverAZombieGrande(soldado)})
+
 		}
 	}
 
@@ -182,6 +215,7 @@ object ataqueZombie {
 	method quitar(zombie) {
 		zombies.remove(zombie)
 		game.removeVisual(zombie)
+		//zombie.removerOnticks()
 	}
 
 }
