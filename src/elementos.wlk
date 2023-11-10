@@ -275,7 +275,7 @@ object monedero {
 
 	const property position = game.at(10, 0)
 	var property cantidadMonedas = 0
-	var monedas = []
+	var property monedas = []
 
 	method image() = "monedero.png"
 
