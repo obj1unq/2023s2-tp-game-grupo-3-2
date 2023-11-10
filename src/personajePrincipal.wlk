@@ -8,7 +8,7 @@ object soldado inherits Personaje {
 
 	var property position = game.at(1, 2)
 	const saludMaxima = 10
-	var moneda = 0
+	var property monedas = 0
 	var property llevando = libre
 	var property armaDePersonaje = arma
 
@@ -70,7 +70,7 @@ object soldado inherits Personaje {
 	}
 
 	method sumarMoneda(valor) {
-		moneda += valor
+		monedas += valor
 	}
 
 }
