@@ -51,3 +51,73 @@ object arriba {
 
 }
 
+// Hay codigo repetido pero es una solucion, hay q mejorarla.
+// Esto nos permite jugar mas con los movimientos de los enemigos
+// Ya que nosotros asignamos que tipo de movimiento tenga.
+object movimientoLibre {
+
+
+	method mover(enemigo, personaje) {
+		 if (not (self.mismoEjeX(enemigo, personaje))) {
+			self.irACeldaX(enemigo, personaje)
+		} else if (not (self.mismoEjeY(enemigo, personaje))) {
+			self.irACeldaY(enemigo, personaje)
+		}
+	}
+	method irACeldaY(enemigo,personaje){
+		enemigo.position(self.celdaY(enemigo,personaje))
+	}
+	method mismoEjeY(enemigo, personaje) {
+		return enemigo.position().y() == personaje.position().y()
+	}
+
+	method celdaY(enemigo, personaje) {
+		return if (personaje.position().y() > enemigo.position().y()) {
+			enemigo.position().up(1)
+		} else {
+			enemigo.position().down(1)
+		}
+	}
+	
+	method irACeldaX(enemigo,personaje){
+		enemigo.position(self.celdaX(enemigo,personaje))
+	}
+	method mismoEjeX(enemigo, personaje) {
+		return enemigo.position().x() == personaje.position().x()
+	}
+
+	method celdaX(enemigo, personaje) {
+		return if (personaje.position().x() > enemigo.position().x()) {
+			enemigo.position().right(1)
+		} else {
+			enemigo.position().left(1)
+		}
+	
+	}
+}
+object movimientoVertical {
+
+
+	method mover(enemigo, personaje) {
+		return if (not (self.mismoEjeY(enemigo, personaje))) {
+			self.irACeldaY(enemigo, personaje)
+		} else {
+			enemigo.position()
+		}
+	}
+	method irACeldaY(enemigo,personaje){
+		enemigo.position(self.celdaY(enemigo,personaje))
+	}
+	method mismoEjeY(enemigo, personaje) {
+		return enemigo.position().y() == personaje.position().y()
+	}
+
+	method celdaY(enemigo, personaje) {
+		return if (personaje.position().y() > enemigo.position().y()) {
+			enemigo.position().up(1)
+		} else {
+			enemigo.position().down(1)
+		}
+	}
+}
+

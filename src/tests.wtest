@@ -4,103 +4,105 @@ import personajePrincipal.*
 import randomizer.*
 import wollok.game.*
 import direcciones.*
-	
+
 describe "test del juego" {	
 	
 		const zombie = new ZombieNormal (position=game.at(1,2))
 	    const enemigoFinal = new ZombieGrande(position=game.at(17,2))
 	    const pocion = new Pocion(position=game.at(1,2))
 	    const moneda = new Moneda(position=game.at(1,2),valorMoneda =1)
-	    const proyectil = new Bala(position=game.at(1,2), imagenDisparo="fireball1.png",danio = 2 )
+	    const proyectil = new Fuego(position=game.at(1,2), imagenDisparo="fireball1.png",danio = 2 )
 	    
         test "movimientos del mago" {
-        	soldado.position(game.at(1,2))
-            soldado.mover(derecha)
-            assert.equals(game.at(2,2),soldado.position())
-            soldado.mover(izquierda)
-            assert.equals(game.at(1,2),soldado.position())
-            soldado.mover(arriba)
-            assert.equals(game.at(1,3),soldado.position())
-            soldado.mover(abajo)
-            assert.equals(game.at(1,2),soldado.position())
+        	mago.position(game.at(1,2))
+            mago.mover(derecha)
+            assert.equals(game.at(2,2),mago.position())
+            mago.mover(izquierda)
+            assert.equals(game.at(1,2),mago.position())
+            mago.mover(arriba)
+            assert.equals(game.at(1,3),mago.position())
+            mago.mover(abajo)
+            assert.equals(game.at(1,2),mago.position())
         }
         test "verificar si el mago sale del tablero" {
-        	soldado.position(game.at(18,18))
-        	soldado.mover(arriba)
-        	assert.equals(game.at(18,18),soldado.position())
-        	soldado.mover(derecha)
-        	assert.equals(game.at(18,18),soldado.position())
+        	mago.position(game.at(18,18))
+        	mago.mover(arriba)
+        	assert.equals(game.at(18,18),mago.position())
+        	mago.mover(derecha)
+        	assert.equals(game.at(18,18),mago.position())
         	
-        	soldado.position(game.at(0,0))
-        	soldado.mover(abajo)
-        	assert.equals(game.at(0,0),soldado.position())
-        	soldado.mover(izquierda)
-        	assert.equals(game.at(0,0),soldado.position())
+        	mago.position(game.at(0,0))
+        	mago.mover(abajo)
+        	assert.equals(game.at(0,0),mago.position())
+        	mago.mover(izquierda)
+        	assert.equals(game.at(0,0),mago.position())
         }
         test "mago toma pocion de vida " {
         	soldado.vida(5)
-        	assert.throwsException({pocion.contacto(soldado)})
-        	assert.equals(10, soldado.vida() )
+        	assert.throwsException({pocion.contacto(mago)})
+        	assert.equals(10, mago.vida() )
         }
         test "mago valida salud maxima" {
-        	assert.throwsException({pocion.contacto(soldado)})
-        	assert.equals(10, soldado.vida() )
+        	assert.throwsException({pocion.contacto(mago)})
+        	assert.equals(10, mago.vida() )
         }
+        /* Este test no sirve xq el mago apesar que guardas monedas el sabe cuanto hay es el
+         * monedero.
         test "mago agarra la moneda" {
-        	assert.equals(0, soldado.monedas() )
-        	assert.throwsException({moneda.contacto(soldado)})
-        	assert.equals(1, soldado.monedas() )
-        }
+        	assert.equals(0, mago.monedas() )
+        	assert.throwsException({moneda.contacto(mago)})
+        	assert.equals(1, mago.monedas() )
+        }*/
         test "mago agarra arma" {
-        	arma.position(game.at(1,2))
-        	assert.equals(libre, soldado.llevando() )
-        	assert.throwsException({soldado.agarrar()})
-        	assert.equals(llevada, soldado.llevando() )
+        	armaFuego.position(game.at(1,2))
+        	assert.equals(libre, mago.llevando() )
+        	assert.throwsException({mago.agarrar()})
+        	assert.equals(llevada, mago.llevando() )
         }
         test "mago valida agarrar arma" {
-        	assert.throwsException({soldado.agarrar()})
-        	assert.equals(libre, soldado.llevando() )
+        	assert.throwsException({mago.agarrar()})
+        	assert.equals(libre, mago.llevando() )
         }
         test "mago verifica si lleva el arma" {
-        	arma.position(game.at(1,2))
-        	assert.throwsException({soldado.agarrar()})
-        	soldado.mover(derecha)
-        	assert.equals(arma.position(), soldado.position() )
+        	armaFuego.position(game.at(1,2))
+        	assert.throwsException({mago.agarrar()})
+        	mago.mover(derecha)
+        	assert.equals(armaFuego.position(), mago.position() )
         }
         test "mago es perseguido por zombie " {
-        	soldado.mover(izquierda)
-        	zombie.mover(soldado)
+        	mago.mover(izquierda)
+        	zombie.mover(mago)
         	assert.equals(game.at(0,2),zombie.position())
-        	soldado.mover(arriba)
-        	zombie.mover(soldado)
+        	mago.mover(arriba)
+        	zombie.mover(mago)
         	assert.equals(game.at(0,3),zombie.position())
-        	soldado.mover(abajo)
-        	zombie.mover(soldado)
+        	mago.mover(abajo)
+        	zombie.mover(mago)
         	assert.equals(game.at(0,2),zombie.position())
-        	soldado.mover(derecha)
-        	zombie.mover(soldado)
+        	mago.mover(derecha)
+        	zombie.mover(mago)
         	assert.equals(game.at(1,2),zombie.position())
         	
         }
         test "mago es perseguido por enemigo final" {
-        	soldado.mover(arriba)
-        	enemigoFinal.mover(soldado)
+        	mago.mover(arriba)
+        	enemigoFinal.mover(mago)
         	assert.equals(game.at(17,3),enemigoFinal.position())
-        	soldado.mover(abajo)
-        	enemigoFinal.mover(soldado)
+        	mago.mover(abajo)
+        	enemigoFinal.mover(mago)
         	assert.equals(game.at(17,2),enemigoFinal.position())
         } 
         test "mago pierde vida " {
-        	soldado.perderVida(zombie)
-        	assert.equals(9, soldado.vida() )
+        	mago.perderVida(zombie)
+        	assert.equals(9, mago.vida() )
         } 
         test "mago es herido por zombie " {
         	zombie.atacarSoldado()
-        	assert.equals(9, soldado.vida() )
+        	assert.equals(9, mago.vida() )
         }
         test "mago es herido con un proyetil" {
-        	assert.throwsException({soldado.impactoDeBala(proyectil)})
-        	assert.equals(8, soldado.vida() )
+        	assert.throwsException({mago.impactoDeBala(proyectil)})
+        	assert.equals(8, mago.vida() )
         }
         test "enemigo normal es herido con proyectil" {
         	assert.throwsException({zombie.impactoDeBala(proyectil)})
