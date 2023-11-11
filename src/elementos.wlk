@@ -77,6 +77,7 @@ object generadorPociones {
 
 	var property pociones = []
 	const cantidadMaxima = 4
+	// Esto el profe me dijo que tengo q modifircarlo,tengo q consultar otra vez
 	const pocionesFactory = [ pocionFactory, pocionAzulFactory, pocionAmarillaFactory ]
 
 	// Esto sirve para que genere nuevas pociones que nosotros definamos.
