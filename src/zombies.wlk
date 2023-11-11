@@ -4,24 +4,19 @@ import direcciones.*
 import elementos.*
 import randomizer.*
 
-class Personaje inherits Elemento(danio = 1) {
-
+class Personaje {
+	
 	var property vida = 10
-
-
-	method position()
-
-	method mover(personaje)
-
+	
 	method morir()
 
-	override method impactoDeBala(elemento) {
+	method impactoDeBala(elemento) {
 		self.perderVida(elemento)
 		game.removeVisual(elemento)
 	}
 
-	override method perderVida(personaje) {
-		vida -= personaje.danio()
+	method perderVida(elemento) {
+		vida -= elemento.danio()
 		if (self.estaMuerto()) {
 			self.morir()
 		}
@@ -30,103 +25,57 @@ class Personaje inherits Elemento(danio = 1) {
 	method estaMuerto() {
 		return (vida <= 0)
 	}
-
-	method atacar(enemigo) {
-		if (self.position() == enemigo.position()) {
-			enemigo.perderVida(self)
-		}
+	method contacto(personaje){
+		// agrege este mensaje por sino sale pantalla de error.
 	}
-
 }
 
 class Zombie inherits Personaje {
 
-	const enemigo = soldado
+	var property danio
+	var property position
+	const enemigo = mago
 	const property rojo = "FF0000FF" // Color rojo
-
+	const movimiento 
 	method text() = self.vida().toString() + "/10"
-
+	
+	method mover(){
+		position = movimiento.mover(self,enemigo)
+	}
+	
 	method textColor() = self.rojo()
-
-	override method mover(personaje) {
-		if (not (self.mismoEjeX(personaje))) {
-			self.irACeldaX(personaje)
-		} else if (not (self.mismoEjeY(personaje))) {
-			self.irACeldaY(personaje)
-		}
-	}
-
-	method mismoEjeY(personaje) {
-		return self.position().y() == personaje.position().y()
-	}
-
-	method irACeldaY(personaje)
-
-	method mismoEjeX(personaje) {
-		return self.position().x() == personaje.position().x()
-	}
-
-	method irACeldaX(personaje)
 
 	override method morir() {
 		self.soltarMoneda()
 		ataqueZombie.quitar(self)
 	}
 
-	method atacarSoldado() {
-		self.atacar(enemigo)
-	}
-
 	method soltarMoneda() {
 		monedero.generarMoneda(self.position())
 	}
+	
+	method atacar() {
+		if (self.position() == enemigo.position()) {
+			enemigo.perderVida(self)
+		}
+	}
+}
+
+class ZombieNormal inherits Zombie(danio = 2) {
+
+
+	method image() = "esqueleto1.png"
+
 
 }
 
-class ZombieNormal inherits Zombie {
-
-	var property position
-
-	override method irACeldaY(personaje) {
-		position = self.subirOBajar(personaje)
-	}
-
-	override method image() = "esqueleto1.png"
-
-	method subirOBajar(personaje) {
-		return if (personaje.position().y() > self.position().y()) {
-			self.position().up(1)
-		} else {
-			self.position().down(1)
-		}
-	}
-
-	override method irACeldaX(personaje) {
-		position = self.izqODerecha(personaje)
-	}
-
-	method izqODerecha(personaje) {
-		return if (personaje.position().x() > self.position().x()) {
-			self.position().right(1)
-		} else {
-			self.position().left(1)
-		}
-	}
-
-}
-
-class ZombieGrande inherits ZombieNormal(position = game.at(17, randomizer.yCualquiera()),vida = 20) {
+class ZombieGrande inherits ZombieNormal(position = game.at(17, randomizer.yCualquiera()),vida = 20,movimiento = movimientoVertical) {
 
 	override method image() = "mago3.png"
 
-	override method mover(personaje) {
-		if (not (self.mismoEjeY(personaje))) {
-			self.irACeldaY(personaje)
-		}
-	}
 
-	override method atacarSoldado() {
-		const nuevaBala = new Bala(position = self.position().left(1).up(1), imagenDisparo = charge, danio = 2)
+	override method atacar() {
+		const nuevaBala = new Fuego(position = self.position().left(1).up(1), imagenDisparo = charge, danio = danio)
 		nuevaBala.disparar(izquierda)
 	}
 
@@ -145,7 +94,7 @@ object ataqueZombie {
 
 	method generarZombiesNormales() {
 		if (zombies.size() < cantidadMaxima) {
-			const nuevoZombi = new ZombieNormal(position = game.at(18, randomizer.yCualquiera()))
+			const nuevoZombi = new ZombieNormal(position = game.at(18, randomizer.yCualquiera()),movimiento = movimientoLibre)
 			game.addVisual(nuevoZombi)
 			zombies.add(nuevoZombi)
 		}
@@ -162,20 +111,20 @@ object ataqueZombie {
 
 	method moverALosZombies(personaje) {
 		if (zombies.size() > 0) {
-			zombies.forEach({ zombie => zombie.mover(personaje)})
+			zombies.forEach({ zombie => zombie.mover()})
 		}
 	}
 
 	method moverAZombieGrande(personaje) {
 		if (cantidadZombieGrande.size() > 0) {
-			cantidadZombieGrande.forEach({ zombie => zombie.mover(personaje)})
+			cantidadZombieGrande.forEach({ zombie => zombie.mover()})
 		}
 	}
 
 	method ataqueZombie() {
 		if (zombies.size() > 0 or cantidadZombieGrande.size() > 0) {
-			zombies.forEach({ zombie => zombie.atacarSoldado()})
-			cantidadZombieGrande.forEach({ zombie => zombie.atacarSoldado()})
+			zombies.forEach({ zombie => zombie.atacar()})
+			cantidadZombieGrande.forEach({ zombie => zombie.atacar()})
 		}
 	}
 

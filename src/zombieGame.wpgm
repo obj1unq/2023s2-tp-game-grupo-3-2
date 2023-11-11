@@ -12,32 +12,32 @@ program zombies {
     game.boardGround("Battleground1.png")
     game.cellSize(30)
     
-    game.addVisual(arma)
-    game.addVisual(soldado)
+    game.addVisual(armaFuego)
+    game.addVisual(mago)
     game.addVisual(corazon)
     game.addVisual(monedero)
    
     
-    game.showAttributes(soldado)
+    game.showAttributes(mago)
     
     
-    keyboard.up().onPressDo({soldado.mover(arriba) })
-    keyboard.down().onPressDo({ soldado.mover(abajo) })
-    keyboard.left().onPressDo({soldado.mover(izquierda ) })
-    keyboard.right().onPressDo ({soldado.mover(derecha) })
+    keyboard.up().onPressDo({mago.mover(arriba) })
+    keyboard.down().onPressDo({ mago.mover(abajo) })
+    keyboard.left().onPressDo({mago.mover(izquierda ) })
+    keyboard.right().onPressDo ({mago.mover(derecha) })
     // Lo saque para probar que agarre las pociones automaticamente, ademas no serviria.
     // keyboard.z().onPressDo({soldado.agarrarElemento()})
-    keyboard.w().onPressDo({arma.generarBalacera(derecha)})
-    keyboard.a().onPressDo({soldado.agarrar()})
+    keyboard.w().onPressDo({armaFuego.generarBalacera(derecha)})
+    keyboard.a().onPressDo({mago.agarrar()})
     
     // Este codigo sirve para cuando esta sobre la moneda y pocion la agarre automaticamente.
-    game.onCollideDo(soldado, { elemento => elemento.contacto(soldado)})
+    game.onCollideDo(mago, { elemento => elemento.contacto(mago) })
     
     game.onTick(700, "HORDA", {ataqueZombie.generarZombiesNormales()})
-    game.onTick(2000, "PERSEGUIR", {ataqueZombie.moverALosZombies(soldado)})
-    game.onTick(2000, "SEGUIR", {ataqueZombie.moverAZombieGrande(soldado)})
-    game.onTick(2000, "MORDER", {ataqueZombie.ataqueZombie()})
-    game.onTick(2000, "ANTIDOTOS", {generadorAntidotos.generarAntidotos()})
+    game.onTick(2000, "PERSEGUIR", {ataqueZombie.moverALosZombies(mago)})
+    game.onTick(2000, "SEGUIR", {ataqueZombie.moverAZombieGrande(mago)})
+    game.onTick(20000, "MORDER", {ataqueZombie.ataqueZombie()})
+    game.onTick(2000, "ANTIDOTOS", {generadorPociones.generarAntidotos()})
     game.onTick(2000, "ZOMBIEGRANDE", {ataqueZombie.generarZombieGrande()} )
     
     game.start()

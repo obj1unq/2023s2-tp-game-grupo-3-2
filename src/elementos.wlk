@@ -3,43 +3,27 @@ import personajePrincipal.*
 import direcciones.*
 import randomizer.*
 
-class Elemento {
-	
-	// cree esta variable para modificar el danio de la bala
-	var property danio = 0 
-	
-	method image()
-
-	method impactoDeBala(elemento) {
-	}
-
-	method usado(personaje) {
-	} // Creo que este metodo ya no sirve porque agarra la pocion solo.
-
-	method contacto(personaje) {
-	// por el momento sirve, a la hora de estar en la misma posicion agarre la moneda.
-	}
-
-	method perderVida(personaje) {
-	}
-
-}
-
-class Pocion inherits Elemento {
+class Pocion {
 
 	var property position
-	var vidaOtorgada = 5 // lo cambie a var para que las otras pociones no den tanta vida.
+	var vidaOtorgada = 5
 
-	override method image() = "pocion_salud.png"
+	method image() = "pocion_salud.png"
 
-	override method contacto(personaje) {
+	method contacto(personaje) {
 		personaje.tomarPocion(self)
-		generadorAntidotos.quitar(self)
+		generadorPociones.quitar(self)
 	}
+
 	// Cada pocion tendra su efecto y por eso se ve asi
-	method efectoPocion(personaje){
+	method efectoPocion(personaje) {
 		personaje.aumentarVida(vidaOtorgada)
 	}
+
+	method impactoDeBala(elemento) {
+	// Sirve para que no salga el mensaje error
+	}
+
 }
 
 class PocionAzul inherits Pocion {
@@ -50,17 +34,18 @@ class PocionAzul inherits Pocion {
 }
 
 class PocionAmarilla inherits Pocion(vidaOtorgada = 1) {
-	
+
 	const danioAdicional = 2
-	
+
 	// Elejir que otorga esta pocion ademas de salud
 	override method image() = "pocion_amarilla.png"
-	
+
 	// Lo mismo sucede aca,solo que da 1 de vida y aumenta el daño.
-	override method efectoPocion(personaje){
+	override method efectoPocion(personaje) {
 		super(personaje)
 		personaje.aumentarDanio(danioAdicional)
 	}
+
 }
 
 object pocionFactory {
@@ -88,22 +73,22 @@ object pocionAmarillaFactory {
 }
 
 // las pociones factory repiten codigo, tratemos de evitar porque a medida que metamos mas cosas se va hacer un choclo.
-object generadorAntidotos {
+object generadorPociones {
 
 	var property pociones = []
 	const cantidadMaxima = 4
-	const pocionesDisponibles = [ pocionFactory, pocionAzulFactory, pocionAmarillaFactory ]
+	const pocionesFactory = [ pocionFactory, pocionAzulFactory, pocionAmarillaFactory ]
 
 	// Esto sirve para que genere nuevas pociones que nosotros definamos.
 	method generarPocion() {
-		return pocionesDisponibles.anyOne()
+		return pocionesFactory.anyOne()
 	}
 
 	method generarAntidotos() {
 		if (pociones.size() < cantidadMaxima) {
-			const antidoto = self.generarPocion().nuevaPocion()
-			game.addVisual(antidoto)
-			pociones.add(antidoto)
+			const pocion = self.generarPocion().nuevaPocion()
+			game.addVisual(pocion)
+			pociones.add(pocion)
 		}
 	}
 
@@ -114,33 +99,27 @@ object generadorAntidotos {
 
 }
 
-object arma inherits Elemento(danio = 2) {
+object armaFuego {
 
+	var danio = 2
 	const maxDanio = 10
 	var property position = game.at(3, 9)
-	const propetario = soldado
+	const propetario = mago
 
-	override method image() = "fire.png"
+	method image() = "fire.png"
 
 	method generarBalacera(direccion) {
-		self.validarEstado(propetario.llevando())
-		const nuevaBala = new Bala(position = self.position().right(1).up(1), imagenDisparo = fireball, danio = danio)
+		propetario.validarBalacera()
+		const nuevaBala = new Fuego(position = self.position().right(1).up(1), imagenDisparo = fireball, danio = danio)
 		nuevaBala.disparar(direccion)
 	}
 
-	method validarEstado(estado) {
-		if (not estado.estaLlevandome()) {
-			self.error("No me esta llevando")
-		}
+	method aumentarSuDanio(_danio) {
+		danio = (danio + _danio).min(maxDanio)
 	}
-	method aumentarSuDanio(_danio){
-		danio += _danio
-		self.validarDanioMax()
-	}
-	method validarDanioMax(){
-		if (danio > maxDanio){
-			danio = maxDanio
-		}
+
+	method contacto(personaje) {
+	// agrege este mensaje por sino sale pantalla de error.
 	}
 
 }
@@ -157,12 +136,11 @@ object llevada {
 		personaje.llevando(cambioEstado)
 	}
 
-	method imagenFuego(arma) {
+	method imagenFuego(arma) { // Hay que cambiar el nombre de este metodo
 		game.removeVisual(arma)
 	}
 
-	method estaLlevandome() {
-		return true
+	method validarBalacera() {
 	}
 
 	method imagenDePersonaje() {
@@ -182,11 +160,7 @@ object libre {
 		personaje.llevando(cambioEstado)
 	}
 
-	method estaLlevandome() {
-		return false
-	}
-
-	method imagenFuego(arma) {
+	method imagenFuego(arma) { // Hay que cambiar el nombre de este metodo
 		game.addVisual(arma)
 	}
 
@@ -194,14 +168,20 @@ object libre {
 		return "mago0"
 	}
 
-}
-// Ahora a la balo le asigno el danio desde el arma, pasando el danio que tiene el arma 
-class Bala inherits Elemento {
+	method validarBalacera() {
+		self.error("No me esta llevando")
+	}
 
+}
+
+// Ahora a la balo le asigno el danio desde el arma, pasando el danio que tiene el arma 
+class Fuego {
+
+	var property danio
 	var property position
 	const property imagenDisparo
 
-	override method image() = imagenDisparo.image()
+	method image() = imagenDisparo.image()
 
 	method disparar(direccion) {
 		game.addVisual(self)
@@ -231,26 +211,33 @@ class Bala inherits Elemento {
 		}
 	}
 
+	method impactoDeBala(elemento) {
+	// Sirve para que no salga el mensaje error
+	}
+
 }
 
-object corazon inherits Elemento {
+object corazon {
 
 	const property position = game.at(1, 0)
 
-	override method image() = "corazon" + soldado.vida().toString() + ".png"
+	method image() = "corazon" + mago.vida().toString() + ".png"
 
 }
 
-class Moneda inherits Elemento {
+class Moneda {
 
 	var property position
 	const property valorMoneda
 
-	override method image() = "moneda.png"
+	method image() = "moneda.png"
 
-	override method contacto(personaje) {
-		personaje.sumarMoneda(valorMoneda)
+	method contacto(personaje) {
 		monedero.removerMoneda(self)
+	}
+
+	method impactoDeBala(elemento) {
+	// Sirve para que no salga el mensaje error
 	}
 
 }
