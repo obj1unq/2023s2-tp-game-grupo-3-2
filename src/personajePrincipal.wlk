@@ -23,7 +23,7 @@ object mago inherits Personaje {
 	}
 
 	override method morir() {
-		game.stop()
+		// game.stop()
 	}
 
 	method tomarPocion(pocion) {

@@ -61,7 +61,7 @@ class Zombie inherits Personaje {
 	}
 }
 
-class ZombieNormal inherits Zombie(danio = 2) {
+class ZombieNormal inherits Zombie(danio = 1,movimiento = movimientoLibre) {
 
 
 	method image() = "esqueleto1.png"
@@ -94,7 +94,7 @@ object ataqueZombie {
 
 	method generarZombiesNormales() {
 		if (zombies.size() < cantidadMaxima) {
-			const nuevoZombi = new ZombieNormal(position = game.at(18, randomizer.yCualquiera()),movimiento = movimientoLibre)
+			const nuevoZombi = new ZombieNormal(position = game.at(18, randomizer.yCualquiera()))
 			game.addVisual(nuevoZombi)
 			zombies.add(nuevoZombi)
 		}
