@@ -268,8 +268,8 @@ class Fuego {
 		self.eliminarDelTablero()
 	}
 
-	method eliminarDelTablero() {
-		if (self.position().x() > 17 or self.position().x() < 1) {
+	method eliminarDelTablero() { // Elimina fuego si supera supera eje X
+		if (self.position().x() > 13 or self.position().x() < 1) { 
 			self.eliminarSiEstoy()
 		}
 	}

@@ -7,10 +7,10 @@ import randomizer.*
 
 program zombies {
     game.title("zombies")
-    game.height(20)
-    game.width(20)
-    game.boardGround("Battleground1.png")
-    game.cellSize(30)
+    game.height(12) 
+    game.width(15)
+    game.boardGround("background600x480_noche.png")
+    game.cellSize(40)
     
     game.addVisual(armaFuego)
     game.addVisual(mago)
