@@ -75,7 +75,7 @@ class ZombieNormal inherits Zombie(danio = 1, movimiento = movimientoLibre) {
 
 }
 
-class ZombieGrande inherits ZombieNormal(position = game.at(17, randomizer.yCualquiera()), vida = 20, movimiento = movimientoVertical) {
+class ZombieGrande inherits ZombieNormal(position = game.at(13, randomizer.yCualquiera()), vida = 20, movimiento = movimientoVertical) {
 
 	override method image() = "mago3.png"
 
@@ -99,7 +99,7 @@ object ataqueZombie {
 
 	method generarZombiesNormales() {
 		if (zombies.size() < cantidadMaxima) {
-			const nuevoZombi = new ZombieNormal(position = game.at(18, randomizer.yCualquiera()))
+			const nuevoZombi = new ZombieNormal(position = game.at(15, randomizer.yCualquiera()))
 			game.addVisual(nuevoZombi)
 			zombies.add(nuevoZombi)
 		}

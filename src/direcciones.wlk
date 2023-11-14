@@ -5,7 +5,7 @@ import elementos.*
 object derecha {
 
 	method siguiente(posicion) {
-		if (posicion.x() < 18) {
+		if (posicion.x() < 14) { // Limite de mapa en eje X
 			return posicion.right(1)
 		} else {
 			return posicion.right(0)
@@ -42,7 +42,7 @@ object abajo {
 object arriba {
 
 	method siguiente(posicion) {
-		if (posicion.y() < 18) {
+		if (posicion.y() < 10) { // Limite de mapa en eje Y
 			return posicion.up(1)
 		} else {
 			return posicion.up(0)
