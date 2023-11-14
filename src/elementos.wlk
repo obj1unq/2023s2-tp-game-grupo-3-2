@@ -172,7 +172,7 @@ object armaFuego {
 
 	method generarBalacera(direccion) {
 		propetario.validarBalacera()
-		const nuevaBala = new Fuego(position = self.position().up(1), imagenDisparo = fireball, danio = danio)
+		const nuevaBala = new Fuego(position = self.position().right(1), imagenDisparo = fireball, danio = danio)
 		nuevaBala.disparar(direccion)
 	}
 
@@ -319,7 +319,7 @@ class Moneda {
 object fireball {
 
 	method image() {
-		return "fireball1.png"
+		return "fireball.png"
 	}
 
 }
