@@ -103,9 +103,13 @@ object generadorPociones {
 class Lanza  {
 	var property danio = 2
     var property position 
+    const maxDanio = 10
     
     method image() = "flecha.png"
     
+    method aumentarSuDanio(_danio) {
+		danio = (danio + _danio).min(maxDanio)
+	}
 	method serLanzada() {
 		game.onTick(300, "lanzar", { self.avanzar(derecha)})
 		game.onCollideDo(self, { zombie => zombie.impactoDeLanza(self)})
@@ -133,6 +137,9 @@ class Lanza  {
 	}
 	method contacto(personaje){
 		
+	}
+	method esUnArma() {
+		return true
 	}
 }
 object generadorLanzas {
@@ -179,6 +186,9 @@ object armaFuego {
     method impactoDeBala(elemento) {
     	
     }
+    method esUnArma() {
+		return true
+	}
 }
 
 object llevada {

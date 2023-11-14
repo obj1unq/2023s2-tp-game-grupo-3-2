@@ -45,7 +45,11 @@ object mago inherits Personaje {
 	}
     
     method cambiarArma() {
-    	 armaDePersonaje = game.uniqueCollider(self)
+    	const objetos = game.colliders(self)
+    	if (not objetos.isEmpty()) {
+    	  armaDePersonaje =	objetos.find({arma => arma.esUnArma()})
+    	}
+    	
     }
     
     method lanzar() {
