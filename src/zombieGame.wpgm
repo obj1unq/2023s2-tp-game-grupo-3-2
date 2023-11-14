@@ -29,6 +29,9 @@ program zombies {
     // keyboard.z().onPressDo({soldado.agarrarElemento()})
     keyboard.w().onPressDo({armaFuego.generarBalacera(derecha)})
     keyboard.a().onPressDo({mago.agarrar()})
+    keyboard.z().onPressDo({mago.lanzar()})
+    keyboard.x().onPressDo({mago.cambiarArma()})
+    
     
     // Este codigo sirve para cuando esta sobre la moneda y pocion la agarre automaticamente.
     game.onCollideDo(mago, { elemento => elemento.contacto(mago) })
@@ -38,6 +41,7 @@ program zombies {
     game.onTick(2000, "SEGUIR", {ataqueZombie.moverAZombieGrande(mago)})
     game.onTick(2000, "MORDER", {ataqueZombie.ataqueZombie()})
     game.onTick(2000, "ANTIDOTOS", {generadorPociones.generarAntidotos()})
+    game.onTick(2000, "LANZAS", {generadorLanzas.generarLanzas()})
     game.onTick(2000, "ZOMBIEGRANDE", {ataqueZombie.generarZombieGrande()} )
     
     game.start()
