@@ -11,7 +11,7 @@ object mago inherits Personaje {
 	var property llevando = libre
 	var property armaDePersonaje = armaFuego
 
-	method image() = llevando.imagenDePersonaje() + ".png"
+	method image() = "mago0.png"//llevando.imagenDePersonaje() + ".png"
 
 	method irA(nuevaPosicion) {
 		position = nuevaPosicion
@@ -23,7 +23,7 @@ object mago inherits Personaje {
 	}
 
 	override method morir() {
-		// game.stop()
+		game.stop()
 	}
 
 	method tomarPocion(pocion) {
@@ -41,9 +41,18 @@ object mago inherits Personaje {
 	method agarrar() {
 		self.validarPosition()
 		llevando.cambiarEstado(self)
-		llevando.imagenFuego(armaDePersonaje)
+		//llevando.imagenFuego(armaDePersonaje)
 	}
-
+    
+    method cambiarArma() {
+    	 armaDePersonaje = game.uniqueCollider(self)
+    }
+    
+    method lanzar() {
+    	self.validarPosition()
+    	llevando.lanzar(self)
+    }
+    
 	method validarPosition() {
 		if (position != armaDePersonaje.position()) {
 			self.error("No estoy donde puedo hacerlo")
@@ -53,6 +62,9 @@ object mago inherits Personaje {
 	method validarBalacera() {
 		llevando.validarBalacera()
 	}
-
+    
+    override method impactoDeLanza(elemento) {
+		
+	}
 }
 

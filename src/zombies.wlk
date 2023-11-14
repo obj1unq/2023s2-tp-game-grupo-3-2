@@ -29,6 +29,10 @@ class Personaje {
 	method contacto(personaje) {
 	// agrege este mensaje por sino sale pantalla de error.
 	}
+	method impactoDeLanza(elemento) {
+		self.perderVida(elemento)
+		game.removeVisual(elemento)
+	}
 
 }
 

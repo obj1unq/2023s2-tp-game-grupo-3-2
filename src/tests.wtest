@@ -38,7 +38,7 @@ describe "test del juego" {
         	assert.equals(game.at(0,0),mago.position())
         }
         test "mago toma pocion de vida " {
-        	soldado.vida(5)
+        	mago.vida(5)
         	assert.throwsException({pocion.contacto(mago)})
         	assert.equals(10, mago.vida() )
         }

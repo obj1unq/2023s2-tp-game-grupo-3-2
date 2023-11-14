@@ -100,6 +100,60 @@ object generadorPociones {
 
 }
 
+class Lanza  {
+	var property danio = 2
+    var property position 
+    
+    method image() = "flecha.png"
+    
+	method serLanzada() {
+		game.onTick(300, "lanzar", { self.avanzar(derecha)})
+		game.onCollideDo(self, { zombie => zombie.impactoDeLanza(self)})
+	}
+  	method avanzar(direccion) {
+		position = direccion.siguiente(self.position())
+		self.eliminarDelTablero()
+	}
+
+	method eliminarDelTablero() {
+		if (self.position().x() > 17 or self.position().x() < 1) {
+			self.eliminarSiEstoy()
+		}
+	}
+
+	method estoyEnElTablero() {
+		return game.hasVisual(self)
+	}
+
+	method eliminarSiEstoy() {
+		if (self.estoyEnElTablero()) {
+			game.removeTickEvent("lanzar")
+			game.removeVisual(self)
+		}
+	}
+	method contacto(personaje){
+		
+	}
+}
+object generadorLanzas {
+
+	var property lanzas = []
+	const cantidadMaxima = 3
+
+	method generarLanzas() {
+		if (lanzas.size() < cantidadMaxima) {
+			const lanza = new Lanza(position= randomizer.position())
+			game.addVisual(lanza)
+			lanzas.add(lanza)
+		}
+	}
+
+	method quitar(elemento) {
+		lanzas.remove(elemento)
+		game.removeVisual(elemento)
+	}
+
+}
 object armaFuego {
 
 	var danio = 2
@@ -111,7 +165,7 @@ object armaFuego {
 
 	method generarBalacera(direccion) {
 		propetario.validarBalacera()
-		const nuevaBala = new Fuego(position = self.position().right(1).up(1), imagenDisparo = fireball, danio = danio)
+		const nuevaBala = new Fuego(position = self.position().up(1), imagenDisparo = fireball, danio = danio)
 		nuevaBala.disparar(direccion)
 	}
 
@@ -122,7 +176,9 @@ object armaFuego {
 	method contacto(personaje) {
 	// agrege este mensaje por sino sale pantalla de error.
 	}
-
+    method impactoDeBala(elemento) {
+    	
+    }
 }
 
 object llevada {
@@ -136,17 +192,21 @@ object llevada {
 	method cambiarEstado(personaje) {
 		personaje.llevando(cambioEstado)
 	}
-
-	method imagenFuego(arma) { // Hay que cambiar el nombre de este metodo
-		game.removeVisual(arma)
+    
+    method lanzar(personaje) {
+		self.cambiarEstado(personaje)
+		personaje.armaDePersonaje().serLanzada()
 	}
+//	method imagenFuego(arma) { // Hay que cambiar el nombre de este metodo
+//		game.removeVisual(arma)
+//	}
 
 	method validarBalacera() {
 	}
 
-	method imagenDePersonaje() {
-		return "mago1"
-	}
+//	method imagenDePersonaje() {
+//		return "mago1"
+//	}
 
 }
 
@@ -160,14 +220,17 @@ object libre {
 	method cambiarEstado(personaje) {
 		personaje.llevando(cambioEstado)
 	}
-
-	method imagenFuego(arma) { // Hay que cambiar el nombre de este metodo
-		game.addVisual(arma)
+    
+    method lanzar(personaje) {
+		personaje.armaDePersonaje().serLanzada()
 	}
+//	method imagenFuego(arma) { // Hay que cambiar el nombre de este metodo
+//		game.addVisual(arma)
+//	}
 
-	method imagenDePersonaje() {
-		return "mago0"
-	}
+//	method imagenDePersonaje() {
+//		return "mago0"
+//	}
 
 	method validarBalacera() {
 		self.error("No me esta llevando")
@@ -186,7 +249,7 @@ class Fuego {
 
 	method disparar(direccion) {
 		game.addVisual(self)
-		game.onTick(300, "disparar", { self.avanzar(direccion)})
+		game.onTick(200, "disparar", { self.avanzar(direccion)})
 		game.onCollideDo(self, { zombie => zombie.impactoDeBala(self)})
 	}
 
