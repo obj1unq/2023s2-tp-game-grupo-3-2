@@ -4,34 +4,35 @@ import direcciones.*
 import zombies.*
 import elementos.*
 import randomizer.*
+import mapa.*
 
 program zombies {
     game.title("zombies")
-    game.height(12) 
-    game.width(15)
-    game.boardGround("background600x480_noche.png")
-    game.cellSize(40)
+    game.height(12) // 12 celdas de alto
+    game.width(15) // 15 celdas de ancho
+    game.cellSize(40) // celdas de 40x40 px
     
-    game.addVisual(armaFuego)
-    game.addVisual(mago)
-    game.addVisual(corazon)
-    game.addVisual(monedero)
-   
-    
-    game.showAttributes(mago)
-    
-    
-    keyboard.up().onPressDo({mago.mover(arriba) })
-    keyboard.down().onPressDo({ mago.mover(abajo) })
-    keyboard.left().onPressDo({mago.mover(izquierda ) })
-    keyboard.right().onPressDo ({mago.mover(derecha) })
-    // Lo saque para probar que agarre las pociones automaticamente, ademas no serviria.
-    // keyboard.z().onPressDo({soldado.agarrarElemento()})
-    keyboard.w().onPressDo({armaFuego.generarBalacera(derecha)})
-    keyboard.a().onPressDo({mago.agarrar()})
-    keyboard.z().onPressDo({mago.lanzar()})
-    keyboard.x().onPressDo({mago.cambiarArma()})
-    
+    // Configuración de teclado inicializar desde Nivel
+	keyboard.up().onPressDo({ mago.mover(arriba)})
+	keyboard.down().onPressDo({ mago.mover(abajo)})
+	keyboard.left().onPressDo({ mago.mover(izquierda)})
+	keyboard.right().onPressDo({ mago.mover(derecha)})
+	keyboard.w().onPressDo({ armaFuego.generarBalacera(derecha)})
+	keyboard.a().onPressDo({ mago.agarrar()})
+	keyboard.z().onPressDo({ mago.lanzar()})
+	keyboard.x().onPressDo({ mago.cambiarArma()})
+	
+	// Objetos visuales y jugables deben iniciar desde Nivel
+	game.addVisual(armaFuego)
+	game.addVisual(mago)
+	game.addVisual(corazon)
+	game.addVisual(monedero)
+	
+	// Muestra los atributos del mago
+	game.showAttributes(mago)
+
+	// Prueba de objetos de mapa - nivel 1
+	nivel1.iniciarNivel()
     
     // Este codigo sirve para cuando esta sobre la moneda y pocion la agarre automaticamente.
     game.onCollideDo(mago, { elemento => elemento.contacto(mago) })

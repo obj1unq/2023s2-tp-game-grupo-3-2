@@ -100,21 +100,24 @@ object generadorPociones {
 
 }
 
-class Lanza  {
+class Lanza {
+
 	var property danio = 2
-    var property position 
-    const maxDanio = 10
-    
-    method image() = "flecha.png"
-    
-    method aumentarSuDanio(_danio) {
+	var property position
+	const maxDanio = 10
+
+	method image() = "flecha.png"
+
+	method aumentarSuDanio(_danio) {
 		danio = (danio + _danio).min(maxDanio)
 	}
+
 	method serLanzada() {
 		game.onTick(300, "lanzar", { self.avanzar(derecha)})
 		game.onCollideDo(self, { zombie => zombie.impactoDeLanza(self)})
 	}
-  	method avanzar(direccion) {
+
+	method avanzar(direccion) {
 		position = direccion.siguiente(self.position())
 		self.eliminarDelTablero()
 	}
@@ -135,13 +138,21 @@ class Lanza  {
 			game.removeVisual(self)
 		}
 	}
-	method contacto(personaje){
-		
+
+	method contacto(personaje) {
+	// Sirve para que no salga el mensaje error
 	}
+
 	method esUnArma() {
 		return true
 	}
+
+	method impactoDeBala(elemento) {
+	// Sirve para que no salga el mensaje error
+	}
+
 }
+
 object generadorLanzas {
 
 	var property lanzas = []
@@ -149,7 +160,7 @@ object generadorLanzas {
 
 	method generarLanzas() {
 		if (lanzas.size() < cantidadMaxima) {
-			const lanza = new Lanza(position= randomizer.position())
+			const lanza = new Lanza(position = randomizer.position())
 			game.addVisual(lanza)
 			lanzas.add(lanza)
 		}
@@ -160,15 +171,19 @@ object generadorLanzas {
 		game.removeVisual(elemento)
 	}
 
+	method contacto(personaje) { // Para que no tire error 
+	}
+
 }
+
 object armaFuego {
 
 	var danio = 2
 	const maxDanio = 10
-	var property position = game.at(3, 9)
+	var property position = game.at(3, 8)
 	const propetario = mago
 
-	method image() = "fire.png"
+	method image() = "poder_fuego.png"
 
 	method generarBalacera(direccion) {
 		propetario.validarBalacera()
@@ -183,12 +198,14 @@ object armaFuego {
 	method contacto(personaje) {
 	// agrege este mensaje por sino sale pantalla de error.
 	}
-    method impactoDeBala(elemento) {
-    	
-    }
-    method esUnArma() {
+
+	method impactoDeBala(elemento) {
+	}
+
+	method esUnArma() {
 		return true
 	}
+
 }
 
 object llevada {
@@ -202,22 +219,21 @@ object llevada {
 	method cambiarEstado(personaje) {
 		personaje.llevando(cambioEstado)
 	}
-    
-    method lanzar(personaje) {
+
+	method lanzar(personaje) {
 		self.cambiarEstado(personaje)
 		personaje.armaDePersonaje().serLanzada()
 	}
+
 //	method imagenFuego(arma) { // Hay que cambiar el nombre de este metodo
 //		game.removeVisual(arma)
 //	}
-
 	method validarBalacera() {
 	}
 
 //	method imagenDePersonaje() {
 //		return "mago1"
 //	}
-
 }
 
 object libre {
@@ -230,18 +246,17 @@ object libre {
 	method cambiarEstado(personaje) {
 		personaje.llevando(cambioEstado)
 	}
-    
-    method lanzar(personaje) {
+
+	method lanzar(personaje) {
 		personaje.armaDePersonaje().serLanzada()
 	}
+
 //	method imagenFuego(arma) { // Hay que cambiar el nombre de este metodo
 //		game.addVisual(arma)
 //	}
-
 //	method imagenDePersonaje() {
 //		return "mago0"
 //	}
-
 	method validarBalacera() {
 		self.error("No me esta llevando")
 	}
@@ -269,7 +284,7 @@ class Fuego {
 	}
 
 	method eliminarDelTablero() { // Elimina fuego si supera supera eje X
-		if (self.position().x() > 13 or self.position().x() < 1) { 
+		if (self.position().x() > 13 or self.position().x() < 1) {
 			self.eliminarSiEstoy()
 		}
 	}
@@ -327,7 +342,7 @@ object fireball {
 object charge {
 
 	method image() {
-		return "charge1.png"
+		return "charge.png"
 	}
 
 }
