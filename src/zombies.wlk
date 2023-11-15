@@ -29,6 +29,7 @@ class Personaje {
 	method contacto(personaje) {
 	// agrege este mensaje por sino sale pantalla de error.
 	}
+
 	method impactoDeLanza(elemento) {
 		self.perderVida(elemento)
 		game.removeVisual(elemento)
@@ -80,7 +81,7 @@ class ZombieGrande inherits ZombieNormal(position = game.at(13, randomizer.yCual
 	override method image() = "mago3.png"
 
 	override method atacar() {
-		const nuevaBala = new Fuego(position = self.position().left(1).up(1), imagenDisparo = charge, danio = danio)
+		const nuevaBala = new Fuego(position = self.position().left(1), imagenDisparo = charge, danio = danio)
 		nuevaBala.disparar(izquierda)
 	}
 
