@@ -84,6 +84,9 @@ class Objeto { // Falta implementar que los objetos sean solidos y no se puedan 
 		game.removeVisual(elemento)
 		game.removeTickEvent("disparar")
 	}
+	method solido() {
+		return true
+	}
 
 }
 

@@ -23,6 +23,9 @@ class Pocion {
 	method impactoDeBala(elemento) {
 	// Sirve para que no salga el mensaje error
 	}
+	method solido() {
+		return false
+	}
 
 }
 
@@ -150,6 +153,9 @@ class Lanza {
 	method impactoDeBala(elemento) {
 	// Sirve para que no salga el mensaje error
 	}
+	method solido() {
+		return false
+	}
 
 }
 
@@ -205,7 +211,9 @@ object armaFuego {
 	method esUnArma() {
 		return true
 	}
-
+    method solido() {
+		return false
+	}
 }
 
 object llevada {
@@ -303,7 +311,9 @@ class Fuego {
 	method impactoDeBala(elemento) {
 	// Sirve para que no salga el mensaje error
 	}
-
+    method solido() {
+		return false
+	}
 }
 
 object corazon {
