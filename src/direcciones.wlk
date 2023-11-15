@@ -120,4 +120,9 @@ object movimientoVertical {
 		}
 	}
 }
-
+object movimientoNulo {
+	method mover(enemigo, personaje) {
+		// literal no hace nada, unicamente sirve para que el enemigo de Soporte este quieto
+		// por el momento lo dejaremos asi.
+	}
+}
