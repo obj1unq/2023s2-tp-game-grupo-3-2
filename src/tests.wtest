@@ -119,6 +119,12 @@ describe "test del juego" {
         	assert.notThat(game.hasVisual(zombie))
         	assert.equals(monedero.monedas() , game.getObjectsIn(game.at(1,2)) )
         }
-        
+        // Proximo a mejorar.
+        test "enemigo soporte, aumentar el dañio y decrese el movimiento"{
+        	zombie.generarOnTicksPerseguir()
+        	zombieSoporte.pruebaAtacar(zombie)
+        	zombieSoporte.pruebaAtacar(zombie)
+        	assert.equals(3,zombie.danio())
+        }
         
 }

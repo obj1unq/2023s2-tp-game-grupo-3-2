@@ -40,10 +40,13 @@ class Personaje {
 class Zombie inherits Personaje {
 
 	var property danio
+	const danioMax = 4
 	var property position
 	const enemigo = mago
 	const property rojo = "FF0000FF" // Color rojo
 	const movimiento
+	var moverActual = 2000
+	const moverMax = 1000
 
 	method text() = self.vida().toString() + "/10"
 
@@ -56,6 +59,7 @@ class Zombie inherits Personaje {
 	override method morir() {
 		self.soltarMoneda()
 		ataqueZombie.quitar(self)
+		game.removeTickEvent("PERSEGUIR" + self.identity())
 	}
 
 	method soltarMoneda() {
@@ -66,6 +70,19 @@ class Zombie inherits Personaje {
 		if (self.position() == enemigo.position()) {
 			enemigo.perderVida(self)
 		}
+	}
+
+	// Cada zombie tiene su propio onTick para moverse,y asi poder modificar.
+	method generarOnTicksPerseguir() {
+		game.onTick(moverActual, "PERSEGUIR" + self.identity(), { self.mover()})
+	}
+
+	// Metodo donde aumenta el movimiento del movimiento.
+	method aumentarMovimientoYAtaque(decreser, _danio) {
+		game.removeTickEvent("PERSEGUIR" + self.identity())
+		const tiempoActual = (moverActual - decreser).max(moverMax)
+		game.onTick(tiempoActual, "PERSEGUIR" + self.identity(), { self.mover()})
+		danio = (danio + _danio).min(danioMax)
 	}
 
 }
@@ -92,8 +109,29 @@ class ZombieGrande inherits ZombieNormal(position = game.at(13, randomizer.yCual
 
 }
 
-object ataqueZombie {
+// Por el momento es unico para probar su funcionamiento
+object zombieSoporte inherits Zombie(position = game.at(10, 10), danio = 1, movimiento = movimientoNulo) {
 
+	const reducirTiempoMovimiento = 100
+	const aumentarDanio = 1
+
+	method image() = "esqueleto2.png"
+
+	// Debe conocer los zombies en el mapa directamente para aplicarle su efecto especial.
+	// No es correcto el usar el metodo ataque pero es algo a mejorar.
+	override method atacar() {
+		ataqueZombie.zombies().forEach({ zombie => zombie.aumentarMovimientoYAtaque(reducirTiempoMovimiento, aumentarDanio)})
+	}
+
+	// Metodo utilizado unicamente en los tests.
+	method pruebaAtacar(enemigo) {
+		enemigo.aumentarMovimientoYAtaque(reducirTiempoMovimiento, aumentarDanio)
+	}
+
+}
+
+object ataqueZombie {
+	 // hay que hacer el que lanza fuego sea un enemigo normal asi tambien sirve el zombieSoporte.
 	var property zombies = []
 	const cantidadMaxima = 3
 	const cantidadZombieGrande = []
@@ -103,27 +141,17 @@ object ataqueZombie {
 			const nuevoZombi = new ZombieNormal(position = game.at(15, randomizer.yCualquiera()))
 			game.addVisual(nuevoZombi)
 			zombies.add(nuevoZombi)
+			nuevoZombi.generarOnTicksPerseguir()
 		}
 	}
-
+	// haciendo que sea un enemigo mas nos ahorramos codigo repitido.
 	method generarZombieGrande() {
 		if (monedero.cantidadMonedas() > 10 and cantidadZombieGrande.size() < 1) {
 			game.removeTickEvent("HORDA")
 			const zombiGrande = new ZombieGrande()
 			game.addVisual(zombiGrande)
 			cantidadZombieGrande.add(zombiGrande)
-		}
-	}
-
-	method moverALosZombies(personaje) {
-		if (zombies.size() > 0) {
-			zombies.forEach({ zombie => zombie.mover()})
-		}
-	}
-
-	method moverAZombieGrande(personaje) {
-		if (cantidadZombieGrande.size() > 0) {
-			cantidadZombieGrande.forEach({ zombie => zombie.mover()})
+			zombiGrande.generarOnTicksPerseguir()
 		}
 	}
 
