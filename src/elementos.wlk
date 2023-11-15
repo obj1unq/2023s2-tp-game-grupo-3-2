@@ -338,7 +338,9 @@ class Moneda {
 	method impactoDeBala(elemento) {
 	// Sirve para que no salga el mensaje error
 	}
-
+    method solido() {
+		return false
+	}
 }
 
 object fireball {

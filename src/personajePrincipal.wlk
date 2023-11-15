@@ -20,9 +20,11 @@ object mago inherits Personaje {
 	}
 
 	method mover(direccion) {
-		self.validarMover(direccion)
-		const proxima = direccion.siguiente(self.position())
-		self.irA(proxima)
+		if (self.sePuedeMover(direccion)) {
+		//self.validarMover(direccion)
+		    const proxima = direccion.siguiente(self.position())
+		   self.irA(proxima)
+		}
 	}
 	method puedeOcupar(posicion) {
 		return tablero.puedeOcupar(posicion)
@@ -60,7 +62,7 @@ object mago inherits Personaje {
     
     method cambiarArma() {
     	const objetos = game.colliders(self)
-    	if (not objetos.isEmpty()) {
+    	if (not objetos.isEmpty() and objetos.all({o => o.esUnArma()}) ) {
     	  armaDePersonaje =	objetos.find({arma => arma.esUnArma()})
     	}
     	

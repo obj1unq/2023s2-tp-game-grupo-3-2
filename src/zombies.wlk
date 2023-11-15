@@ -34,7 +34,9 @@ class Personaje {
 		self.perderVida(elemento)
 		game.removeVisual(elemento)
 	}
-
+    method solido() {
+		return false
+	}
 }
 
 class Zombie inherits Personaje {
@@ -83,6 +85,9 @@ class Zombie inherits Personaje {
 		const tiempoActual = (moverActual - decreser).max(moverMax)
 		game.onTick(tiempoActual, "PERSEGUIR" + self.identity(), { self.mover()})
 		danio = (danio + _danio).min(danioMax)
+	}
+	method esUnArma() {
+		return false
 	}
 
 }
