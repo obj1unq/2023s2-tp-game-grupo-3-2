@@ -5,12 +5,13 @@ import zombies.*
 import elementos.*
 import randomizer.*
 import mapa.*
-
+import nivel.*
 program zombies {
     game.title("zombies")
     game.height(12) // 12 celdas de alto
     game.width(15) // 15 celdas de ancho
     game.cellSize(40) // celdas de 40x40 px
+    game.boardGround("background600x480_noche.png")
     
     // Configuración de teclado inicializar desde Nivel
 	keyboard.up().onPressDo({ mago.mover(arriba)})
@@ -33,7 +34,8 @@ program zombies {
 	game.showAttributes(mago)
 
 	// Prueba de objetos de mapa - nivel 1
-	nivel1.iniciarNivel()
+	//nivel1.iniciarNivel()
+	mapa.generar()
     
     // Este codigo sirve para cuando esta sobre la moneda y pocion la agarre automaticamente.
     game.onCollideDo(mago, { elemento => elemento.contacto(mago) })

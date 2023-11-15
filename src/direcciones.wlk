@@ -126,3 +126,16 @@ object movimientoNulo {
 		// por el momento lo dejaremos asi.
 	}
 }
+object tablero {
+	method pertenece(position) {
+		return position.x().between(0, game.width() - 1) and
+		       position.y().between(0, game.height() - 1)
+	}
+	
+	method puedeOcupar(position) {
+		return self.pertenece(position) and not self.haySolido(position)
+	}
+	method haySolido(position) {
+		return game.getObjectsIn(position).any({elemento => elemento.solido()}) 
+	}
+}

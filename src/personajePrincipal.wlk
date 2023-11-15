@@ -3,6 +3,7 @@ import direcciones.*
 import elementos.*
 import zombies.*
 import randomizer.*
+import nivel.*
 
 object mago inherits Personaje {
 
@@ -19,9 +20,22 @@ object mago inherits Personaje {
 	}
 
 	method mover(direccion) {
-		self.irA(direccion.siguiente(self.position()))
+		self.validarMover(direccion)
+		const proxima = direccion.siguiente(self.position())
+		self.irA(proxima)
 	}
-
+	method puedeOcupar(posicion) {
+		return tablero.puedeOcupar(posicion)
+	}
+    method sePuedeMover(direccion) {
+    	const proxima = direccion.siguiente(self.position())
+    	return self.puedeOcupar(proxima)
+    }
+    method validarMover(direccion) {
+    	if(not self.sePuedeMover(direccion) ) {
+    		self.error("no puedo ir ahi")
+    	}
+    }
 	override method morir() {
 		game.stop()
 	}
