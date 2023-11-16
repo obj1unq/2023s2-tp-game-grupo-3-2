@@ -28,7 +28,7 @@ program zombies {
 	game.addVisual(mago)
 	game.addVisual(corazon)
 	game.addVisual(monedero)
-	game.addVisual(zombieSoporte) // Como es solo, lo llamo directo desde aca.
+	
 	
 	// Muestra los atributos del mago
 	game.showAttributes(mago)
@@ -40,13 +40,11 @@ program zombies {
     // Este codigo sirve para cuando esta sobre la moneda y pocion la agarre automaticamente.
     game.onCollideDo(mago, { elemento => elemento.contacto(mago) })
     game.onTick(700, "arma", {mago.cambiarArma()})
-    game.onTick(700, "HORDA", {ataqueZombie.generarZombiesNormales()})
-	// este onTick es unicamente para el zombieSoporte, mas adelante se cambiara.
-    game.onTick(3000, "SOPORTE", {zombieSoporte.atacar()})
-    game.onTick(2000, "MORDER", {ataqueZombie.ataqueZombie()})
-    game.onTick(2000, "ANTIDOTOS", {generadorPociones.generarAntidotos()})
+    game.onTick(700, "HORDA", {administradorEnemigos.generarEnemigos()})
+    game.onTick(2000, "MORDER", {administradorEnemigos.ataqueEnemigo()})
+    game.onTick(2000, "ANTIDOTOS", {administradorPociones.generarPociones()})
     game.onTick(2000, "LANZAS", {generadorLanzas.generarLanzas()})
-    game.onTick(2000, "ZOMBIEGRANDE", {ataqueZombie.generarZombieGrande()} )
+
     
     game.start()
 }

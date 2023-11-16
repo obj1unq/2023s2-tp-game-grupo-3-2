@@ -6,55 +6,48 @@ import randomizer.*
 class Pocion {
 
 	var property position
-	var vidaOtorgada = 5
+	var vidaOtorgada 
+	const imagenPocion  // ahora le pasamos la imagen por parametro
+	const danioAdicional = 0 
 
-	method image() = "pocion_salud.png"
+	method image() = imagenPocion
 
 	method contacto(personaje) {
 		personaje.tomarPocion(self)
-		generadorPociones.quitar(self)
+		administradorPociones.quitar(self)
 	}
 
-	// Cada pocion tendra su efecto y por eso se ve asi
+	// Cada pocion pasara los valores que le asignemos nosotros.
 	method efectoPocion(personaje) {
 		personaje.aumentarVida(vidaOtorgada)
+		personaje.aumentarDanio(danioAdicional)
 	}
 
 	method impactoDeBala(elemento) {
 	// Sirve para que no salga el mensaje error
 	}
+
 	method solido() {
 		return false
 	}
 
 }
 
-class PocionAzul inherits Pocion {
-
-	// Elejir que otorga esta pocion ademas de salud
-	override method image() = "pocion_azul.png"
-
+class PocionRoja inherits Pocion(imagenPocion = "pocion_salud.png",vidaOtorgada = 5){
+	// Pocion de salud 	
+}
+class PocionAzul inherits Pocion(imagenPocion = "pocion_azul.png", vidaOtorgada = 3) {
+	// Pocion de ... (hay que proveerle algo)
 }
 
-class PocionAmarilla inherits Pocion(vidaOtorgada = 1) {
-
-	const danioAdicional = 2
-
-	// Elejir que otorga esta pocion ademas de salud
-	override method image() = "pocion_amarilla.png"
-
-	// Lo mismo sucede aca,solo que da 1 de vida y aumenta el daño.
-	override method efectoPocion(personaje) {
-		super(personaje)
-		personaje.aumentarDanio(danioAdicional)
-	}
-
+class PocionAmarilla inherits Pocion(imagenPocion = "pocion_amarilla.png", vidaOtorgada = 1, danioAdicional = 2) {
+	// Pocion de daño
 }
 
-object pocionFactory {
+object pocionRojaFactory {
 
 	method nuevaPocion() {
-		return new Pocion(position = randomizer.position())
+		return new PocionRoja(position = randomizer.position())
 	}
 
 }
@@ -76,21 +69,21 @@ object pocionAmarillaFactory {
 }
 
 // las pociones factory repiten codigo, tratemos de evitar porque a medida que metamos mas cosas se va hacer un choclo.
-object generadorPociones {
+object administradorPociones {
 
 	var property pociones = []
 	const cantidadMaxima = 4
-	// Esto el profe me dijo que tengo q modifircarlo,tengo q consultar otra vez
-	const pocionesFactory = [ pocionFactory, pocionAzulFactory, pocionAmarillaFactory ]
+	
+	const pocionesFactory = [ pocionRojaFactory, pocionAzulFactory, pocionAmarillaFactory ]
 
 	// Esto sirve para que genere nuevas pociones que nosotros definamos.
 	method generarPocion() {
-		return pocionesFactory.anyOne()
+		return pocionesFactory.anyOne().nuevaPocion()
 	}
 
-	method generarAntidotos() {
+	method generarPociones() {
 		if (pociones.size() < cantidadMaxima) {
-			const pocion = self.generarPocion().nuevaPocion()
+			const pocion = self.generarPocion()
 			game.addVisual(pocion)
 			pociones.add(pocion)
 		}
@@ -153,6 +146,7 @@ class Lanza {
 	method impactoDeBala(elemento) {
 	// Sirve para que no salga el mensaje error
 	}
+
 	method solido() {
 		return false
 	}
@@ -211,9 +205,11 @@ object armaFuego {
 	method esUnArma() {
 		return true
 	}
-    method solido() {
+
+	method solido() {
 		return false
 	}
+
 }
 
 object llevada {
@@ -271,7 +267,7 @@ object libre {
 
 }
 
-// Ahora a la balo le asigno el danio desde el arma, pasando el danio que tiene el arma 
+// Ahora a la bala le asigno el danio desde el arma, pasando el danio que tiene el arma 
 class Fuego {
 
 	var property danio
@@ -311,9 +307,11 @@ class Fuego {
 	method impactoDeBala(elemento) {
 	// Sirve para que no salga el mensaje error
 	}
-    method solido() {
+
+	method solido() {
 		return false
 	}
+
 }
 
 object corazon {
@@ -338,9 +336,11 @@ class Moneda {
 	method impactoDeBala(elemento) {
 	// Sirve para que no salga el mensaje error
 	}
-    method solido() {
+
+	method solido() {
 		return false
 	}
+
 }
 
 object fireball {
