@@ -7,10 +7,11 @@ import direcciones.*
 
 describe "test del juego" {	
 	
-		const zombie = new ZombieNormal (position=game.at(1,2))
-	    const enemigoFinal = new ZombieGrande(position=game.at(17,2))
-	    const pocion = new Pocion(position=game.at(1,2))
-	    const moneda = new Moneda(position=game.at(1,2),valorMoneda =1)
+		const zombie = new EnemigoNormal (position=game.at(1,2))
+	    const enemigoFinal = new EnemigoMago(position=game.at(17,2))
+	    const enemigoSoporte = new EnemigoSoporte(position = game.at(10,10))
+	    const pocion = new PocionRoja(position=game.at(1,2))
+	    //const moneda = new Moneda(position=game.at(1,2),valorMoneda =1)
 	    const proyectil = new Fuego(position=game.at(1,2), imagenDisparo="fireball1.png",danio = 2 )
 	    
         test "movimientos del mago" {
@@ -122,9 +123,14 @@ describe "test del juego" {
         // Proximo a mejorar.
         test "enemigo soporte, aumentar el dañio y decrese el movimiento"{
         	zombie.generarOnTicksPerseguir()
-        	zombieSoporte.pruebaAtacar(zombie)
-        	zombieSoporte.pruebaAtacar(zombie)
+        	enemigoFinal.generarOnTicksPerseguir()
+        	enemigoSoporte.pruebaAtacar(zombie)
+        	enemigoSoporte.pruebaAtacar(zombie)
+        	enemigoSoporte.pruebaAtacar(enemigoFinal)
+        	enemigoSoporte.pruebaAtacar(enemigoFinal)
         	assert.equals(3,zombie.danio())
+        	assert.equals(4,enemigoFinal.danio())
+        	
         }
         
 }
