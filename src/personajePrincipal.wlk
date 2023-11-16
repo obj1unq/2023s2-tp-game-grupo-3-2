@@ -3,7 +3,7 @@ import direcciones.*
 import elementos.*
 import zombies.*
 import randomizer.*
-import nivel.*
+import mapa.*
 
 object mago inherits Personaje {
 

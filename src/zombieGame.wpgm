@@ -4,24 +4,15 @@ import direcciones.*
 import zombies.*
 import elementos.*
 import randomizer.*
-import mapa.*
 import nivel.*
+import mapa.*
 program zombies {
     game.title("zombies")
     game.height(12) // 12 celdas de alto
     game.width(15) // 15 celdas de ancho
     game.cellSize(40) // celdas de 40x40 px
-    game.boardGround("background600x480_noche.png")
+//    game.boardGround("background600x480_noche.png")
     
-    // Configuración de teclado inicializar desde Nivel
-	keyboard.up().onPressDo({ mago.mover(arriba)})
-	keyboard.down().onPressDo({ mago.mover(abajo)})
-	keyboard.left().onPressDo({ mago.mover(izquierda)})
-	keyboard.right().onPressDo({ mago.mover(derecha)})
-	keyboard.w().onPressDo({ armaFuego.generarBalacera(derecha)})
-	keyboard.a().onPressDo({ mago.agarrar()})
-	keyboard.z().onPressDo({ mago.lanzar()})
-	keyboard.x().onPressDo({ mago.cambiarArma()})
 	
 	// Objetos visuales y jugables deben iniciar desde Nivel
 	game.addVisual(armaFuego)
@@ -33,9 +24,11 @@ program zombies {
 	// Muestra los atributos del mago
 	game.showAttributes(mago)
 
-	// Prueba de objetos de mapa - nivel 1
-	//nivel1.iniciarNivel()
-	mapa.generar()
+	// Instanciar primer nivel y ejecutarlo
+	const primerNivel = new Nivel(mapa = mapaNivel1, imagenFondo = "background600x480_noche.png")
+	primerNivel.iniciarNivel()
+	
+	//mapaNivel1.generar()
     
     // Este codigo sirve para cuando esta sobre la moneda y pocion la agarre automaticamente.
     game.onCollideDo(mago, { elemento => elemento.contacto(mago) })
