@@ -4,127 +4,116 @@ import direcciones.*
 import zombies.*
 import elementos.*
 import randomizer.*
+import nivel.*
 
-class Nivel {
+class Mapa {
 
-// Clase para crear mas de un nivel	
-	method configuracionTeclado() { // Configuración de teclado
+	const property celdas
+
+	method generar() {
+		game.width(celdas.anyOne().size())
+		game.height(celdas.size())
+		(0 .. game.width() - 1).forEach({ x => (0 .. game.height() - 1).forEach({ y => self.generarCelda(x, y)})})
 	}
 
-	method objetosVisualesExtra() {
-	}
-
-	method iniciarNivel() { // metodo para iniciar nivel desde main
-		self.imagenDeFondo()
-		self.instanciarObjetosFijos()
-		self.configuracionTeclado()
-		self.objetosVisualesExtra()
-	}
-
-	method instanciarObjetosFijos() // instanciar objetos fijos 
-
-	method imagenDeFondo()
-
-}
-
-object nivel1 inherits Nivel {
-
-	override method instanciarObjetosFijos() {
-		game.addVisual(new ArbolQuemado(position = game.at(0, 11)))
-		game.addVisual(new ArbolQuemado(position = game.at(1, 11)))
-		game.addVisual(new ArbolQuemado(position = game.at(2, 11)))
-		game.addVisual(new ArbolQuemado(position = game.at(3, 11)))
-		game.addVisual(new ArbolQuemado(position = game.at(4, 11)))
-		game.addVisual(new ArbolQuemado(position = game.at(5, 11)))
-		game.addVisual(new ArbolQuemado(position = game.at(6, 11)))
-		game.addVisual(new ArbolQuemado(position = game.at(7, 11)))
-		game.addVisual(new ArbolQuemado(position = game.at(8, 11)))
-		game.addVisual(new ArbolQuemado(position = game.at(9, 11)))
-		game.addVisual(new ArbolQuemado(position = game.at(10, 11)))
-		game.addVisual(new ArbolQuemado(position = game.at(11, 11)))
-		game.addVisual(new ArbolQuemado(position = game.at(12, 11)))
-		game.addVisual(new ArbolQuemado(position = game.at(13, 11)))
-		game.addVisual(new ArbolQuemado(position = game.at(14, 11)))
-		game.addVisual(new ArbolQuemado(position = game.at(15, 11)))
-		game.addVisual(new ArbolNormal(position = game.at(12, 4)))
-		game.addVisual(new ArbolCortado(position = game.at(9, 9)))
-		game.addVisual(new Roca(position = game.at(7, 7), numeroRoca = 1))
-		game.addVisual(new Roca(position = game.at(5, 3), numeroRoca = 2))
-		game.addVisual(cueva)
-		game.addVisual(totem)
-	}
-
-	override method imagenDeFondo() {
-		game.boardGround("background600x480_noche.png")
+	method generarCelda(x, y) {
+		const celda = celdas.get(y).get(x)
+		celda.generar(game.at(x, y))
 	}
 
 }
 
-object nivel2 inherits Nivel {
-
-	// Siguiente nivel
-	override method instanciarObjetosFijos() {
-	}
-
-	override method imagenDeFondo() {
-	}
+object mapaNivel1 inherits Mapa(celdas = [ 
+		[a,a,a,a,a,a,a,a,a,a,a,a,a,a,a],
+		[_,_,_,_,_,_,_,_,_,_,_,_,_,_,_],
+		[_,_,_,t,_,a,_,_,_,_,_,_,_,c,_],
+		[_,_,_,_,_,_,_,_,_,_,_,_,_,_,_],
+		[_,_,_,_,_,_,_,_,_,_,_,_,_,_,_],
+		[_,_,_,_,_,_,_,_,_,_,_,_,_,_,_],
+		[_,_,_,_,_,_,_,_,r,_,_,_,_,_,_],
+		[_,_,_,_,_,_,_,_,_,_,_,_,_,_,_],
+		[_,_,_,r,_,_,_,_,_,_,_,_,_,_,_],
+		[_,_,_,_,_,_,_,_,_,_,_,_,_,_,_],
+		[_,_,m,_,_,_,_,_,_,_,_,_,_,_,_],
+		[_,_,_,_,_,_,_,_,_,_,_,_,_,_,_]
+	].reverse()) {
 
 }
 
-class Objeto { // Falta implementar que los objetos sean solidos y no se puedan atravesar 
+class Objeto {
 
 	const property position
+	const property image
 
-	method image()
-
-	method contacto(personaje) { // Para que no tire error 
+	method contacto(personaje) {
 	}
 
 	method impactoDeBala(elemento) { // Elimina imagen y evento de disparo si colisiona con objeto
 		game.removeVisual(elemento)
 		game.removeTickEvent("disparar")
 	}
+
 	method solido() {
 		return true
 	}
 
 }
 
-class ArbolQuemado inherits Objeto {
+object _ {
 
-	override method image() = "arbol_quemado.png"
-
-}
-
-class ArbolNormal inherits Objeto {
-
-	override method image() = "arbol_normal.png"
+	method generar(position) {
+	}
 
 }
 
-class ArbolCortado inherits Objeto {
+object m { // Personaje principal
 
-	override method image() = "arbol_cortado.png"
-
-}
-
-class Roca inherits Objeto {
-
-	const property numeroRoca
-
-	override method image() = "roca" + numeroRoca.toString() + ".png"
+	method generar(position) {
+		mago.position(position)
+	}
 
 }
 
-object cueva inherits Objeto(position = game.at(13, 9)) { // Puede ser una cueva/castillo - Colisionar y pasar al siguiente nivel 
+object a { // Arbol
 
-	override method image() = "cueva.png"
+	method generar(position) {
+		game.addVisual(new Objeto(position = position, image = "arbol_quemado.png"))
+	}
 
 }
 
-object totem inherits Objeto(position = game.at(3, 9)) {
+object r { // Roca
 
-	override method image() = "totem.png"
+	method generar(position) {
+		game.addVisual(new Objeto(position = position, image = "roca1.png"))
+	}
+
+}
+
+object f { // Arma tipo fuego
+
+	method generar(position) {
+		game.addVisual(armaFuego)
+	}
+
+}
+
+object c { // Cueva (cambiar por castillo)
+
+	method generar(position) {
+		game.addVisual(new Objeto(position = position, image = "cueva.png"))
+	}
+
+	method pasarNivel() {
+	} // crear metodo para pasar de nivel cuando se cumpla el objetivo de monedas y colisione con objeto
+
+}
+
+object t {
+
+	method generar(position) {
+		game.addVisual(new Objeto(position = position, image = "totem.png"))
+	}
 
 }
 
