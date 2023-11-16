@@ -38,22 +38,4 @@ class Nivel {
 
 }
 
-class Objeto { // Falta implementar que los objetos sean solidos y no se puedan atravesar 
-
-	const property position
-	const property image
-
-	method contacto(personaje) { // Para que no tire error 
-	}
-
-	method impactoDeBala(elemento) { // Elimina imagen y evento de disparo si colisiona con objeto
-		game.removeVisual(elemento)
-		game.removeTickEvent("disparar")
-	}
-
-	method solido() {
-		return true
-	}
-
-}
 

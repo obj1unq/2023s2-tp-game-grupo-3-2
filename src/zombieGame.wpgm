@@ -6,13 +6,14 @@ import elementos.*
 import randomizer.*
 import nivel.*
 import mapa.*
+
 program zombies {
+	
     game.title("zombies")
     game.height(12) // 12 celdas de alto
     game.width(15) // 15 celdas de ancho
     game.cellSize(40) // celdas de 40x40 px
-//    game.boardGround("background600x480_noche.png")
-    
+
 	
 	// Objetos visuales y jugables deben iniciar desde Nivel
 	game.addVisual(armaFuego)
