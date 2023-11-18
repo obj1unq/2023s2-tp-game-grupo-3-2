@@ -3,6 +3,7 @@ import personajePrincipal.*
 import direcciones.*
 import zombies.*
 import elementos.*
+import armas.*
 import randomizer.*
 import mapa.*
 

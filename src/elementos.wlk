@@ -98,7 +98,7 @@ object administradorPociones {
 
 class Lanza {
 
-	var property danio = 2
+	var property danio = 5
 	var property position
 	const maxDanio = 10
 
@@ -210,13 +210,14 @@ object armaFuego {
 	method solido() {
 		return false
 	}
+	/*
 	method validarBalacera() {
 		propetario.validarBalacera()
 		if (propetario.armaDePersonaje() != self) {
 			self.error("No me esta llevando")
 		}
 		
-	}
+	} */
 
 }
 
