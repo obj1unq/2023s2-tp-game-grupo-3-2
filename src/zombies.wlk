@@ -49,7 +49,7 @@ class Enemigo inherits Personaje {
 	var property position
 	const enemigo = mago
 	const property rojo = "FF0000FF" // Color rojo
-	const movimiento
+	var property movimiento // para que cambie la inteligencia del movimiento.
 	var moverActual = 2000
 	const moverMax = 1000
 
@@ -96,7 +96,7 @@ class Enemigo inherits Personaje {
 
 }
 
-class EnemigoNormal inherits Enemigo(danio = 1, movimiento = movimientoLibre) {
+class EnemigoNormal inherits Enemigo(danio = 1, movimiento = new MovimientoLibreX()) {
 
 	method image() = "esqueleto1.png"
 
@@ -166,7 +166,7 @@ object administradorEnemigos {
 	// enemigos con cierta probabilidad, ya que el soperte y el mago son dificiles.
 	method ramdomFactoryEnemigo() {
 		const x = (1..100).anyOne() 
-		return if (x < 80 ) {	// un 80% de que sea normal
+		return if (x < 100 ) {	// un 80% de que sea normal
 			enemigoNormalFactory
 		} else if (x < 95) {	// un 15% de que sea mago
 			enemigoMagoFactory
