@@ -2,6 +2,7 @@ import wollok.game.*
 import personajePrincipal.*
 import direcciones.*
 import elementos.*
+import armas.*
 import randomizer.*
 
 class Personaje {

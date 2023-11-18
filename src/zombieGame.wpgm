@@ -4,6 +4,7 @@ import direcciones.*
 import zombies.*
 import elementos.*
 import randomizer.*
+import armas.*
 import nivel.*
 import mapa.*
 

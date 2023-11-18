@@ -3,6 +3,7 @@ import direcciones.*
 import elementos.*
 import zombies.*
 import randomizer.*
+import armas.*
 import mapa.*
 
 object mago inherits Personaje {
@@ -82,7 +83,10 @@ object mago inherits Personaje {
 	method validarBalacera() {
 		llevando.validarBalacera()
 	}
-    
+    method tirarHechizo(){
+    	self.validarBalacera()
+    	armaDePersonaje.generarBalacera(derecha)
+    }
     override method impactoDeLanza(elemento) {
 		
 	}

@@ -4,6 +4,7 @@ import personajePrincipal.*
 import randomizer.*
 import wollok.game.*
 import direcciones.*
+import armas.*
 
 describe "test del juego" {	
 	
