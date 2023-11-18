@@ -82,7 +82,10 @@ object mago inherits Personaje {
 	method validarBalacera() {
 		llevando.validarBalacera()
 	}
-    
+    method tirarHechizo(){
+    	self.validarBalacera()
+    	armaDePersonaje.generarBalacera(derecha)
+    }
     override method impactoDeLanza(elemento) {
 		
 	}

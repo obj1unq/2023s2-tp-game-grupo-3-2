@@ -16,7 +16,7 @@ class Nivel {
 		keyboard.down().onPressDo({ mago.mover(abajo)})
 		keyboard.left().onPressDo({ mago.mover(izquierda)})
 		keyboard.right().onPressDo({ mago.mover(derecha)})
-		keyboard.w().onPressDo({ armaFuego.generarBalacera(derecha)})
+		keyboard.w().onPressDo({ mago.tirarHechizo()})
 		keyboard.a().onPressDo({ mago.agarrar()})
 		keyboard.z().onPressDo({ mago.lanzar()})
 		keyboard.x().onPressDo({ mago.cambiarArma()})

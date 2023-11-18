@@ -187,7 +187,7 @@ object armaFuego {
 
 	method generarBalacera(direccion) {
 		//propetario.validarBalacera()
-		self.validarBalacera()
+		//self.validarBalacera()
 		const nuevaBala = new Fuego(position = self.position().right(1), imagenDisparo = fireball, danio = danio)
 		nuevaBala.disparar(direccion)
 	}
