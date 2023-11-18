@@ -78,7 +78,7 @@ object mago inherits Personaje {
 			self.error("No estoy donde puedo hacerlo")
 		}
 	}
-
+    
 	method validarBalacera() {
 		llevando.validarBalacera()
 	}

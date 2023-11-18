@@ -186,7 +186,8 @@ object armaFuego {
 	method image() = "poder_fuego.png"
 
 	method generarBalacera(direccion) {
-		propetario.validarBalacera()
+		//propetario.validarBalacera()
+		self.validarBalacera()
 		const nuevaBala = new Fuego(position = self.position().right(1), imagenDisparo = fireball, danio = danio)
 		nuevaBala.disparar(direccion)
 	}
@@ -208,6 +209,13 @@ object armaFuego {
 
 	method solido() {
 		return false
+	}
+	method validarBalacera() {
+		propetario.validarBalacera()
+		if (propetario.armaDePersonaje() != self) {
+			self.error("No me esta llevando")
+		}
+		
 	}
 
 }
@@ -238,6 +246,9 @@ object llevada {
 //	method imagenDePersonaje() {
 //		return "mago1"
 //	}
+    method poseeArma() {
+    	return true
+    }
 }
 
 object libre {
@@ -264,7 +275,9 @@ object libre {
 	method validarBalacera() {
 		self.error("No me esta llevando")
 	}
-
+    method poseeArma() {
+    	return false
+    }
 }
 
 // Ahora a la bala le asigno el danio desde el arma, pasando el danio que tiene el arma 
@@ -311,7 +324,10 @@ class Fuego {
 	method solido() {
 		return false
 	}
-
+    method contacto(personaje) {
+		
+	}
+    
 }
 
 object corazon {
