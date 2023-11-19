@@ -13,7 +13,7 @@ object mago inherits Personaje {
 	var property llevando = libre
 	var property armaDePersonaje = armaFuego
 
-	method image() = llevando.imagenDePersonaje() + ".png"
+	method image() = llevando.imagenDePersonaje(armaDePersonaje)
 
 	method irA(nuevaPosicion) {
 		position = nuevaPosicion

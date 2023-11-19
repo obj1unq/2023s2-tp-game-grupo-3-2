@@ -105,7 +105,7 @@ class Lanza {
 	var property position
 	const maxDanio = 10
 
-	method image() = "flecha.png"
+	method image() = "lanza.png"
 
 	method aumentarSuDanio(_danio) {
 		danio = (danio + _danio).min(maxDanio)
@@ -152,6 +152,10 @@ class Lanza {
 
 	method solido() {
 		return false
+	}
+
+	method imagenMagoConArma() {
+		return "mago_lanza.png"
 	}
 
 }
@@ -214,6 +218,10 @@ object armaFuego {
 		return false
 	}
 
+	method imagenMagoConArma() {
+		return "mago_fuego.png"
+	}
+
 /*
  * method validarBalacera() {
  * 	propetario.validarBalacera()
@@ -248,8 +256,8 @@ object llevada {
 	method validarBalacera() {
 	}
 
-	method imagenDePersonaje() { // Modificar imagenes para fuego o lanza
-		return "mago1"
+	method imagenDePersonaje(arma) { // Modificar imagenes para fuego o lanza
+		return arma.imagenMagoConArma()
 	}
 
 	method poseeArma() {
@@ -277,8 +285,8 @@ object libre {
 		game.addVisual(arma)
 	}
 
-	method imagenDePersonaje() {
-		return "mago0"
+	method imagenDePersonaje(arma) {
+		return "mago0.png"
 	}
 
 	method validarBalacera() {
