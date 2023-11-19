@@ -26,14 +26,14 @@ class Mapa {
 object mapaNivel1 inherits Mapa(celdas = [ 
 		[a,a,a,a,a,a,a,a,a,a,a,a,a,a,a],
 		[_,_,_,_,_,_,_,_,_,_,_,_,_,_,_],
-		[_,_,_,t,_,a,_,_,_,_,_,_,_,c,_],
+		[_,_,_,t,_,_,n,_,_,_,_,_,_,c,_],
+		[_,_,_,_,_,_,_,_,_,e,_,_,_,_,_],
 		[_,_,_,_,_,_,_,_,_,_,_,_,_,_,_],
-		[_,_,_,_,_,_,_,_,_,_,_,_,_,_,_],
-		[_,_,_,_,_,_,_,_,_,_,_,_,_,_,_],
-		[_,_,_,_,_,_,_,_,r,_,_,_,_,_,_],
+		[_,_,e,_,_,e,_,_,_,_,_,_,n,_,_],
+		[_,_,_,_,_,_,_,_,y,_,_,_,_,_,_],
 		[_,_,_,_,_,_,_,_,_,_,_,_,_,_,_],
 		[_,_,_,r,_,_,_,_,_,_,_,_,_,_,_],
-		[_,_,_,_,_,_,_,_,_,_,_,_,_,_,_],
+		[_,_,_,_,_,_,_,_,_,n,_,_,_,r,_],
 		[_,_,m,_,_,_,_,_,_,_,_,_,_,_,_],
 		[_,_,_,_,_,_,_,_,_,_,_,_,_,_,_]
 	].reverse()) {
@@ -74,7 +74,7 @@ object m { // Personaje principal
 
 }
 
-object a { // Arbol
+object a { // Arbol quemado
 
 	method generar(position) {
 		game.addVisual(new Objeto(position = position, image = "arbol_quemado.png"))
@@ -82,10 +82,34 @@ object a { // Arbol
 
 }
 
-object r { // Roca
+object n { // Arbol normal
+
+	method generar(position) {
+		game.addVisual(new Objeto(position = position, image = "arbol_normal.png"))
+	}
+
+}
+
+object e { // Arbol cortado
+
+	method generar(position) {
+		game.addVisual(new Objeto(position = position, image = "arbol_cortado.png"))
+	}
+
+}
+
+object r { // Roca 1
 
 	method generar(position) {
 		game.addVisual(new Objeto(position = position, image = "roca1.png"))
+	}
+
+}
+
+object y { // Roca 2
+
+	method generar(position) {
+		game.addVisual(new Objeto(position = position, image = "roca2.png"))
 	}
 
 }
