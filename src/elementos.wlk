@@ -101,7 +101,7 @@ object administradorPociones {
 
 class Lanza {
 
-	var property danio = 5
+	var property danio = 8
 	var property position
 	const maxDanio = 10
 
@@ -112,7 +112,7 @@ class Lanza {
 	}
 
 	method serLanzada() {
-		game.onTick(300, "lanzar", { self.avanzar(derecha)})
+		game.onTick(100, "lanzar", { self.avanzar(derecha)})
 		game.onCollideDo(self, { zombie => zombie.impactoDeLanza(self)})
 	}
 
@@ -154,8 +154,7 @@ class Lanza {
 		return false
 	}
 
-	method imagenMagoConArma() {
-		return "mago_lanza.png"
+	method cambioVisualArma(llevando) {
 	}
 
 }
@@ -218,8 +217,12 @@ object armaFuego {
 		return false
 	}
 
-	method imagenMagoConArma() {
-		return "mago_fuego.png"
+	method cambioVisualArma(llevando) {
+		if (self.siAgarroArmaDeFuego(llevando)) game.removeVisual(self) else game.addVisual(self)
+	}
+
+	method siAgarroArmaDeFuego(llevando) {
+		return llevando.poseeArma()
 	}
 
 /*
@@ -249,16 +252,11 @@ object llevada {
 		personaje.armaDePersonaje().serLanzada()
 	}
 
-	method cambioVisualArma(arma) {
-		//game.removeVisual(arma)
-	}
-	
-
 	method validarBalacera() {
 	}
 
-	method imagenDePersonaje(arma) { // Modificar imagenes para fuego o lanza
-		return arma.imagenMagoConArma()
+	method imagenDePersonaje() { 
+		return "mago_lanzando.png"
 	}
 
 	method poseeArma() {
@@ -282,11 +280,7 @@ object libre {
 		personaje.armaDePersonaje().serLanzada()
 	}
 
-	method cambioVisualArma(arma) {
-		game.addVisual(arma)
-	}
-
-	method imagenDePersonaje(arma) {
+	method imagenDePersonaje() {
 		return "mago0.png"
 	}
 
