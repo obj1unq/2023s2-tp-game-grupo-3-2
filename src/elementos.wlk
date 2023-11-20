@@ -79,16 +79,23 @@ object administradorPociones {
 
 	var property pociones = []
 	const cantidadMaxima = 4
-	const pocionesFactory = [ pocionAzulFactory, pocionRojaFactory, pocionAmarillaFactory ]
+	// const pocionesFactory = [ pocionAzulFactory, pocionRojaFactory, pocionAmarillaFactory ]
 
 	// Esto sirve para que genere nuevas pociones que nosotros definamos.
-	method generarPocion() {
-		return pocionesFactory.anyOne().nuevaPocion()
+	method ramdomFactoryPociones() {
+		const x = (1..100).anyOne() 
+		return if (x < 80 ) {	// un 80% de que sea pocion normal
+			pocionRojaFactory
+		} else if (x < 95) {	// un 15% de que sea pocion velocidad
+			pocionAzulFactory
+		} else {
+			pocionAmarillaFactory // menos del 5% que sea pocion dañio
+		}
 	}
 
 	method generarPociones() {
 		if (pociones.size() < cantidadMaxima) {
-			const pocion = self.generarPocion()
+			const pocion = self.ramdomFactoryPociones().nuevaPocion()
 			game.addVisual(pocion)
 			pociones.add(pocion)
 		}
