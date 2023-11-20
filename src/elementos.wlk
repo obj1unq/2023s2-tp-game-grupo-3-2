@@ -252,6 +252,7 @@ object llevada {
 	method cambioVisualArma(arma) {
 		//game.removeVisual(arma)
 	}
+	
 
 	method validarBalacera() {
 	}
