@@ -42,7 +42,7 @@ object abajo {
 object arriba {
 
 	method siguiente(posicion) {
-		if (posicion.y() < 10) { // Limite de mapa en eje Y
+		if (posicion.y() < 12) { // Limite de mapa en eje Y
 			return posicion.up(1)
 		} else {
 			return posicion.up(0)

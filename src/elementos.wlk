@@ -9,6 +9,7 @@ class Pocion {
 	var vidaOtorgada
 	const imagenPocion // ahora le pasamos la imagen por parametro
 	const danioAdicional = 0
+	const velocidadAdicional = 0
 
 	method image() = imagenPocion
 
@@ -21,6 +22,7 @@ class Pocion {
 	method efectoPocion(personaje) {
 		personaje.aumentarVida(vidaOtorgada)
 		personaje.aumentarDanio(danioAdicional)
+		personaje.aumentarVelocidadArma(velocidadAdicional)
 	}
 
 	method impactoDeBala(elemento) {
@@ -38,7 +40,7 @@ class PocionRoja inherits Pocion(imagenPocion = "pocion_salud.png", vidaOtorgada
 // Pocion de salud 	
 }
 
-class PocionAzul inherits Pocion(imagenPocion = "pocion_azul.png", vidaOtorgada = 3) {
+class PocionAzul inherits Pocion(imagenPocion = "pocion_azul.png", vidaOtorgada = 3, velocidadAdicional = 10) {
 
 // Pocion de ... (hay que proveerle algo)
 }
@@ -77,7 +79,7 @@ object administradorPociones {
 
 	var property pociones = []
 	const cantidadMaxima = 4
-	const pocionesFactory = [ pocionRojaFactory, pocionAzulFactory, pocionAmarillaFactory ]
+	const pocionesFactory = [ pocionAzulFactory, pocionRojaFactory, pocionAmarillaFactory ]
 
 	// Esto sirve para que genere nuevas pociones que nosotros definamos.
 	method generarPocion() {

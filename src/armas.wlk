@@ -15,13 +15,14 @@ class Lanza {
 	method aumentarSuDanio(_danio) {
 		danio = (danio + _danio).min(maxDanio)
 	}
-    
-    method accion() {
-    	llevada.cambiarEstado(duenio)
-    	self.serLanzada()
-    }
-	method serLanzada() {
-		game.onTick(300, "lanzar", { self.avanzar(derecha)})
+
+	method accion(direccion) {
+		llevada.cambiarEstado(duenio)
+		self.serLanzada(direccion)
+	}
+
+	method serLanzada(direccion) {
+		game.onTick(300, "lanzar", { self.avanzar(direccion)})
 		game.onCollideDo(self, { zombie => zombie.impactoDeLanza(self)})
 	}
 
@@ -31,7 +32,7 @@ class Lanza {
 	}
 
 	method eliminarDelTablero() {
-		if (self.position().x() > 13 or self.position().x() < 1) {
+		if (self.position().x() > 13 or self.position().x() < 1 or self.position().y() < 2) {
 			self.eliminarSiEstoy()
 		}
 	}
@@ -43,7 +44,7 @@ class Lanza {
 	method eliminarSiEstoy() {
 		if (self.estoyEnElTablero()) {
 			game.removeTickEvent("lanzar")
-			game.removeVisual(self)
+			generadorLanzas.quitar(self)
 		}
 	}
 
@@ -95,22 +96,29 @@ object generadorLanzas {
 object armaFuego {
 
 	var danio = 2
+	var velocidad = 250
 	const maxDanio = 10
+	const maxVelocidad = 100
 	var property position = game.at(3, 8)
 
 	method image() = "poder_fuego.png"
-    
-    method accion(direccion) {
-    	self.generarBalacera(direccion)
-    }
+
+	method accion(direccion) {
+		self.generarBalacera(direccion)
+	}
+
 	method generarBalacera(direccion) {
 		// Ahora sabe la direccion en cual tiene q ir x parametro.
 		const nuevaBala = new Fuego(position = direccion.siguiente(self.position()), imagenDisparo = fireball, danio = danio)
-		nuevaBala.disparar(direccion)
+		nuevaBala.disparar(direccion,velocidad)
 	}
 
 	method aumentarSuDanio(_danio) {
 		danio = (danio + _danio).min(maxDanio)
+	}
+
+	method aumentarSuVelocidad(_velocidad) {
+		velocidad = (velocidad - _velocidad).max(maxVelocidad)
 	}
 
 	method contacto(personaje) {
@@ -153,9 +161,9 @@ object llevada {
 	method cambiarEstado(personaje) {
 		personaje.llevando(cambioEstado)
 	}
-    
+
 	method accion(personaje) {
-		//self.cambiarEstado(personaje) esto tampoco sirve, solamente la lanza cambia el estado al personaje 
+		// self.cambiarEstado(personaje) esto tampoco sirve, solamente la lanza cambia el estado al personaje 
 		personaje.armaDePersonaje().accion(personaje.ultimaDireccion())
 	}
 
@@ -178,7 +186,7 @@ object libre {
 	method cambiarEstado(personaje) {
 		personaje.llevando(cambioEstado)
 	}
-    
+
 	method accion(personaje) {
 		// no deberia hacer nada en el estado libre ??? 
 		personaje.armaDePersonaje().accion(personaje.ultimaDireccion())
@@ -203,9 +211,9 @@ class Fuego {
 
 	method image() = imagenDisparo.image()
 
-	method disparar(direccion) {
+	method disparar(direccion,velocidad) {
 		game.addVisual(self)
-		game.onTick(200, "disparar", { self.avanzar(direccion)})
+		game.onTick(velocidad, "disparar", { self.avanzar(direccion)})
 		game.onCollideDo(self, { zombie => zombie.impactoDeBala(self)})
 	}
 
@@ -215,12 +223,13 @@ class Fuego {
 	}
 
 	method eliminarDelTablero() { // Elimina fuego si supera supera eje X
-		if (self.position().x() > 13 or self.position().x() < 1) {
+		if (self.position().x() > 13 or self.position().x() < 1 or self.position().y() < 2) {
 			self.eliminarSiEstoy()
 		}
 	}
 
 	method estoyEnElTablero() {
+		
 		return game.hasVisual(self)
 	}
 

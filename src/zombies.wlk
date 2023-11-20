@@ -108,7 +108,7 @@ class EnemigoMago inherits Enemigo(vida = 20, danio = 2, movimiento = movimiento
 
 	override method atacar() {
 		const nuevaBala = new Fuego(position = self.position().left(1), imagenDisparo = charge, danio = danio)
-		nuevaBala.disparar(izquierda)
+		nuevaBala.disparar(izquierda,250) // x ahora sera un numero magico
 	}
 
 }
@@ -160,13 +160,13 @@ object enemigoSoporteFactory {
 object administradorEnemigos {
 
 	var property enemigos = []
-	const cantidadMaxima = 4
+	const cantidadMaxima = 2
 	// const enemigosFactory = [ enemigoNormalFactory, enemigoMagoFactory, enemigoSoporteFactory ]
 
 	// enemigos con cierta probabilidad, ya que el soperte y el mago son dificiles.
 	method ramdomFactoryEnemigo() {
 		const x = (1..100).anyOne() 
-		return if (x < 100 ) {	// un 80% de que sea normal
+		return if (x < 80 ) {	// un 80% de que sea normal
 			enemigoNormalFactory
 		} else if (x < 95) {	// un 15% de que sea mago
 			enemigoMagoFactory
