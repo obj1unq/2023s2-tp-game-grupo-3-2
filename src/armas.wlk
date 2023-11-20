@@ -10,7 +10,7 @@ class Lanza {
 	const maxDanio = 10
 	const duenio = mago
 
-	method image() = "lanza.png"
+	method image() = "fuegoAzul.png"
 
 	method aumentarSuDanio(_danio) {
 		danio = (danio + _danio).min(maxDanio)
@@ -32,7 +32,7 @@ class Lanza {
 	}
 
 	method eliminarDelTablero() {
-		if (self.position().x() > 13 or self.position().x() < 1 or self.position().y() < 2) {
+		if (self.position().x() > 13 or self.position().x() < 1 or self.position().y() < 1) {
 			self.eliminarSiEstoy()
 		}
 	}
@@ -101,7 +101,7 @@ object armaFuego {
 	const maxVelocidad = 100
 	var property position = game.at(3, 8)
 
-	method image() = "poder_fuego.png"
+	method image() = "fuegoAmarillo.png"
 
 	method accion(direccion) {
 		self.generarBalacera(direccion)
@@ -256,7 +256,7 @@ class Fuego {
 object fireball {
 
 	method image() {
-		return "fireball.png"
+		return "fuegoAmarillo.png"
 	}
 
 }
