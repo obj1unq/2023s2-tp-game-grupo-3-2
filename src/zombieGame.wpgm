@@ -17,8 +17,8 @@ program zombies {
 
 	
 	// Objetos visuales y jugables deben iniciar desde Nivel
-	game.addVisual(armaFuego)
 	game.addVisual(mago)
+	game.addVisual(armaFuego)
 	game.addVisual(corazon)
 	game.addVisual(monedero)
 	
