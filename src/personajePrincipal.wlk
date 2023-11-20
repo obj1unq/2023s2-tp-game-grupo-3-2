@@ -13,7 +13,7 @@ object mago inherits Personaje {
 	var property llevando = libre
 	var property armaDePersonaje = armaFuego
 
-	method image() = llevando.imagenDePersonaje(armaDePersonaje)
+	method image() = llevando.imagenDePersonaje()
 
 	method irA(nuevaPosicion) {
 		position = nuevaPosicion
@@ -62,7 +62,7 @@ object mago inherits Personaje {
 	method agarrar() {
 		self.validarPosition()
 		llevando.cambiarEstado(self)
-		llevando.cambioVisualArma(armaDePersonaje)
+		armaDePersonaje.cambioVisualArma(llevando)
 	}
 
 	method cambiarArma() {
