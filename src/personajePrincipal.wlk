@@ -13,7 +13,7 @@ object mago inherits Personaje {
 	var property llevando = libre
 	var property armaDePersonaje = armaFuego
 
-	method image() = llevando.imagenDePersonaje()
+	method image() = "mago0.png"
 
 	method irA(nuevaPosicion) {
 		position = nuevaPosicion
@@ -62,7 +62,7 @@ object mago inherits Personaje {
 	method agarrar() {
 		self.validarPosition()
 		llevando.cambiarEstado(self)
-		armaDePersonaje.cambioVisualArma(llevando)
+		//armaDePersonaje.cambioVisualArma(llevando)
 	}
 
 	method cambiarArma() {
@@ -72,10 +72,10 @@ object mago inherits Personaje {
 		}
 	}
 
-	method lanzar() {
-		self.validarPosition()
-		llevando.lanzar(self)
-	}
+//	method lanzar() { esto ya no sirve
+//		self.validarPosition()
+//		llevando.lanzar(self)
+//	}
 
 	method validarPosition() {
 		if (position != armaDePersonaje.position()) {
@@ -83,13 +83,13 @@ object mago inherits Personaje {
 		}
 	}
 
-	method validarBalacera() {
-		llevando.validarBalacera()
-	}
+//	method validarBalacera() { ahora solamente necesita saber si tiene el arma encima
+//		llevando.validarBalacera()
+//	}
 
 	method tirarHechizo() {
-		self.validarBalacera()
-		armaDePersonaje.generarBalacera(derecha)
+		self.validarPosition()
+		llevando.accion(self)
 	}
 
 	override method impactoDeLanza(elemento) {
