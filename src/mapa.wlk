@@ -40,6 +40,23 @@ object mapaNivel1 inherits Mapa(celdas = [
 
 }
 
+object mapaNivel2 inherits Mapa(celdas = [ 
+		[_,_,_,_,_,_,_,_,_,_,_,_,_,_,_],
+		[_,_,_,_,_,_,_,_,_,_,_,_,_,_,_],
+		[_,_,_,_,_,_,_,_,_,_,_,_,_,_,_],
+		[_,_,_,_,_,_,_,_,_,_,_,_,_,_,_],
+		[_,_,_,_,_,_,_,_,_,_,_,_,_,_,_],
+		[_,_,_,_,_,_,_,_,_,_,_,_,_,_,_],
+		[_,_,_,_,_,_,_,_,_,_,_,_,_,_,_],
+		[_,_,_,_,_,_,_,_,_,_,_,_,_,_,_],
+		[_,_,_,_,_,_,_,_,_,_,_,_,_,_,_],
+		[_,_,_,_,_,_,_,_,_,_,_,_,_,_,_],
+		[_,_,m,_,_,_,_,_,_,_,_,_,_,_,_],
+		[_,_,_,_,_,_,_,_,_,_,_,_,_,_,_]
+	].reverse()) {
+
+}
+
 class Objeto {
 
 	const property position
@@ -122,13 +139,26 @@ object f { // Arma tipo fuego
 
 }
 
-object c { // Cueva (cambiar por castillo)
+object c inherits Objeto(position = game.at(11, 9), image = "cueva.png"){ 
 
 	method generar(position) {
-		game.addVisual(new Objeto(position = position, image = "cueva.png"))
+		game.addVisual(self)
+	}
+	
+	override method solido() {
+		return false
+	}
+	
+	method esUnArma() {
+		return false
+	}
+	
+	override method contacto(personaje) {
+		// Validar si puede pasar de nivel - Cambiar a nuevo mapa
 	}
 
 	method pasarNivel() {
+		
 	} // crear metodo para pasar de nivel cuando se cumpla el objetivo de monedas y colisione con objeto
 
 }
