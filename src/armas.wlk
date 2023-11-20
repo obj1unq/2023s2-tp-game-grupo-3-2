@@ -8,13 +8,18 @@ class Lanza {
 	var property danio = 5
 	var property position
 	const maxDanio = 10
+	const duenio = mago
 
 	method image() = "lanza.png"
 
 	method aumentarSuDanio(_danio) {
 		danio = (danio + _danio).min(maxDanio)
 	}
-
+    
+    method accion() {
+    	llevada.cambiarEstado(duenio)
+    	self.serLanzada()
+    }
 	method serLanzada() {
 		game.onTick(300, "lanzar", { self.avanzar(derecha)})
 		game.onCollideDo(self, { zombie => zombie.impactoDeLanza(self)})
@@ -26,7 +31,7 @@ class Lanza {
 	}
 
 	method eliminarDelTablero() {
-		if (self.position().x() > 17 or self.position().x() < 1) {
+		if (self.position().x() > 13 or self.position().x() < 1) {
 			self.eliminarSiEstoy()
 		}
 	}
@@ -94,7 +99,10 @@ object armaFuego {
 	var property position = game.at(3, 8)
 
 	method image() = "poder_fuego.png"
-
+    
+    method accion() {
+    	self.generarBalacera(derecha)
+    }
 	method generarBalacera(direccion) {
 		// propetario.validarBalacera()
 		// self.validarBalacera()
@@ -146,10 +154,10 @@ object llevada {
 	method cambiarEstado(personaje) {
 		personaje.llevando(cambioEstado)
 	}
-
-	method lanzar(personaje) {
-		self.cambiarEstado(personaje)
-		personaje.armaDePersonaje().serLanzada()
+    
+	method accion(personaje) {
+		//self.cambiarEstado(personaje) esto tampoco sirve, solamente la lanza cambia el estado al personaje 
+		personaje.armaDePersonaje().accion()
 	}
 
 	method validarBalacera() {
@@ -171,9 +179,9 @@ object libre {
 	method cambiarEstado(personaje) {
 		personaje.llevando(cambioEstado)
 	}
-
-	method lanzar(personaje) {
-		personaje.armaDePersonaje().serLanzada()
+    
+	method accion(personaje) {
+		personaje.armaDePersonaje().accion()
 	}
 
 	method validarBalacera() {

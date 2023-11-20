@@ -5,6 +5,7 @@ import zombies.*
 import elementos.*
 import randomizer.*
 import nivel.*
+import armas.*
 
 class Mapa {
 
@@ -73,7 +74,10 @@ class Objeto {
 	method solido() {
 		return true
 	}
-
+    method impactoDeLanza(elemento) { // Elimina imagen y evento de disparo si colisiona con objeto
+		game.removeVisual(elemento)
+		game.removeTickEvent("lanzar")
+	}
 }
 
 object _ {

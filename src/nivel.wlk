@@ -19,8 +19,8 @@ class Nivel {
 		keyboard.right().onPressDo({ mago.mover(derecha)})
 		keyboard.w().onPressDo({ mago.tirarHechizo()})
 		keyboard.a().onPressDo({ mago.agarrar()})
-		keyboard.z().onPressDo({ mago.lanzar()})
-		keyboard.x().onPressDo({ mago.cambiarArma()})
+		//keyboard.z().onPressDo({ mago.lanzar()}) ya no hace falta
+		//keyboard.x().onPressDo({ mago.cambiarArma()})  ya no hace falta
 	}
 
 	method iniciarNivel() { // Iniciar nivel desde main
