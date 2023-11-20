@@ -60,7 +60,9 @@ object mago inherits Personaje {
 	method aumentarDanio(danio) {
 		armaDePersonaje.aumentarSuDanio(danio)
 	}
-
+	method aumentarVelocidadArma(velocidad){
+		armaDePersonaje.aumentarSuVelocidad(velocidad)
+	}
 	method agarrar() {
 		self.validarPosition()
 		llevando.cambiarEstado(self)
