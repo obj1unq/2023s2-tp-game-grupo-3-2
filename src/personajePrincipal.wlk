@@ -12,6 +12,7 @@ object mago inherits Personaje {
 	const saludMaxima = 10
 	var property llevando = libre
 	var property armaDePersonaje = armaFuego
+	var property ultimaDireccion = null
 
 	method image() = "mago0.png"
 
@@ -21,6 +22,7 @@ object mago inherits Personaje {
 	}
 
 	method mover(direccion) {
+		ultimaDireccion = direccion
 		if (self.sePuedeMover(direccion)) {
 			// self.validarMover(direccion)
 			const proxima = direccion.siguiente(self.position())
