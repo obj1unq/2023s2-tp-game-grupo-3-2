@@ -51,7 +51,7 @@ class PocionAmarilla inherits Pocion(imagenPocion = "pocion_amarilla.png", vidaO
 object pocionRojaFactory {
 
 	method nuevaPocion() {
-		return new PocionRoja(position = randomizer.position())
+		return new PocionRoja(position = randomizer.emptyPosition())
 	}
 
 }
@@ -59,7 +59,7 @@ object pocionRojaFactory {
 object pocionAzulFactory {
 
 	method nuevaPocion() {
-		return new PocionAzul(position = randomizer.position())
+		return new PocionAzul(position = randomizer.emptyPosition())
 	}
 
 }
@@ -67,7 +67,7 @@ object pocionAzulFactory {
 object pocionAmarillaFactory {
 
 	method nuevaPocion() {
-		return new PocionAmarilla(position = randomizer.position())
+		return new PocionAmarilla(position = randomizer.emptyPosition())
 	}
 
 }
@@ -98,7 +98,6 @@ object administradorPociones {
 	}
 
 }
-
 
 object corazon {
 

@@ -76,7 +76,7 @@ object generadorLanzas {
 
 	method generarLanzas() {
 		if (lanzas.size() < cantidadMaxima) {
-			const lanza = new Lanza(position = randomizer.position())
+			const lanza = new Lanza(position = randomizer.emptyPosition())
 			game.addVisual(lanza)
 			lanzas.add(lanza)
 		}
@@ -100,13 +100,12 @@ object armaFuego {
 
 	method image() = "poder_fuego.png"
     
-    method accion() {
-    	self.generarBalacera(derecha)
+    method accion(direccion) {
+    	self.generarBalacera(direccion)
     }
 	method generarBalacera(direccion) {
-		// propetario.validarBalacera()
-		// self.validarBalacera()
-		const nuevaBala = new Fuego(position = self.position().right(1), imagenDisparo = fireball, danio = danio)
+		// Ahora sabe la direccion en cual tiene q ir x parametro.
+		const nuevaBala = new Fuego(position = direccion.siguiente(self.position()), imagenDisparo = fireball, danio = danio)
 		nuevaBala.disparar(direccion)
 	}
 
@@ -157,7 +156,7 @@ object llevada {
     
 	method accion(personaje) {
 		//self.cambiarEstado(personaje) esto tampoco sirve, solamente la lanza cambia el estado al personaje 
-		personaje.armaDePersonaje().accion()
+		personaje.armaDePersonaje().accion(personaje.ultimaDireccion())
 	}
 
 	method validarBalacera() {
@@ -181,7 +180,8 @@ object libre {
 	}
     
 	method accion(personaje) {
-		personaje.armaDePersonaje().accion()
+		// no deberia hacer nada en el estado libre ??? 
+		personaje.armaDePersonaje().accion(personaje.ultimaDireccion())
 	}
 
 	method validarBalacera() {
