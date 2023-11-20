@@ -13,7 +13,7 @@ object mago inherits Personaje {
 	var property llevando = libre
 	var property armaDePersonaje = armaFuego
 
-	method image() = "mago0.png"//llevando.imagenDePersonaje() + ".png"
+	method image() = llevando.imagenDePersonaje(armaDePersonaje)
 
 	method irA(nuevaPosicion) {
 		position = nuevaPosicion
@@ -22,23 +22,27 @@ object mago inherits Personaje {
 
 	method mover(direccion) {
 		if (self.sePuedeMover(direccion)) {
-		//self.validarMover(direccion)
-		    const proxima = direccion.siguiente(self.position())
-		   self.irA(proxima)
+			// self.validarMover(direccion)
+			const proxima = direccion.siguiente(self.position())
+			self.irA(proxima)
 		}
 	}
+
 	method puedeOcupar(posicion) {
 		return tablero.puedeOcupar(posicion)
 	}
-    method sePuedeMover(direccion) {
-    	const proxima = direccion.siguiente(self.position())
-    	return self.puedeOcupar(proxima)
-    }
-    method validarMover(direccion) {
-    	if(not self.sePuedeMover(direccion) ) {
-    		self.error("no puedo ir ahi")
-    	}
-    }
+
+	method sePuedeMover(direccion) {
+		const proxima = direccion.siguiente(self.position())
+		return self.puedeOcupar(proxima)
+	}
+
+	method validarMover(direccion) {
+		if (not self.sePuedeMover(direccion)) {
+			self.error("no puedo ir ahi")
+		}
+	}
+
 	override method morir() {
 		game.stop()
 	}
@@ -58,37 +62,38 @@ object mago inherits Personaje {
 	method agarrar() {
 		self.validarPosition()
 		llevando.cambiarEstado(self)
-		//llevando.imagenFuego(armaDePersonaje)
+		llevando.cambioVisualArma(armaDePersonaje)
 	}
-    
-    method cambiarArma() {
-    	const objetos = game.colliders(self)
-    	if (not objetos.isEmpty() and objetos.all({o => o.esUnArma()}) ) {
-    	  armaDePersonaje =	objetos.find({arma => arma.esUnArma()})
-    	}
-    	
-    }
-    
-    method lanzar() {
-    	self.validarPosition()
-    	llevando.lanzar(self)
-    }
-    
+
+	method cambiarArma() {
+		const objetos = game.colliders(self)
+		if (not objetos.isEmpty() and objetos.all({ o => o.esUnArma() })) {
+			armaDePersonaje = objetos.find({ arma => arma.esUnArma() })
+		}
+	}
+
+	method lanzar() {
+		self.validarPosition()
+		llevando.lanzar(self)
+	}
+
 	method validarPosition() {
 		if (position != armaDePersonaje.position()) {
 			self.error("No estoy donde puedo hacerlo")
 		}
 	}
-    
+
 	method validarBalacera() {
 		llevando.validarBalacera()
 	}
-    method tirarHechizo(){
-    	self.validarBalacera()
-    	armaDePersonaje.generarBalacera(derecha)
-    }
-    override method impactoDeLanza(elemento) {
-		
+
+	method tirarHechizo() {
+		self.validarBalacera()
+		armaDePersonaje.generarBalacera(derecha)
 	}
+
+	override method impactoDeLanza(elemento) {
+	}
+
 }
 

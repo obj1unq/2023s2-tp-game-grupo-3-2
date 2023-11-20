@@ -6,9 +6,9 @@ import randomizer.*
 class Pocion {
 
 	var property position
-	var vidaOtorgada 
-	const imagenPocion  // ahora le pasamos la imagen por parametro
-	const danioAdicional = 0 
+	var vidaOtorgada
+	const imagenPocion // ahora le pasamos la imagen por parametro
+	const danioAdicional = 0
 
 	method image() = imagenPocion
 
@@ -33,15 +33,19 @@ class Pocion {
 
 }
 
-class PocionRoja inherits Pocion(imagenPocion = "pocion_salud.png",vidaOtorgada = 5){
-	// Pocion de salud 	
+class PocionRoja inherits Pocion(imagenPocion = "pocion_salud.png", vidaOtorgada = 5) {
+
+// Pocion de salud 	
 }
+
 class PocionAzul inherits Pocion(imagenPocion = "pocion_azul.png", vidaOtorgada = 3) {
-	// Pocion de ... (hay que proveerle algo)
+
+// Pocion de ... (hay que proveerle algo)
 }
 
 class PocionAmarilla inherits Pocion(imagenPocion = "pocion_amarilla.png", vidaOtorgada = 1, danioAdicional = 2) {
-	// Pocion de daño
+
+// Pocion de daño
 }
 
 object pocionRojaFactory {
@@ -73,7 +77,6 @@ object administradorPociones {
 
 	var property pociones = []
 	const cantidadMaxima = 4
-	
 	const pocionesFactory = [ pocionRojaFactory, pocionAzulFactory, pocionAmarillaFactory ]
 
 	// Esto sirve para que genere nuevas pociones que nosotros definamos.
@@ -102,7 +105,7 @@ class Lanza {
 	var property position
 	const maxDanio = 10
 
-	method image() = "flecha.png"
+	method image() = "lanza.png"
 
 	method aumentarSuDanio(_danio) {
 		danio = (danio + _danio).min(maxDanio)
@@ -151,6 +154,10 @@ class Lanza {
 		return false
 	}
 
+	method imagenMagoConArma() {
+		return "mago_lanza.png"
+	}
+
 }
 
 object generadorLanzas {
@@ -186,8 +193,8 @@ object armaFuego {
 	method image() = "poder_fuego.png"
 
 	method generarBalacera(direccion) {
-		//propetario.validarBalacera()
-		//self.validarBalacera()
+		// propetario.validarBalacera()
+		// self.validarBalacera()
 		const nuevaBala = new Fuego(position = self.position().right(1), imagenDisparo = fireball, danio = danio)
 		nuevaBala.disparar(direccion)
 	}
@@ -210,15 +217,19 @@ object armaFuego {
 	method solido() {
 		return false
 	}
-	/*
-	method validarBalacera() {
-		propetario.validarBalacera()
-		if (propetario.armaDePersonaje() != self) {
-			self.error("No me esta llevando")
-		}
-		
-	} */
 
+	method imagenMagoConArma() {
+		return "mago_fuego.png"
+	}
+
+/*
+ * method validarBalacera() {
+ * 	propetario.validarBalacera()
+ * 	if (propetario.armaDePersonaje() != self) {
+ * 		self.error("No me esta llevando")
+ * 	}
+ * 	
+ } */
 }
 
 object llevada {
@@ -238,18 +249,22 @@ object llevada {
 		personaje.armaDePersonaje().serLanzada()
 	}
 
-//	method imagenFuego(arma) { // Hay que cambiar el nombre de este metodo
-//		game.removeVisual(arma)
-//	}
+	method cambioVisualArma(arma) {
+		//game.removeVisual(arma)
+	}
+	
+
 	method validarBalacera() {
 	}
 
-//	method imagenDePersonaje() {
-//		return "mago1"
-//	}
-    method poseeArma() {
-    	return true
-    }
+	method imagenDePersonaje(arma) { // Modificar imagenes para fuego o lanza
+		return arma.imagenMagoConArma()
+	}
+
+	method poseeArma() {
+		return true
+	}
+
 }
 
 object libre {
@@ -267,18 +282,22 @@ object libre {
 		personaje.armaDePersonaje().serLanzada()
 	}
 
-//	method imagenFuego(arma) { // Hay que cambiar el nombre de este metodo
-//		game.addVisual(arma)
-//	}
-//	method imagenDePersonaje() {
-//		return "mago0"
-//	}
+	method cambioVisualArma(arma) {
+		game.addVisual(arma)
+	}
+
+	method imagenDePersonaje(arma) {
+		return "mago0.png"
+	}
+
 	method validarBalacera() {
 		self.error("No me esta llevando")
 	}
-    method poseeArma() {
-    	return false
-    }
+
+	method poseeArma() {
+		return false
+	}
+
 }
 
 // Ahora a la bala le asigno el danio desde el arma, pasando el danio que tiene el arma 
@@ -325,10 +344,10 @@ class Fuego {
 	method solido() {
 		return false
 	}
-    method contacto(personaje) {
-		
+
+	method contacto(personaje) {
 	}
-    
+
 }
 
 object corazon {
