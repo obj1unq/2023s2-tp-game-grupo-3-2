@@ -28,9 +28,11 @@ class Pocion {
 	method impactoDeBala(elemento) {
 	// Sirve para que no salga el mensaje error
 	}
-	method impactoDeFuego(elemento){
-		// para que no salga mensaje de error. 
+
+	method impactoDeFuego(elemento) {
+	// Sirve para que no salga el mensaje error
 	}
+
 	method solido() {
 		return false
 	}
@@ -81,14 +83,14 @@ object administradorPociones {
 
 	var property pociones = []
 	const cantidadMaxima = 4
-	// const pocionesFactory = [ pocionAzulFactory, pocionRojaFactory, pocionAmarillaFactory ]
 
+	// const pocionesFactory = [ pocionAzulFactory, pocionRojaFactory, pocionAmarillaFactory ]
 	// Esto sirve para que genere nuevas pociones que nosotros definamos.
 	method ramdomFactoryPociones() {
-		const x = (1..100).anyOne() 
-		return if (x < 80 ) {	// un 80% de que sea pocion normal
+		const x = (1 .. 100).anyOne()
+		return if (x < 80) { // un 80% de que sea pocion normal
 			pocionRojaFactory
-		} else if (x < 95) {	// un 15% de que sea pocion velocidad
+		} else if (x < 95) { // un 15% de que sea pocion velocidad
 			pocionAzulFactory
 		} else {
 			pocionAmarillaFactory // menos del 5% que sea pocion dañio
@@ -132,8 +134,9 @@ class Moneda {
 	method impactoDeBala(elemento) {
 	// Sirve para que no salga el mensaje error
 	}
-	method impactoDeFuego(elemento){
-		// para que no salga mensaje de error. 
+
+	method impactoDeFuego(elemento) {
+	// para que no salga mensaje de error. 
 	}
 
 	method solido() {

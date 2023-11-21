@@ -7,7 +7,7 @@ class Arma {
 
 	var property danio
 	var velocidad
-	const maxDanio = 10
+	const maxDanio 
 	const maxVelocidad = 100
 	var property position
 
@@ -46,11 +46,12 @@ class Arma {
 
 }
 
-class FuegoAzul inherits Arma(danio = 5, velocidad = 300) {
-
+class FuegoAzul inherits Arma(danio = 5,maxDanio = 10, velocidad = 300) {
+	
+	const property efectoVelocidad = 0
 	const duenio = mago
 
-	override method image() = "fuegoAzul.png"
+	override method image() = "fuegoAzul.png" 
 
 	override method accion(direccion) {
 		llevada.cambiarEstado(duenio)
@@ -80,7 +81,7 @@ class FuegoAzul inherits Arma(danio = 5, velocidad = 300) {
 	method eliminarSiEstoy() {
 		if (self.estoyEnElTablero()) {
 			game.removeTickEvent("lanzar")
-			administradorFuegoAzul.quitar(self)
+			administradorFuego.quitar(self)
 		}
 	}
 
@@ -90,21 +91,37 @@ class FuegoAzul inherits Arma(danio = 5, velocidad = 300) {
 
 }
 
-object administradorFuegoAzul {
+class FuegoVerde inherits FuegoAzul(danio = 2, maxDanio = 5, velocidad = 200, efectoVelocidad = 50 ) {
+	// que sea verde 
+	var contador = 5
+	
+	override method avanzar(direccion){
+		if (contador != 0){
+			contador --
+			position = direccion.siguiente(self.position())
+			self.eliminarDelTablero()
+		}else { contador = 5 
+				game.removeTickEvent("lanzar")
+				administradorFuego.quitar(self)
+			}
+	}
+}
 
-	var property lanzas = []
+object administradorFuego {
+
+	var property fuegos = []
 	const cantidadMaxima = 3
 
 	method generarLanzas() {
-		if (lanzas.size() < cantidadMaxima) {
-			const lanza = new FuegoAzul(position = randomizer.emptyPosition())
-			game.addVisual(lanza)
-			lanzas.add(lanza)
+		if (fuegos.size() < cantidadMaxima) {
+			const fuego = new FuegoAzul(position = randomizer.emptyPosition())
+			game.addVisual(fuego)
+			fuegos.add(fuego)
 		}
 	}
 
 	method quitar(elemento) {
-		lanzas.remove(elemento)
+		fuegos.remove(elemento)
 		game.removeVisual(elemento)
 	}
 
@@ -235,7 +252,7 @@ class Fuego {
 
 	method contacto(personaje) {
 	}
-
+	
 }
 
 object fireball {
