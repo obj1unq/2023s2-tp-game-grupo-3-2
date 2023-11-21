@@ -101,7 +101,7 @@ object armaFuego {
 	const maxVelocidad = 100
 	var property position = game.at(3, 8)
 
-	method image() = "fuegoAmarillo.png"
+	method image() = "fuegoRojo.png"
 
 	method accion(direccion) {
 		self.generarBalacera(direccion)
@@ -256,7 +256,7 @@ class Fuego {
 object fireball {
 
 	method image() {
-		return "fuegoAmarillo.png"
+		return "fuegoRojo.png"
 	}
 
 }
