@@ -27,6 +27,8 @@ class Nivel {
 		self.imagenDeFondo()
 		self.instanciarObjetosFijos()
 		self.configuracionTeclado()
+		self.configuracionDelJuego()
+		self.administradores()
 	}
 
 	method instanciarObjetosFijos() {
@@ -36,6 +38,18 @@ class Nivel {
 	method imagenDeFondo() {
 		game.boardGround(imagenFondo)
 	}
+	
+	method configuracionDelJuego() {
+    	game.onCollideDo(mago, { elemento => elemento.contacto(mago) })
+        game.onTick(700, "arma", {mago.cambiarArma()})
+    }
+    method administradores() {
+    	game.onTick(700, "HORDA", {administradorEnemigos.generarEnemigos()})
+        game.onTick(2000, "MORDER", {administradorEnemigos.ataqueEnemigo()})
+        game.onTick(2000, "POCIONES", {administradorPociones.generarPociones()})
+        game.onTick(2000, "LANZAS", {generadorLanzas.generarLanzas()})
+    	
+    }
 
 }
 

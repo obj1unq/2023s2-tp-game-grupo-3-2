@@ -12,6 +12,7 @@ class Mapa {
 	const property celdas
 
 	method generar() {
+		game.addVisual(mago)
 		game.width(celdas.anyOne().size())
 		game.height(celdas.size())
 		(0 .. game.width() - 1).forEach({ x => (0 .. game.height() - 1).forEach({ y => self.generarCelda(x, y)})})
@@ -27,16 +28,16 @@ class Mapa {
 object mapaNivel1 inherits Mapa(celdas = [ 
 		[a,a,a,a,a,a,a,a,a,a,a,a,a,a,a],
 		[_,_,_,_,_,_,_,_,_,_,_,_,_,_,_],
-		[_,_,_,t,_,_,n,_,_,_,_,_,_,c,_],
-		[_,_,_,_,_,_,_,_,_,e,_,_,_,_,_],
+		[_,_,_,t,_,_,_,_,_,_,_,_,c,_,_],
 		[_,_,_,_,_,_,_,_,_,_,_,_,_,_,_],
-		[_,_,e,_,_,e,_,_,_,_,_,_,n,_,_],
-		[_,_,_,_,_,_,_,_,y,_,_,_,_,_,_],
 		[_,_,_,_,_,_,_,_,_,_,_,_,_,_,_],
+		[_,_,_,_,e,_,_,_,_,_,_,_,_,_,_],
+		[_,_,_,_,_,_,_,_,_,_,y,_,_,_,_],
+		[_,f,_,_,_,_,_,_,_,_,_,_,_,_,_],
 		[_,_,_,r,_,_,_,_,_,_,_,_,_,_,_],
-		[_,_,_,_,_,_,_,_,_,n,_,_,_,r,_],
+		[_,_,_,_,_,_,_,_,_,n,_,_,_,_,_],
 		[_,_,m,_,_,_,_,_,_,_,_,_,_,_,_],
-		[_,_,_,_,_,_,_,_,_,_,_,_,_,_,_]
+		[h,_,_,_,_,_,_,_,_,_,k,_,_,_,_]
 	].reverse()) {
 
 }
@@ -143,6 +144,20 @@ object f { // Arma tipo fuego
 
 }
 
+object h { // corazon
+
+	method generar(position) {
+		game.addVisual(corazon)
+	}
+
+}
+object k { // monedero
+
+	method generar(position) {
+		game.addVisual(monedero)
+	}
+
+}
 object c inherits Objeto(position = game.at(11, 9), image = "cueva.png"){  // Cueva
 
 	method generar(position) {

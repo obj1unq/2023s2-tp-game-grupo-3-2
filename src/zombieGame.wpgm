@@ -17,14 +17,14 @@ program zombies {
 
 	
 	// Objetos visuales y jugables deben iniciar desde Nivel
-	game.addVisual(mago)
-	game.addVisual(armaFuego)
-	game.addVisual(corazon)
-	game.addVisual(monedero)
+//	game.addVisual(mago)
+//	game.addVisual(armaFuego)
+//	game.addVisual(corazon)
+//	game.addVisual(monedero)
 	
 	
 	// Muestra los atributos del mago
-	game.showAttributes(mago)
+//	game.showAttributes(mago)
 
 	// Instanciar primer nivel y ejecutarlo
 	const primerNivel = new Nivel(mapa = mapaNivel1, imagenFondo = "background600x480_noche.png")
@@ -34,12 +34,12 @@ program zombies {
 	//mapaNivel1.generar()
     
     // Este codigo sirve para cuando esta sobre la moneda y pocion la agarre automaticamente.
-    game.onCollideDo(mago, { elemento => elemento.contacto(mago) })
-    game.onTick(700, "arma", {mago.cambiarArma()})
-    game.onTick(700, "HORDA", {administradorEnemigos.generarEnemigos()})
-    game.onTick(2000, "MORDER", {administradorEnemigos.ataqueEnemigo()})
-    game.onTick(10000, "POCIONES", {administradorPociones.generarPociones()})
-    game.onTick(2000, "LANZAS", {generadorLanzas.generarLanzas()})
+//    game.onCollideDo(mago, { elemento => elemento.contacto(mago) })
+//    game.onTick(700, "arma", {mago.cambiarArma()})
+//    game.onTick(700, "HORDA", {administradorEnemigos.generarEnemigos()})
+//    game.onTick(2000, "MORDER", {administradorEnemigos.ataqueEnemigo()})
+//    game.onTick(10000, "POCIONES", {administradorPociones.generarPociones()})
+//    game.onTick(2000, "LANZAS", {generadorLanzas.generarLanzas()})
 
     
     game.start()
