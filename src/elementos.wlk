@@ -28,7 +28,9 @@ class Pocion {
 	method impactoDeBala(elemento) {
 	// Sirve para que no salga el mensaje error
 	}
-
+	method impactoDeFuego(elemento){
+		// para que no salga mensaje de error. 
+	}
 	method solido() {
 		return false
 	}
@@ -129,6 +131,9 @@ class Moneda {
 
 	method impactoDeBala(elemento) {
 	// Sirve para que no salga el mensaje error
+	}
+	method impactoDeFuego(elemento){
+		// para que no salga mensaje de error. 
 	}
 
 	method solido() {

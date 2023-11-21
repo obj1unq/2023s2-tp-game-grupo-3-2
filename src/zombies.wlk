@@ -31,7 +31,7 @@ class Personaje {
 	// agrege este mensaje por sino sale pantalla de error.
 	}
 
-	method impactoDeLanza(elemento) {
+	method impactoDeFuego(elemento) {
 		self.perderVida(elemento)
 		game.removeVisual(elemento)
 	}
