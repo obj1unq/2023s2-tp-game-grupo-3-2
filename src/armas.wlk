@@ -46,7 +46,7 @@ class Arma {
 
 }
 
-class FuegoAzul inherits Arma(danio = 5, maxDanio = 10, velocidad = 300) {
+class FuegoAzul inherits Arma(danio = 10, maxDanio = 15, velocidad = 100) {
 
 	const property efectoVelocidad = 0
 	const duenio = mago
@@ -59,7 +59,7 @@ class FuegoAzul inherits Arma(danio = 5, maxDanio = 10, velocidad = 300) {
 	}
 
 	method serLanzada(direccion) {
-		game.onTick(300, "lanzar", { self.avanzar(direccion)})
+		game.onTick(velocidad, "lanzar", { self.avanzar(direccion)})
 		game.onCollideDo(self, { zombie => zombie.impactoDeFuego(self)})
 	}
 
@@ -91,7 +91,7 @@ class FuegoAzul inherits Arma(danio = 5, maxDanio = 10, velocidad = 300) {
 
 }
 
-class FuegoVerde inherits FuegoAzul(danio = 2, maxDanio = 5, velocidad = 200, efectoVelocidad = 50) {
+class FuegoVerde inherits FuegoAzul(danio = 4, maxDanio = 6, velocidad = 100, efectoVelocidad = 50) {
 
 	var contador = 5
 
