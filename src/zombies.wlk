@@ -39,7 +39,7 @@ class Personaje {
 	method solido() {
 		return false
 	}
-
+	
 }
 
 class Enemigo inherits Personaje {
@@ -52,6 +52,7 @@ class Enemigo inherits Personaje {
 	var property movimiento // para que cambie la inteligencia del movimiento.
 	var moverActual = 2000
 	const moverMax = 1000
+	const moverMin = 3000
 
 	method text() = self.vida().toString() + "/10"
 
@@ -93,7 +94,15 @@ class Enemigo inherits Personaje {
 	method esUnArma() {
 		return false
 	}
-
+	override method impactoDeFuego(elemento){
+		self.disminuirMovimiento(elemento.efectoVelocidad())
+		super(elemento)
+	}
+	method disminuirMovimiento(aumentar){
+		game.removeTickEvent("PERSEGUIR" + self.identity())
+		const tiempoActual = (moverActual - aumentar).max(moverMin)
+		game.onTick(tiempoActual, "PERSEGUIR" + self.identity(), { self.mover()})
+	}
 }
 
 class EnemigoNormal inherits Enemigo(danio = 1, movimiento = new MovimientoLibreX()) {
