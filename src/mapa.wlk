@@ -42,17 +42,17 @@ object mapaNivel1 inherits Mapa(celdas = [
 }
 
 object mapaNivel2 inherits Mapa(celdas = [ 
+		[s,s,s,s,s,s,s,s,s,s,s,s,s,s,s],
+		[_,_,_,_,_,_,_,_,_,_,_,_,_,_,_],
+		[_,_,s,_,_,_,_,_,_,_,_,_,_,_,_],
+		[_,_,_,_,_,_,_,_,_,_,_,s,_,_,_],
+		[_,_,_,_,_,_,s,_,_,_,_,_,_,_,_],
 		[_,_,_,_,_,_,_,_,_,_,_,_,_,_,_],
 		[_,_,_,_,_,_,_,_,_,_,_,_,_,_,_],
+		[_,_,_,s,_,_,_,_,_,_,_,_,_,_,_],
+		[_,_,_,_,_,_,_,_,_,_,s,_,_,_,_],
 		[_,_,_,_,_,_,_,_,_,_,_,_,_,_,_],
-		[_,_,_,_,_,_,_,_,_,_,_,_,_,_,_],
-		[_,_,_,_,_,_,_,_,_,_,_,_,_,_,_],
-		[_,_,_,_,_,_,_,_,_,_,_,_,_,_,_],
-		[_,_,_,_,_,_,_,_,_,_,_,_,_,_,_],
-		[_,_,_,_,_,_,_,_,_,_,_,_,_,_,_],
-		[_,_,_,_,_,_,_,_,_,_,_,_,_,_,_],
-		[_,_,_,_,_,_,_,_,_,_,_,_,_,_,_],
-		[_,_,m,_,_,_,_,_,_,_,_,_,_,_,_],
+		[s,s,s,s,s,s,s,s,s,s,s,s,s,s,s],
 		[_,_,_,_,_,_,_,_,_,_,_,_,_,_,_]
 	].reverse()) {
 
@@ -143,7 +143,7 @@ object f { // Arma tipo fuego
 
 }
 
-object c inherits Objeto(position = game.at(11, 9), image = "cueva.png"){ 
+object c inherits Objeto(position = game.at(11, 9), image = "cueva.png"){  // Cueva
 
 	method generar(position) {
 		game.addVisual(self)
@@ -167,11 +167,20 @@ object c inherits Objeto(position = game.at(11, 9), image = "cueva.png"){
 
 }
 
-object t {
+object t { // Totem
 
 	method generar(position) {
 		game.addVisual(new Objeto(position = position, image = "totem.png"))
 	}
 
 }
+
+object s { // Estalactita
+
+	method generar(position) {
+		game.addVisual(new Objeto(position = position, image = "estalactita.png"))
+	}
+
+}
+
 
