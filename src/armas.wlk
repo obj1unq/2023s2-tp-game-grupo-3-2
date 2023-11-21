@@ -7,7 +7,7 @@ class Arma {
 
 	var property danio
 	var velocidad
-	const maxDanio 
+	const maxDanio
 	const maxVelocidad = 100
 	var property position
 
@@ -46,12 +46,12 @@ class Arma {
 
 }
 
-class FuegoAzul inherits Arma(danio = 5,maxDanio = 10, velocidad = 300) {
-	
+class FuegoAzul inherits Arma(danio = 5, maxDanio = 10, velocidad = 300) {
+
 	const property efectoVelocidad = 0
 	const duenio = mago
 
-	override method image() = "fuegoAzul.png" 
+	override method image() = "fuegoAzul.png"
 
 	override method accion(direccion) {
 		llevada.cambiarEstado(duenio)
@@ -91,20 +91,24 @@ class FuegoAzul inherits Arma(danio = 5,maxDanio = 10, velocidad = 300) {
 
 }
 
-class FuegoVerde inherits FuegoAzul(danio = 2, maxDanio = 5, velocidad = 200, efectoVelocidad = 50 ) {
-	// que sea verde 
+class FuegoVerde inherits FuegoAzul(danio = 2, maxDanio = 5, velocidad = 200, efectoVelocidad = 50) {
+
 	var contador = 5
-	
-	override method avanzar(direccion){
-		if (contador != 0){
-			contador --
+
+	override method image() = "fuegoVerde.png"
+
+	override method avanzar(direccion) {
+		if (contador != 0) {
+			contador--
 			position = direccion.siguiente(self.position())
 			self.eliminarDelTablero()
-		}else { contador = 5 
-				game.removeTickEvent("lanzar")
-				administradorFuego.quitar(self)
-			}
+		} else {
+			contador = 5
+			game.removeTickEvent("lanzar")
+			administradorFuego.quitar(self)
+		}
 	}
+
 }
 
 object administradorFuego {
@@ -252,7 +256,7 @@ class Fuego {
 
 	method contacto(personaje) {
 	}
-	
+
 }
 
 object fireball {
