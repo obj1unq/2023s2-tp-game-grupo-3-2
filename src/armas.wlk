@@ -3,27 +3,63 @@ import personajePrincipal.*
 import direcciones.*
 import randomizer.*
 
-class Lanza {
+class Arma {
 
-	var property danio = 5
-	var property position
+	var property danio
+	var velocidad
 	const maxDanio = 10
-	const duenio = mago
+	const maxVelocidad = 100
+	var property position
 
-	method image() = "fuegoAzul.png"
+	method image()
+
+	method accion(dirrecion)
 
 	method aumentarSuDanio(_danio) {
 		danio = (danio + _danio).min(maxDanio)
 	}
 
-	method accion(direccion) {
+	method aumentarSuVelocidad(_velocidad) {
+		velocidad = (velocidad - _velocidad).max(maxVelocidad)
+	}
+
+	method contacto(personaje) {
+	// agrege este mensaje por sino sale pantalla de error.
+	}
+
+	method impactoDeBala(elemento) {
+	}
+
+	method impactoDeFuego(elemento) {
+	// para que no salga mensaje de error. 
+	}
+
+	method esUnArma() {
+		return true
+	}
+
+	method solido() {
+		return false
+	}
+
+	method imagenMagoConArma()
+
+}
+
+class FuegoAzul inherits Arma(danio = 5, velocidad = 300) {
+
+	const duenio = mago
+
+	override method image() = "fuegoAzul.png"
+
+	override method accion(direccion) {
 		llevada.cambiarEstado(duenio)
 		self.serLanzada(direccion)
 	}
 
 	method serLanzada(direccion) {
 		game.onTick(300, "lanzar", { self.avanzar(direccion)})
-		game.onCollideDo(self, { zombie => zombie.impactoDeLanza(self)})
+		game.onCollideDo(self, { zombie => zombie.impactoDeFuego(self)})
 	}
 
 	method avanzar(direccion) {
@@ -44,40 +80,24 @@ class Lanza {
 	method eliminarSiEstoy() {
 		if (self.estoyEnElTablero()) {
 			game.removeTickEvent("lanzar")
-			generadorLanzas.quitar(self)
+			administradorFuegoAzul.quitar(self)
 		}
 	}
 
-	method contacto(personaje) {
-	// Sirve para que no salga el mensaje error
-	}
-
-	method esUnArma() {
-		return true
-	}
-
-	method impactoDeBala(elemento) {
-	// Sirve para que no salga el mensaje error
-	}
-
-	method solido() {
-		return false
-	}
-
-	method imagenMagoConArma() {
+	override method imagenMagoConArma() {
 		return "mago_lanza.png"
 	}
 
 }
 
-object generadorLanzas {
+object administradorFuegoAzul {
 
 	var property lanzas = []
 	const cantidadMaxima = 3
 
 	method generarLanzas() {
 		if (lanzas.size() < cantidadMaxima) {
-			const lanza = new Lanza(position = randomizer.emptyPosition())
+			const lanza = new FuegoAzul(position = randomizer.emptyPosition())
 			game.addVisual(lanza)
 			lanzas.add(lanza)
 		}
@@ -93,61 +113,23 @@ object generadorLanzas {
 
 }
 
-object armaFuego {
+object armaFuego inherits Arma(danio = 2, maxDanio = 5, velocidad = 250, position = game.at(3, 8)) {
 
-	var danio = 2
-	var velocidad = 250
-	const maxDanio = 10
-	const maxVelocidad = 100
-	var property position = game.at(3, 8)
+	override method image() = "fuegoRojo.png"
 
-	method image() = "fuegoRojo.png"
-
-	method accion(direccion) {
+	override method accion(direccion) {
 		self.generarBalacera(direccion)
 	}
 
 	method generarBalacera(direccion) {
-		// Ahora sabe la direccion en cual tiene q ir x parametro.
 		const nuevaBala = new Fuego(position = direccion.siguiente(self.position()), imagenDisparo = fireball, danio = danio)
-		nuevaBala.disparar(direccion,velocidad)
+		nuevaBala.disparar(direccion, velocidad)
 	}
 
-	method aumentarSuDanio(_danio) {
-		danio = (danio + _danio).min(maxDanio)
-	}
-
-	method aumentarSuVelocidad(_velocidad) {
-		velocidad = (velocidad - _velocidad).max(maxVelocidad)
-	}
-
-	method contacto(personaje) {
-	// agrege este mensaje por sino sale pantalla de error.
-	}
-
-	method impactoDeBala(elemento) {
-	}
-
-	method esUnArma() {
-		return true
-	}
-
-	method solido() {
-		return false
-	}
-
-	method imagenMagoConArma() {
+	override method imagenMagoConArma() {
 		return "mago_fuego.png"
 	}
 
-/*
- * method validarBalacera() {
- * 	propetario.validarBalacera()
- * 	if (propetario.armaDePersonaje() != self) {
- * 		self.error("No me esta llevando")
- * 	}
- * 	
- } */
 }
 
 object llevada {
@@ -188,8 +170,8 @@ object libre {
 	}
 
 	method accion(personaje) {
-		// no deberia hacer nada en el estado libre ??? 
-		personaje.armaDePersonaje().accion(personaje.ultimaDireccion())
+	// no deberia hacer nada en el estado libre ??? 
+	// personaje.armaDePersonaje().accion(personaje.ultimaDireccion())
 	}
 
 	method validarBalacera() {
@@ -211,7 +193,7 @@ class Fuego {
 
 	method image() = imagenDisparo.image()
 
-	method disparar(direccion,velocidad) {
+	method disparar(direccion, velocidad) {
 		game.addVisual(self)
 		game.onTick(velocidad, "disparar", { self.avanzar(direccion)})
 		game.onCollideDo(self, { zombie => zombie.impactoDeBala(self)})
@@ -229,7 +211,6 @@ class Fuego {
 	}
 
 	method estoyEnElTablero() {
-		
 		return game.hasVisual(self)
 	}
 
@@ -242,6 +223,10 @@ class Fuego {
 
 	method impactoDeBala(elemento) {
 	// Sirve para que no salga el mensaje error
+	}
+
+	method impactoDeFuego(elemento) {
+	// para que no salga mensaje de error. 
 	}
 
 	method solido() {

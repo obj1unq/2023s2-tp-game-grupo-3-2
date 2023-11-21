@@ -96,7 +96,7 @@ object mago inherits Personaje {
 		llevando.accion(self)
 	}
 
-	override method impactoDeLanza(elemento) {
+	override method impactoDeFuego(elemento) {
 	}
 
 }
