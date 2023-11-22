@@ -5,6 +5,7 @@ import zombies.*
 import randomizer.*
 import armas.*
 import mapa.*
+import nivel.*
 
 object mago inherits Personaje {
 
@@ -46,7 +47,8 @@ object mago inherits Personaje {
 	}
 
 	override method morir() {
-		game.stop()
+		//game.stop()
+		escenario.perdiste()
 	}
 
 	method tomarPocion(pocion) {
