@@ -129,7 +129,7 @@ class EnemigoMago inherits Enemigo(vida = 20, danio = 2, movimiento = movimiento
 
 	override method atacar() {
 		const nuevaBala = new Fuego(position = self.position().left(1), imagenDisparo = charge, danio = danio)
-		nuevaBala.disparar(izquierda, velocidadAtaque) // x ahora sera un numero magico
+		nuevaBala.disparar(izquierda, velocidadAtaque) 
 	}
 
 }
@@ -301,7 +301,7 @@ object magoFactorySur {
 
 }
 
-object administradorMagosFinal inherits AuxiliarDeAdministradores {
+object administradorMagosFinal inherits AuxiliarDeAdministradores(cantidadMaxima = 2) {
 
 	const factoryMagos = [ enemigoMagoFactory, magoFactoryEste, magoFactoryNorte, magoFactorySur ]
 
