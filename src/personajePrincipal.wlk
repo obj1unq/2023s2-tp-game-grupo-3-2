@@ -66,7 +66,6 @@ object mago inherits Personaje {
 	}
 
 	method agarrar() {
-		self.cambiarArma()
 		self.validarPosition()
 		llevando.cambiarEstado(self)
 	}
