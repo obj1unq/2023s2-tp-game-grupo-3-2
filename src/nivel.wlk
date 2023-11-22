@@ -69,6 +69,14 @@ class Nivel {
         game.onTick(2000, "LANZAS", {administradorFuego.generarFuegoAzul()})
     	
     }
-
+	
 }
-
+class Nivel2 inherits Nivel {
+	
+	override method administradores(){
+		administradorJefe.generarJefeFinal()
+		game.onTick(1000, "ATAQUEJEFE",{administradorJefe.ataqueJefe()})
+		game.onTick(2000, "POCIONES", {administradorPociones.generarPociones()})
+        game.onTick(2000, "LANZAS", {administradorFuego.generarFuegoAzul()})
+	}
+}

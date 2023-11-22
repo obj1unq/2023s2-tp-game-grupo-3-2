@@ -48,7 +48,7 @@ object mapaNivel2 inherits Mapa(celdas = [
 		[_,_,s,_,_,_,_,_,_,_,_,_,_,_,_],
 		[_,_,_,_,_,_,_,_,_,_,_,s,_,_,_],
 		[_,_,_,_,_,_,s,_,_,_,_,_,_,_,_],
-		[_,_,_,_,_,_,_,_,_,_,_,_,_,_,_],
+		[_,_,f,_,_,_,_,_,_,_,_,_,_,_,_],
 		[_,_,_,_,_,_,_,_,_,_,_,_,_,_,_],
 		[_,_,_,s,_,_,_,_,_,_,_,_,_,_,_],
 		[_,_,_,_,_,_,_,_,_,_,s,_,_,_,_],
@@ -75,8 +75,8 @@ class Objeto {
 	method solido() {
 		return true
 	}
-    method impactoDeLanza(elemento) { // Elimina imagen y evento de disparo si colisiona con objeto
-		game.removeVisual(elemento)
+    method impactoDeFuego(elemento) { // Elimina imagen y evento de disparo si colisiona con objeto
+		administradorFuego.quitar(elemento) // Necesita conocer el administrador
 		game.removeTickEvent("lanzar")
 	}
 }
@@ -175,9 +175,9 @@ object c inherits Objeto(position = game.at(11, 9), image = "cueva.png"){  // Cu
 	
 	override method contacto(personaje) {
 		if (monedero.cantidadMonedas() > monedasAJuntar) {
-			const segundoNivel = new Nivel(mapa = mapaNivel2, imagenFondo = game.boardGround("background600x480_cueva.png"))
+			const segundoNivel = new Nivel2(mapa = mapaNivel2, imagenFondo = game.boardGround("background600x480_cueva.png"))
             escenario.inciarNivel(segundoNivel)
-			
+		
 		}else {
 			self.error("no tienes monedas suficientes")
 		}
