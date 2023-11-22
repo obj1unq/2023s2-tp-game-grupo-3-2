@@ -4,6 +4,7 @@ import direcciones.*
 import elementos.*
 import armas.*
 import randomizer.*
+import nivel.*
 
 class Personaje {
 
@@ -212,11 +213,15 @@ object administradorEnemigos {
 
 }
 
-object enemigoJefe inherits Enemigo(danio = 3, vida = 100, moverActual = 500, moverMax = 100, moverMin = 1000, position = randomizer.emptyPosition(), movimiento = new MovimientoLibreX()) {
+object enemigoJefe inherits Enemigo(danio = 3, vida = 1, moverActual = 500, moverMax = 100, moverMin = 1000, position = randomizer.emptyPosition(), movimiento = new MovimientoLibreX()) {
 
 	method image() = "orco.png"
 
 	override method text() = self.vida().toString() + "/100"
+	
+	override method morir() {
+		escenario.ganaste()
+	}
 
 }
 

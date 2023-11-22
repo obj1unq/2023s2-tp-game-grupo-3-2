@@ -20,9 +20,18 @@ object escenario {
         self.inciarNivel(segundoNivel)
 	}
 	method perdiste(){
-		const gameOver = new GameOver() 
+		const gameOver = new PortadaNivel(fondo= fondoGameOver) 
 		self.inciarNivel(gameOver)
 	}
+	method ganaste() {
+		const winner = new PortadaNivel(fondo= fondoWinner) 
+		self.inciarNivel(winner)
+	}
+	method empezar() {
+		const comienzo = new PortadaNivel(fondo= inicioJuego) 
+		self.inciarNivel(comienzo)
+	}
+		
 }
 class Nivel {
 
@@ -126,7 +135,8 @@ object fondoTierra  {
 	}
 
 }
-class GameOver inherits Nivel(mapa=null) {
+class PortadaNivel inherits Nivel(mapa=null) {
+	const fondo 
 	
 	override method iniciarNivel() {
 		self.removerNivel()
@@ -134,11 +144,12 @@ class GameOver inherits Nivel(mapa=null) {
 		self.configuracionTeclado()
 	}	
 	override method configuracionFondo(){
-		game.addVisual(fondoGameOver)		
+		game.addVisual(fondo)		
 	}
 	override method configuracionTeclado() {
 		const primerNivel = new Nivel1()
 		keyboard.x().onPressDo({ escenario.inciarNivel(primerNivel)})
+		keyboard.z().onPressDo({ game.stop()})
 	}
 	override method vaciarAdministradores() {
 		
@@ -155,5 +166,20 @@ object fondoGameOver {
 	 method chocasteCon(personaje) {
 	}
 }	   
+object fondoWinner {
+	var property position = game.at(0, 0)
 
+	 method image() = "background600x480_ganaste.png"
+
+	 method chocasteCon(personaje) {
+	}
+}
+object inicioJuego {
+	var property position = game.at(0, 0)
+
+	 method image() = "background600x480_gameover.png"
+
+	 method chocasteCon(personaje) {
+	}
+}	
 
