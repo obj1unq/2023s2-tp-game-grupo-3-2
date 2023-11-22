@@ -67,16 +67,15 @@ class Objeto {
 	method contacto(personaje) {
 	}
 
-	method impactoDeBala(elemento) { // Elimina imagen y evento de disparo si colisiona con objeto
-		game.removeVisual(elemento)
-		game.removeTickEvent("disparar")
+	method impactoDeBala(elemento) { // Elimina imagen de bala
+		elemento.eliminarSiEstoy()
 	}
 
 	method solido() {
 		return true
 	}
-    method impactoDeFuego(elemento) { // Elimina imagen y evento de disparo si colisiona con objeto
-		administradorFuegos.quitar(elemento) // Necesita conocer el administrador
+    method impactoDeFuego(elemento) { // Elimina imagen de fuego
+  		administradorFuegos.quitar(elemento) // Necesita conocer el administrador
 	}
 }
 
