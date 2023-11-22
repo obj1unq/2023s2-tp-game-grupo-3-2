@@ -261,7 +261,9 @@ class Fuego {
 
 	method contacto(personaje) {
 	}
-
+    method esUnArma() {
+		return false // no es un arma es un proyectil
+	}
 }
 
 object fireball {
