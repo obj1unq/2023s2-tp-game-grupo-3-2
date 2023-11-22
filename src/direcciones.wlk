@@ -26,7 +26,6 @@ object izquierda {
 
 }
 
-// Para ajustar el banear unicamente cambie la que abajo no pase de la segunda celda.
 object abajo {
 
 	method siguiente(posicion) {
@@ -42,7 +41,7 @@ object abajo {
 object arriba {
 
 	method siguiente(posicion) {
-		if (posicion.y() < 12) { // Limite de mapa en eje Y
+		if (posicion.y() < 12) {
 			return posicion.up(1)
 		} else {
 			return posicion.up(0)
@@ -51,10 +50,6 @@ object arriba {
 
 }
 
-// Hay codigo repetido pero es una solucion, hay q mejorarla.
-// Esto nos permite jugar mas con los movimientos de los enemigos
-// Ya que nosotros asignamos que tipo de movimiento tenga.
-// Ahora es una clase ya que necesito que cambie para no crear muchos if anidados.
 class MovimientoLibreX {
 
 	method mover(enemigo, personaje) {
@@ -138,7 +133,7 @@ class MovimientoLibreX {
 	}
 
 }
-// Apesar de ser parecido, este se mueve por el ejeY y cambia cuando colisiona con un objeto.
+
 object movimientoLibreY inherits MovimientoLibreX {
 
 	const movimientoX = new MovimientoLibreX()
@@ -151,7 +146,6 @@ object movimientoLibreY inherits MovimientoLibreX {
 		}
 	}
 
-	// Es mucho codigo repetido, pero es una solucion.
 	override method moverDerechaColisionX(enemigo, personaje) {
 		const posicion = enemigo.position().right(1)
 		return if (not tablero.puedeOcupar(posicion)) {
@@ -224,8 +218,7 @@ object movimientoVertical {
 object movimientoNulo {
 
 	method mover(enemigo, personaje) {
-	// literal no hace nada, unicamente sirve para que el enemigo de Soporte este quieto
-	// por el momento lo dejaremos asi.
+	// sirve para que el enemigo de Soporte este quieto
 	}
 
 }

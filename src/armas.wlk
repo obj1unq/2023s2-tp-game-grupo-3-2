@@ -42,8 +42,6 @@ class Arma {
 		return false
 	}
 
-	method imagenMagoConArma()
-
 }
 
 class FuegoAzul inherits Arma(danio = 10, maxDanio = 15, velocidad = 100) {
@@ -83,10 +81,6 @@ class FuegoAzul inherits Arma(danio = 10, maxDanio = 15, velocidad = 100) {
 			game.removeTickEvent("lanzar")
 			administradorFuego.quitar(self)
 		}
-	}
-
-	override method imagenMagoConArma() {
-		return "mago_lanza.png"
 	}
 
 }
@@ -147,10 +141,6 @@ object armaFuego inherits Arma(danio = 2, maxDanio = 5, velocidad = 250, positio
 		nuevaBala.disparar(direccion, velocidad)
 	}
 
-	override method imagenMagoConArma() {
-		return "mago_fuego.png"
-	}
-
 }
 
 object llevada {
@@ -166,7 +156,6 @@ object llevada {
 	}
 
 	method accion(personaje) {
-		// self.cambiarEstado(personaje) esto tampoco sirve, solamente la lanza cambia el estado al personaje 
 		personaje.armaDePersonaje().accion(personaje.ultimaDireccion())
 	}
 
@@ -205,7 +194,6 @@ object libre {
 
 }
 
-// Ahora a la bala le asigno el danio desde el arma, pasando el danio que tiene el arma 
 class Fuego {
 
 	var property danio

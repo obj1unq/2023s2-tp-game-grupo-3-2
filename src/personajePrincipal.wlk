@@ -60,13 +60,15 @@ object mago inherits Personaje {
 	method aumentarDanio(danio) {
 		armaDePersonaje.aumentarSuDanio(danio)
 	}
-	method aumentarVelocidadArma(velocidad){
+
+	method aumentarVelocidadArma(velocidad) {
 		armaDePersonaje.aumentarSuVelocidad(velocidad)
 	}
+
 	method agarrar() {
 		self.validarPosition()
 		llevando.cambiarEstado(self)
-		//armaDePersonaje.cambioVisualArma(llevando)
+	// armaDePersonaje.cambioVisualArma(llevando)
 	}
 
 	method cambiarArma() {
@@ -76,20 +78,11 @@ object mago inherits Personaje {
 		}
 	}
 
-//	method lanzar() { esto ya no sirve
-//		self.validarPosition()
-//		llevando.lanzar(self)
-//	}
-
 	method validarPosition() {
 		if (position != armaDePersonaje.position()) {
 			self.error("No estoy donde puedo hacerlo")
 		}
 	}
-
-//	method validarBalacera() { ahora solamente necesita saber si tiene el arma encima
-//		llevando.validarBalacera()
-//	}
 
 	method tirarHechizo() {
 		self.validarPosition()
