@@ -107,6 +107,8 @@ class Nivel2 inherits Nivel (mapa = mapaNivel2){ //, imagenFondo = game.boardGro
 	   override method administradores() {
 	   	administradorJefe.generarJefeFinal()
 		game.onTick(1000, "ATAQUEJEFE",{administradorJefe.ataqueJefe()})
+		game.onTick(5000, "ORDAMAGOS", {administradorMagosFinal.generarEnemigos()})
+		game.onTick(3000, "ATAQUEMAGOS", {administradorMagosFinal.ataqueEnemigo()})
 		game.onTick(2000, "POCIONES", {administradorPociones.generarPociones()})
         game.onTick(2000, "LANZAS", {administradorFuegos.generarFuegos()})
 	   }

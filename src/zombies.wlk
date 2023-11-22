@@ -31,7 +31,7 @@ class Personaje {
 	// agrege este mensaje por sino sale pantalla de error.
 	}
 
-	method impactoDeFuego(elemento) 
+	method impactoDeFuego(elemento)
 
 	method solido() {
 		return false
@@ -229,6 +229,83 @@ object administradorJefe {
 
 	method ataqueJefe() {
 		enemigoJefe.atacar()
+	}
+
+}
+// Se tiene que crear nuevos magos para ajustar donde disparan.
+class EnemigoMagoEste inherits EnemigoMago {
+
+	override method atacar() {
+		const nuevaBala = new Fuego(position = self.position().right(1), imagenDisparo = charge, danio = danio)
+		nuevaBala.disparar(derecha, 300) // x ahora sera un numero magico
+	}
+
+}
+
+class EnemigoMagoNorte inherits EnemigoMago {
+
+	override method atacar() {
+		const nuevaBala = new Fuego(position = self.position().down(1), imagenDisparo = charge, danio = danio)
+		nuevaBala.disparar(abajo, 300) // x ahora sera un numero magico
+	}
+
+}
+
+class EnemigoMagoSur inherits EnemigoMago {
+
+	override method atacar() {
+		const nuevaBala = new Fuego(position = self.position().up(1), imagenDisparo = charge, danio = danio)
+		nuevaBala.disparar(arriba, 300) // x ahora sera un numero magico
+	}
+
+}
+
+object magoFactoryEste {
+
+	method nuevoEnemigo() {
+		return new EnemigoMagoEste(position = game.at(1, randomizer.yCualquiera()))
+	}
+
+}
+
+object magoFactoryNorte {
+
+	method nuevoEnemigo() {
+		return new EnemigoMagoNorte(position = game.at(randomizer.xCualquiera(), 10), movimiento = movimientoHorizontal)
+	}
+
+}
+
+object magoFactorySur {
+
+	method nuevoEnemigo() {
+		return new EnemigoMagoSur(position = game.at(randomizer.xCualquiera(), 2),movimiento = movimientoHorizontal)
+	}
+
+}
+
+object administradorMagosFinal {
+
+	const magosEnemigos = []
+	const cantidadMaxima = 4
+	const factoryMagos = [ enemigoMagoFactory, magoFactoryEste, magoFactoryNorte, magoFactorySur ]
+
+	method seleccionFactory(){
+		return factoryMagos.anyOne()
+	}
+	method generarEnemigos() {
+		if (magosEnemigos.size() < cantidadMaxima) {
+			const nuevoMago = self.seleccionFactory().nuevoEnemigo()
+			game.addVisual(nuevoMago)
+			magosEnemigos.add(nuevoMago)
+			nuevoMago.generarOnTicksPerseguir()
+		}
+	}
+
+	method ataqueEnemigo() {
+		if (magosEnemigos.size() > 0) {
+			magosEnemigos.forEach({ enemigo => enemigo.atacar()})
+		}
 	}
 
 }
