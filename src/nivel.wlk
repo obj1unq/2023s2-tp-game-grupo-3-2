@@ -15,10 +15,9 @@ object escenario {
 		nivel = nuevoNivel
 	}
 	method pasarNivel() {
-		//const segundoNivel = new Nivel2(mapa = mapaNivel2, imagenFondo = game.boardGround("background600x480_cueva.png"))
-        const segundoNivel = new Nivel2()
-        self.inciarNivel(segundoNivel)
-	}
+	   const segundoNivel = new Nivel2()
+	   self.inciarNivel(segundoNivel)
+ 	}
 	method perdiste(){
 		const gameOver = new PortadaNivel(fondo= fondoGameOver) 
 		self.inciarNivel(gameOver)
@@ -36,7 +35,6 @@ object escenario {
 class Nivel {
 
 	const property mapa
-	//const property imagenFondo
 
 	method configuracionTeclado() { // Configuración de teclado para todos los niveles
 		keyboard.up().onPressDo({ mago.mover(arriba)})
@@ -45,11 +43,9 @@ class Nivel {
 		keyboard.right().onPressDo({ mago.mover(derecha)})
 		keyboard.w().onPressDo({ mago.tirarHechizo()})
 		keyboard.a().onPressDo({ mago.agarrar()})
-		//keyboard.z().onPressDo({ mago.lanzar()}) ya no hace falta
-		//keyboard.x().onPressDo({ mago.cambiarArma()})  ya no hace falta
 	}
 
-	method iniciarNivel() { // Iniciar nivel desde main
+	method iniciarNivel() { 
 	    monedero.cantidadMonedas(0)
 	    mago.vida(10)
 	    self.removerNivel()
@@ -78,19 +74,21 @@ class Nivel {
 	
 }
 
-class Nivel1 inherits Nivel (mapa = mapaNivel1) {//, imagenFondo = game.boardGround("background600x480_noche.png")) {
-       
+class Nivel1 inherits Nivel (mapa = mapaNivel1) {
+	
        override method 	vaciarAdministradores() {
        	    administradorEnemigos.enemigos().clear()
     	    administradorPociones.pociones().clear()
     	    administradorFuegos.fuegos().clear()
        }
+       
 	   override method administradores() {
 	   	   game.onTick(700, "HORDA", {administradorEnemigos.generarEnemigos()})
            game.onTick(2000, "MORDER", {administradorEnemigos.ataqueEnemigo()})
            game.onTick(2000, "POCIONES", {administradorPociones.generarPociones()})
            game.onTick(2000, "LANZAS", {administradorFuegos.generarFuegos()})
 	   }
+	   
 	   override method configuracionFondo(){
 		   game.addVisual(fondoPasto)	
 	}
@@ -106,13 +104,14 @@ object fondoPasto  {
 
 }
 
-class Nivel2 inherits Nivel (mapa = mapaNivel2){ //, imagenFondo = game.boardGround("background600x480_cueva.png")) {
-       
+class Nivel2 inherits Nivel (mapa = mapaNivel2){ 
+	
        override method 	vaciarAdministradores() {
        	    administradorEnemigos.enemigos().clear()
     	    administradorPociones.pociones().clear()
     	    administradorFuegos.fuegos().clear()
        }
+       
 	   override method administradores() {
 	   	administradorJefe.generarJefeFinal()
 		game.onTick(1000, "ATAQUEJEFE",{administradorJefe.ataqueJefe()})
@@ -143,29 +142,37 @@ class PortadaNivel inherits Nivel(mapa=null) {
 		self.configuracionFondo()
 		self.configuracionTeclado()
 	}	
+	
 	override method configuracionFondo(){
 		game.addVisual(fondo)		
 	}
+	
 	override method configuracionTeclado() {
 		const primerNivel = new Nivel1()
 		keyboard.x().onPressDo({ escenario.inciarNivel(primerNivel)})
 		keyboard.z().onPressDo({ game.stop()})
 	}
+	
 	override method vaciarAdministradores() {
 		
 	}
+	
 	override method administradores() {
 		
 	}	
 }
+
 object fondoGameOver {
+	
 	var property position = game.at(0, 0)
 
 	 method image() = "background600x480_gameover.png"
 
 	 method chocasteCon(personaje) {
 	}
-}	   
+	
+}	
+   
 object fondoWinner {
 	var property position = game.at(0, 0)
 
@@ -173,7 +180,9 @@ object fondoWinner {
 
 	 method chocasteCon(personaje) {
 	}
+	
 }
+
 object inicioJuego {
 	var property position = game.at(0, 0)
 
@@ -181,5 +190,6 @@ object inicioJuego {
 
 	 method chocasteCon(personaje) {
 	}
+	
 }	
 

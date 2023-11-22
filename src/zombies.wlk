@@ -138,7 +138,6 @@ class EnemigoSoporte inherits Enemigo(danio = 0, movimiento = movimientoNulo, vi
 	override method text() = self.vida().toString() + "/30"
 
 	// Debe conocer los zombies en el mapa directamente para aplicarle su efecto especial.
-	// No es correcto el usar el metodo ataque pero es algo a mejorar.
 	override method atacar() {
 		administradorEnemigos.enemigos().forEach({ enemigo => enemigo.aumentarMovimientoYAtaque(reducirTiempoMovimiento, aumentarDanio)})
 	}
