@@ -107,15 +107,15 @@ describe "test del juego" {
         	assert.equals(9, mago.vida() )
         }
         test "mago es herido con un proyetil" {
-        	assert.throwsException({mago.impactoDeBala(proyectil)})
+        	mago.impactoDeBala(proyectil)
         	assert.equals(8, mago.vida() )
         }
         test "enemigo normal es herido con proyectil" {
-        	assert.throwsException({enemigoNormal.impactoDeBala(proyectil)})
+        	enemigoNormal.impactoDeBala(proyectil)
         	assert.equals(8, enemigoNormal.vida() )
         }
         test "enemigo mago es herido con proyectil" {
-        	assert.throwsException({enemigoMago.impactoDeBala(proyectil)})
+        	enemigoMago.impactoDeBala(proyectil)
         	assert.equals(18, enemigoMago.vida() )
         }
         test "enemigo normal muere y deja una moneda" {
