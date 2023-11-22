@@ -37,6 +37,7 @@ class Nivel {
 	}
 
 	method iniciarNivel() { // Iniciar nivel desde main
+	    monedero.cantidadMonedas(0)
 	    self.removerNivel()
 		self.instanciarObjetosFijos()
 		self.configuracionTeclado()
