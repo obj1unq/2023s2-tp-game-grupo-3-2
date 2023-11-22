@@ -104,9 +104,11 @@ class Enemigo inherits Personaje {
 		moverActual = (moverActual + aumentar).min(moverMin)
 		game.onTick(moverActual, "PERSEGUIR" + self.identity(), { self.mover()})
 	}
-	method moverActual(){ // unico metodo para los tests
-		return moverActual 
+
+	method moverActual() { // unico metodo para los tests
+		return moverActual
 	}
+
 }
 
 class EnemigoNormal inherits Enemigo(danio = 1, movimiento = new MovimientoLibreX()) {
@@ -177,13 +179,10 @@ object enemigoSoporteFactory {
 
 }
 
-object administradorEnemigos {
-
-	var property enemigos = #{}
-	const cantidadMaxima = 4
+object administradorEnemigos inherits AuxiliarDeAdministradores {
 
 	// Enemigos con cierta probabilidad, ya que el soperte y el mago son dificiles.
-	method ramdomFactoryEnemigo() {
+	override method seleccionFactory() {
 		const x = (1 .. 100).anyOne()
 		return if (x < 80) { // un 80% de que sea normal
 			enemigoNormalFactory
@@ -194,9 +193,18 @@ object administradorEnemigos {
 		}
 	}
 
+}
+
+class AuxiliarDeAdministradores {
+
+	var property enemigos = []
+	const cantidadMaxima = 4
+
+	method seleccionFactory()
+
 	method generarEnemigos() {
 		if (enemigos.size() < cantidadMaxima) {
-			const nuevoEnemigo = self.ramdomFactoryEnemigo().nuevoEnemigo()
+			const nuevoEnemigo = self.seleccionFactory().nuevoEnemigo()
 			game.addVisual(nuevoEnemigo)
 			enemigos.add(nuevoEnemigo)
 			nuevoEnemigo.generarOnTicksPerseguir()
@@ -216,7 +224,7 @@ object administradorEnemigos {
 
 }
 
-object enemigoJefe inherits Enemigo(danio = 3,danioMax = 5, vida = 100, moverActual = 500, moverMax = 100, moverMin = 1000, position = randomizer.emptyPosition(), movimiento = new MovimientoLibreX()) {
+object enemigoJefe inherits Enemigo(danio = 3, danioMax = 5, vida = 100, moverActual = 500, moverMax = 100, moverMin = 1000, position = randomizer.emptyPosition(), movimiento = new MovimientoLibreX()) {
 
 	method image() = "orco.png"
 
@@ -246,7 +254,7 @@ class EnemigoMagoEste inherits EnemigoMago {
 
 	override method atacar() {
 		const nuevaBala = new Fuego(position = self.position().right(1), imagenDisparo = charge, danio = danio)
-		nuevaBala.disparar(derecha, velocidadAtaque) 
+		nuevaBala.disparar(derecha, velocidadAtaque)
 	}
 
 }
@@ -264,7 +272,7 @@ class EnemigoMagoSur inherits EnemigoMago {
 
 	override method atacar() {
 		const nuevaBala = new Fuego(position = self.position().up(1), imagenDisparo = charge, danio = danio)
-		nuevaBala.disparar(arriba, velocidadAtaque) 
+		nuevaBala.disparar(arriba, velocidadAtaque)
 	}
 
 }
@@ -293,29 +301,12 @@ object magoFactorySur {
 
 }
 
-object administradorMagosFinal {
+object administradorMagosFinal inherits AuxiliarDeAdministradores {
 
-	const magosEnemigos = []
-	const cantidadMaxima = 2
 	const factoryMagos = [ enemigoMagoFactory, magoFactoryEste, magoFactoryNorte, magoFactorySur ]
 
-	method seleccionFactory() {
+	override method seleccionFactory() {
 		return factoryMagos.anyOne()
-	}
-
-	method generarEnemigos() {
-		if (magosEnemigos.size() < cantidadMaxima) {
-			const nuevoMago = self.seleccionFactory().nuevoEnemigo()
-			game.addVisual(nuevoMago)
-			magosEnemigos.add(nuevoMago)
-			nuevoMago.generarOnTicksPerseguir()
-		}
-	}
-
-	method ataqueEnemigo() {
-		if (magosEnemigos.size() > 0) {
-			magosEnemigos.forEach({ enemigo => enemigo.atacar()})
-		}
 	}
 
 }
