@@ -158,6 +158,9 @@ object armaFuego inherits Arma(danio = 2, maxDanio = 5, velocidad = 250, positio
 		const nuevaBala = new Fuego(position = direccion.siguiente(self.position()), imagenDisparo = fireball, danio = danio)
 		nuevaBala.disparar(direccion, velocidad)
 	}
+	method velocidad(){ // metodo unico para los test
+		return velocidad 
+	}
 
 }
 

@@ -43,7 +43,7 @@ class PocionRoja inherits Pocion(imagenPocion = "pocion_salud.png", vidaOtorgada
 // Pocion de salud 	
 }
 
-class PocionAzul inherits Pocion(imagenPocion = "pocion_azul.png", vidaOtorgada = 3, velocidadAdicional = 10) {
+class PocionAzul inherits Pocion(imagenPocion = "pocion_azul.png", vidaOtorgada = 3, velocidadAdicional = 25) {
 
 // Pocion de velocidad
 }

@@ -104,7 +104,9 @@ class Enemigo inherits Personaje {
 		moverActual = (moverActual + aumentar).min(moverMin)
 		game.onTick(moverActual, "PERSEGUIR" + self.identity(), { self.mover()})
 	}
-
+	method moverActual(){ // unico metodo para los tests
+		return moverActual 
+	}
 }
 
 class EnemigoNormal inherits Enemigo(danio = 1, movimiento = new MovimientoLibreX()) {
@@ -117,13 +119,15 @@ class EnemigoNormal inherits Enemigo(danio = 1, movimiento = new MovimientoLibre
 
 class EnemigoMago inherits Enemigo(vida = 20, danio = 2, movimiento = movimientoVertical) {
 
+	const velocidadAtaque = 300
+
 	method image() = "mago3.png"
 
 	override method text() = self.vida().toString() + "/20"
 
 	override method atacar() {
 		const nuevaBala = new Fuego(position = self.position().left(1), imagenDisparo = charge, danio = danio)
-		nuevaBala.disparar(izquierda, 250) // x ahora sera un numero magico
+		nuevaBala.disparar(izquierda, velocidadAtaque) // x ahora sera un numero magico
 	}
 
 }
@@ -212,12 +216,12 @@ object administradorEnemigos {
 
 }
 
-object enemigoJefe inherits Enemigo(danio = 3, vida = 100, moverActual = 500, moverMax = 100, moverMin = 1000, position = randomizer.emptyPosition(), movimiento = new MovimientoLibreX()) {
+object enemigoJefe inherits Enemigo(danio = 3,danioMax = 5, vida = 100, moverActual = 500, moverMax = 100, moverMin = 1000, position = randomizer.emptyPosition(), movimiento = new MovimientoLibreX()) {
 
 	method image() = "orco.png"
 
 	override method text() = self.vida().toString() + "/100"
-	
+
 	override method morir() {
 		escenario.ganaste()
 	}
@@ -236,12 +240,13 @@ object administradorJefe {
 	}
 
 }
+
 // Se tiene que crear nuevos magos para ajustar donde disparan.
 class EnemigoMagoEste inherits EnemigoMago {
 
 	override method atacar() {
 		const nuevaBala = new Fuego(position = self.position().right(1), imagenDisparo = charge, danio = danio)
-		nuevaBala.disparar(derecha, 300) // x ahora sera un numero magico
+		nuevaBala.disparar(derecha, velocidadAtaque) 
 	}
 
 }
@@ -250,7 +255,7 @@ class EnemigoMagoNorte inherits EnemigoMago {
 
 	override method atacar() {
 		const nuevaBala = new Fuego(position = self.position().down(1), imagenDisparo = charge, danio = danio)
-		nuevaBala.disparar(abajo, 300) // x ahora sera un numero magico
+		nuevaBala.disparar(abajo, velocidadAtaque)
 	}
 
 }
@@ -259,7 +264,7 @@ class EnemigoMagoSur inherits EnemigoMago {
 
 	override method atacar() {
 		const nuevaBala = new Fuego(position = self.position().up(1), imagenDisparo = charge, danio = danio)
-		nuevaBala.disparar(arriba, 300) // x ahora sera un numero magico
+		nuevaBala.disparar(arriba, velocidadAtaque) 
 	}
 
 }
@@ -283,7 +288,7 @@ object magoFactoryNorte {
 object magoFactorySur {
 
 	method nuevoEnemigo() {
-		return new EnemigoMagoSur(position = game.at(randomizer.xCualquiera(), 2),movimiento = movimientoHorizontal)
+		return new EnemigoMagoSur(position = game.at(randomizer.xCualquiera(), 2), movimiento = movimientoHorizontal)
 	}
 
 }
@@ -291,12 +296,13 @@ object magoFactorySur {
 object administradorMagosFinal {
 
 	const magosEnemigos = []
-	const cantidadMaxima = 4
+	const cantidadMaxima = 2
 	const factoryMagos = [ enemigoMagoFactory, magoFactoryEste, magoFactoryNorte, magoFactorySur ]
 
-	method seleccionFactory(){
+	method seleccionFactory() {
 		return factoryMagos.anyOne()
 	}
+
 	method generarEnemigos() {
 		if (magosEnemigos.size() < cantidadMaxima) {
 			const nuevoMago = self.seleccionFactory().nuevoEnemigo()
