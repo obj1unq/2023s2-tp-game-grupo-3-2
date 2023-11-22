@@ -1,4 +1,4 @@
-import zombies.*
+import enemigos.*
 import elementos.*
 import personajePrincipal.*
 import randomizer.*
