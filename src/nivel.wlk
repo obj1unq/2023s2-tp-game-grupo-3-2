@@ -48,6 +48,7 @@ class Nivel {
 	method iniciarNivel() { 
 	    monedero.cantidadMonedas(0)
 	    mago.vida(10)
+	    mago.llevando(libre)
 	    self.removerNivel()
 	    self.configuracionFondo()
 		self.instanciarObjetosFijos()
@@ -166,7 +167,7 @@ object fondoGameOver {
 	
 	var property position = game.at(0, 0)
 
-	 method image() = "background600x480_gameover.png"
+	 method image() = "imagen.gameOver.jpg"
 
 	 method chocasteCon(personaje) {
 	}
@@ -176,7 +177,7 @@ object fondoGameOver {
 object fondoWinner {
 	var property position = game.at(0, 0)
 
-	 method image() = "background600x480_ganaste.png"
+	 method image() = "imagen.winner.jpg"
 
 	 method chocasteCon(personaje) {
 	}
@@ -186,7 +187,7 @@ object fondoWinner {
 object inicioJuego {
 	var property position = game.at(0, 0)
 
-	 method image() = "background600x480_gameover.png"
+	 method image() = "imagen.inicioJuego.jpg"
 
 	 method chocasteCon(personaje) {
 	}

@@ -8,9 +8,9 @@ import armas.*
 import nivel.*
 import mapa.*
 
-program zombies {
+program wizardsAventure {
 	
-    game.title("zombies")
+    game.title("wizard's aventure")
     game.height(12) // 12 celdas de alto
     game.width(15) // 15 celdas de ancho
     game.cellSize(40) // celdas de 40x40 px
