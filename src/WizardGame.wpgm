@@ -15,8 +15,8 @@ program wizardsAventure {
     game.width(15) // 15 celdas de ancho
     game.cellSize(40) // celdas de 40x40 px
 	
-
     escenario.empezar()
+    escenario.configuracionSonido()
 
     
     game.start()
