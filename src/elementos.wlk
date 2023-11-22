@@ -79,7 +79,7 @@ object pocionAmarillaFactory {
 
 object administradorPociones {
 
-	var property pociones = []
+	var property pociones = #{}
 	const cantidadMaxima = 4
 
 	// Esto sirve para que genere nuevas pociones que nosotros definamos.

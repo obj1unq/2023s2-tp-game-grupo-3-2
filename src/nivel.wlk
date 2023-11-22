@@ -7,6 +7,23 @@ import armas.*
 import randomizer.*
 import mapa.*
 
+object escenario {
+	var nivel 
+	
+	method inciarNivel(nuevoNivel) {
+		nuevoNivel.iniciarNivel()
+		nivel = nuevoNivel
+		nuevoNivel.vaciarAdministradores()
+		nuevoNivel.administradores()
+	}
+	method pasarNivel() {
+		const segundoNivel = new Nivel(mapa = mapaNivel2, imagenFondo = game.boardGround("background600x480_cueva.png"))
+        self.inciarNivel(segundoNivel)
+        segundoNivel.vaciarAdministradores()
+        segundoNivel.administradores()
+	}
+	
+}
 class Nivel {
 
 	const property mapa
@@ -24,30 +41,32 @@ class Nivel {
 	}
 
 	method iniciarNivel() { // Iniciar nivel desde main
-		self.imagenDeFondo()
+	    self.removerNivel()
 		self.instanciarObjetosFijos()
 		self.configuracionTeclado()
 		self.configuracionDelJuego()
-		self.administradores()
 	}
 
 	method instanciarObjetosFijos() {
 		mapa.generar()
 	}
-
-	method imagenDeFondo() {
-		game.boardGround(imagenFondo)
-	}
-	
+	method removerNivel() {
+    	game.clear()
+    }
 	method configuracionDelJuego() {
     	game.onCollideDo(mago, { elemento => elemento.contacto(mago) })
         game.onTick(700, "arma", {mago.cambiarArma()})
+    }
+    method vaciarAdministradores() {
+    	administradorEnemigos.enemigos().clear()
+    	administradorPociones.pociones().clear()
+    	administradorFuego.fuegos().clear()
     }
     method administradores() {
     	game.onTick(700, "HORDA", {administradorEnemigos.generarEnemigos()})
         game.onTick(2000, "MORDER", {administradorEnemigos.ataqueEnemigo()})
         game.onTick(2000, "POCIONES", {administradorPociones.generarPociones()})
-        game.onTick(2000, "LANZAS", {administradorFuego.generarLanzas()})
+        game.onTick(2000, "LANZAS", {administradorFuego.generarFuegoAzul()})
     	
     }
 

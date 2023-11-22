@@ -159,7 +159,8 @@ object k { // monedero
 
 }
 object c inherits Objeto(position = game.at(11, 9), image = "cueva.png"){  // Cueva
-
+    const monedasAJuntar = 1
+    
 	method generar(position) {
 		game.addVisual(self)
 	}
@@ -173,13 +174,14 @@ object c inherits Objeto(position = game.at(11, 9), image = "cueva.png"){  // Cu
 	}
 	
 	override method contacto(personaje) {
-		// Validar si puede pasar de nivel - Cambiar a nuevo mapa
+		if (monedero.cantidadMonedas() > monedasAJuntar) {
+			const segundoNivel = new Nivel(mapa = mapaNivel2, imagenFondo = game.boardGround("background600x480_cueva.png"))
+            escenario.inciarNivel(segundoNivel)
+			
+		}else {
+			self.error("no tienes monedas suficientes")
+		}
 	}
-
-	method pasarNivel() {
-		
-	} // crear metodo para pasar de nivel cuando se cumpla el objetivo de monedas y colisione con objeto
-
 }
 
 object t { // Totem
