@@ -111,7 +111,7 @@ class Enemigo inherits Personaje {
 
 }
 
-class EnemigoNormal inherits Enemigo(danio = 1, movimiento = new MovimientoLibreX()) {
+class EnemigoNormal inherits Enemigo(danio = 1, movimiento = movimientoLibreX) {
 
 	method image() = "esqueleto1.png"
 
@@ -224,7 +224,7 @@ class AuxiliarDeAdministradores {
 
 }
 
-object enemigoJefe inherits Enemigo(danio = 3, danioMax = 5, vida = 100, moverActual = 500, moverMax = 100, moverMin = 1000, position = randomizer.emptyPosition(), movimiento = new MovimientoLibreX()) {
+object enemigoJefe inherits Enemigo(danio = 3, danioMax = 5, vida = 100, moverActual = 500, moverMax = 100, moverMin = 1000, position = randomizer.emptyPosition(), movimiento = movimientoLibreX) {
 
 	method image() = "orco.png"
 

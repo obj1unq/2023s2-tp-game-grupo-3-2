@@ -50,15 +50,9 @@ object arriba {
 
 }
 
-class MovimientoLibreX {
+class Movimiento {
 
-	method mover(enemigo, personaje) {
-		if (not (self.mismoEjeX(enemigo, personaje))) {
-			self.irACeldaX(enemigo, personaje)
-		} else if (not (self.mismoEjeY(enemigo, personaje))) {
-			self.irACeldaY(enemigo, personaje)
-		}
-	}
+	method mover(enemigo, personaje)
 
 	method irACeldaY(enemigo, personaje) {
 		enemigo.position(self.celdaY(enemigo, personaje))
@@ -92,8 +86,29 @@ class MovimientoLibreX {
 		}
 	}
 
-	// Es mucho codigo repetido, 
-	method moverDerechaColisionX(enemigo, personaje) {
+	method moverDerechaColisionX(enemigo, personaje) 
+
+	method moverIzquierdaColisionX(enemigo, personaje) 
+
+	method moverArribaColisionY(enemigo, personaje) 
+
+	method moverAbajoColisionY(enemigo, personaje) 
+	
+
+}
+
+object movimientoLibreX inherits Movimiento {
+
+	// Empieza moviendose por el EjeX.
+	override method mover(enemigo, personaje) {
+		if (not (self.mismoEjeX(enemigo, personaje))) {
+			self.irACeldaX(enemigo, personaje)
+		} else if (not (self.mismoEjeY(enemigo, personaje))) {
+			self.irACeldaY(enemigo, personaje)
+		}
+	}
+
+	override method moverDerechaColisionX(enemigo, personaje) {
 		const posicion = enemigo.position().right(1)
 		return if (not tablero.puedeOcupar(posicion)) {
 			self.celdaY(enemigo, personaje)
@@ -102,7 +117,7 @@ class MovimientoLibreX {
 		}
 	}
 
-	method moverIzquierdaColisionX(enemigo, personaje) {
+	override method moverIzquierdaColisionX(enemigo, personaje) {
 		const posicion = enemigo.position().left(1)
 		return if (not tablero.puedeOcupar(posicion)) {
 			self.celdaY(enemigo, personaje)
@@ -112,7 +127,7 @@ class MovimientoLibreX {
 	}
 
 	// Al chocar con algo en el ejeY cambia su estado y lo persegui por el EjeY
-	method moverArribaColisionY(enemigo, personaje) {
+	override method moverArribaColisionY(enemigo, personaje) {
 		const posicion = enemigo.position().up(1)
 		return if (not tablero.puedeOcupar(posicion)) {
 			enemigo.movimiento(movimientoLibreY)
@@ -122,7 +137,7 @@ class MovimientoLibreX {
 		}
 	}
 
-	method moverAbajoColisionY(enemigo, personaje) {
+	override method moverAbajoColisionY(enemigo, personaje) {
 		const posicion = enemigo.position().down(1)
 		return if (not tablero.puedeOcupar(posicion)) {
 			enemigo.movimiento(movimientoLibreY)
@@ -134,10 +149,9 @@ class MovimientoLibreX {
 
 }
 
-object movimientoLibreY inherits MovimientoLibreX {
+object movimientoLibreY inherits Movimiento {
 
-	const movimientoX = new MovimientoLibreX()
-
+	// Empieza moviendose por el EjeY.
 	override method mover(enemigo, personaje) {
 		if (not (self.mismoEjeY(enemigo, personaje))) {
 			self.irACeldaY(enemigo, personaje)
@@ -145,11 +159,11 @@ object movimientoLibreY inherits MovimientoLibreX {
 			self.irACeldaX(enemigo, personaje)
 		}
 	}
-
+	// Al chocar con algo en el ejeX cambia su estado y lo persegui por el EjeX.
 	override method moverDerechaColisionX(enemigo, personaje) {
 		const posicion = enemigo.position().right(1)
 		return if (not tablero.puedeOcupar(posicion)) {
-			enemigo.movimiento(movimientoX)
+			enemigo.movimiento(movimientoLibreX)
 			self.celdaY(enemigo, personaje)
 		} else {
 			posicion
@@ -159,14 +173,13 @@ object movimientoLibreY inherits MovimientoLibreX {
 	override method moverIzquierdaColisionX(enemigo, personaje) {
 		const posicion = enemigo.position().left(1)
 		return if (not tablero.puedeOcupar(posicion)) {
-			enemigo.movimiento(movimientoX)
+			enemigo.movimiento(movimientoLibreX)
 			self.celdaY(enemigo, personaje)
 		} else {
 			posicion
 		}
 	}
 
-	// Se sobrescribe para que no cambie el estado del movimiento del personaje.
 	override method moverArribaColisionY(enemigo, personaje) {
 		const posicion = enemigo.position().up(1)
 		return if (not tablero.puedeOcupar(posicion)) {
@@ -187,59 +200,55 @@ object movimientoLibreY inherits MovimientoLibreX {
 
 }
 
-object movimientoVertical {
+object movimientoVertical inherits Movimiento{
 
-	method mover(enemigo, personaje) {
+	override method mover(enemigo, personaje) {
 		return if (not (self.mismoEjeY(enemigo, personaje))) {
 			self.irACeldaY(enemigo, personaje)
 		} else {
 			enemigo.position()
 		}
 	}
+	override method moverDerechaColisionX(enemigo, personaje){} 
 
-	method irACeldaY(enemigo, personaje) {
-		enemigo.position(self.celdaY(enemigo, personaje))
-	}
+	override method moverIzquierdaColisionX(enemigo, personaje){} 
 
-	method mismoEjeY(enemigo, personaje) {
-		return enemigo.position().y() == personaje.position().y()
-	}
+	override method moverArribaColisionY(enemigo, personaje){
+		return enemigo.position().up(1)
+	} 
 
-	method celdaY(enemigo, personaje) {
-		return if (personaje.position().y() > enemigo.position().y()) {
-			enemigo.position().up(1)
-		} else {
-			enemigo.position().down(1)
-		}
-	}
+	override method moverAbajoColisionY(enemigo, personaje){
+		return enemigo.position().down(1)
+	} 
 
 }
-object movimientoHorizontal {
-	
-	method mover(enemigo, personaje) {
+
+object movimientoHorizontal inherits Movimiento{
+
+	override method mover(enemigo, personaje) {
 		return if (not (self.mismoEjeX(enemigo, personaje))) {
 			self.irACeldaX(enemigo, personaje)
 		} else {
 			enemigo.position()
 		}
 	}
+	
+	override method moverDerechaColisionX(enemigo, personaje){
+		return enemigo.position().right(1)
+	} 
 
-	method irACeldaX(enemigo, personaje) {
-		enemigo.position(self.celdaX(enemigo, personaje))
-	}
+	override method moverIzquierdaColisionX(enemigo, personaje){
+		return enemigo.position().left(1)
+	} 
 
-	method mismoEjeX(enemigo, personaje) {
-		return enemigo.position().x() == personaje.position().x()
-	}
+	override method moverArribaColisionY(enemigo, personaje){
+		
+	} 
 
-	method celdaX(enemigo, personaje) {
-		return if (personaje.position().x() > enemigo.position().x()) {
-			enemigo.position().right(1)
-		} else {
-			enemigo.position().left(1)
-		}
-	}	
+	override method moverAbajoColisionY(enemigo, personaje){} 
+
 }
+
 object movimientoNulo {
 
 	method mover(enemigo, personaje) {
