@@ -1,7 +1,7 @@
 import wollok.game.*
 import personajePrincipal.*
 import direcciones.*
-import zombies.*
+import enemigos.*
 import elementos.*
 import armas.*
 import randomizer.*
