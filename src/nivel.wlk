@@ -19,7 +19,10 @@ object escenario {
         const segundoNivel = new Nivel2()
         self.inciarNivel(segundoNivel)
 	}
-	
+	method perdiste(){
+		const gameOver = new GameOver() 
+		self.inciarNivel(gameOver)
+	}
 }
 class Nivel {
 
@@ -39,6 +42,7 @@ class Nivel {
 
 	method iniciarNivel() { // Iniciar nivel desde main
 	    monedero.cantidadMonedas(0)
+	    mago.vida(10)
 	    self.removerNivel()
 	    self.configuracionFondo()
 		self.instanciarObjetosFijos()
@@ -120,6 +124,34 @@ object fondoTierra  {
 	}
 
 }
-	   
+class GameOver inherits Nivel(mapa=null) {
+	
+	override method iniciarNivel() {
+		self.removerNivel()
+		self.configuracionFondo()
+		self.configuracionTeclado()
+	}	
+	override method configuracionFondo(){
+		game.addVisual(fondoGameOver)		
+	}
+	override method configuracionTeclado() {
+		const primerNivel = new Nivel1()
+		keyboard.x().onPressDo({ escenario.inciarNivel(primerNivel)})
+	}
+	override method vaciarAdministradores() {
+		
+	}
+	override method administradores() {
+		
+	}	
+}
+object fondoGameOver {
+	var property position = game.at(0, 0)
+
+	 method image() = "background600x480_gameover.png"
+
+	 method chocasteCon(personaje) {
+	}
+}	   
 
 
