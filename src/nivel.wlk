@@ -15,7 +15,7 @@ object escenario {
 		nivel = nuevoNivel
 	}
 	method pasarNivel() {
-		const segundoNivel = new Nivel(mapa = mapaNivel2, imagenFondo = game.boardGround("background600x480_cueva.png"))
+		const segundoNivel = new Nivel2(mapa = mapaNivel2, imagenFondo = game.boardGround("background600x480_cueva.png"))
         self.inciarNivel(segundoNivel)
 	}
 	

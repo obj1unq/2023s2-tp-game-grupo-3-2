@@ -54,7 +54,7 @@ class Enemigo inherits Personaje {
 	const moverMax = 1000
 	const moverMin = 3000
 
-	method text() = self.vida().toString() + "/10"
+	method text()
 
 	method mover() {
 		movimiento.mover(self, enemigo)
@@ -112,11 +112,15 @@ class EnemigoNormal inherits Enemigo(danio = 1, movimiento = new MovimientoLibre
 
 	method image() = "esqueleto1.png"
 
+	override method text() = self.vida().toString() + "/10"
+
 }
 
 class EnemigoMago inherits Enemigo(vida = 20, danio = 2, movimiento = movimientoVertical) {
 
 	method image() = "mago3.png"
+
+	override method text() = self.vida().toString() + "/20"
 
 	override method atacar() {
 		const nuevaBala = new Fuego(position = self.position().left(1), imagenDisparo = charge, danio = danio)
@@ -131,6 +135,8 @@ class EnemigoSoporte inherits Enemigo(danio = 0, movimiento = movimientoNulo, vi
 	const aumentarDanio = 1
 
 	method image() = "mago_soporte.png"
+
+	override method text() = self.vida().toString() + "/30"
 
 	// Debe conocer los zombies en el mapa directamente para aplicarle su efecto especial.
 	// No es correcto el usar el metodo ataque pero es algo a mejorar.
@@ -207,17 +213,25 @@ object administradorEnemigos {
 	}
 
 }
-object enemigoJefe inherits Enemigo(danio = 3,vida = 100,moverActual = 500, moverMax = 100,position = randomizer.position(), movimiento = new MovimientoLibreX()){
-	
+
+object enemigoJefe inherits Enemigo(danio = 3, vida = 100, moverActual = 500, moverMax = 100, position = randomizer.position(), movimiento = new MovimientoLibreX()) {
+
 	method image() = "orco.png"
+
+	override method text() = self.vida().toString() + "/100"
+
 }
-object administradorJefe{
-	
-	method generarJefeFinal(){
+
+object administradorJefe {
+
+	method generarJefeFinal() {
 		game.addVisual(enemigoJefe)
 		enemigoJefe.generarOnTicksPerseguir()
 	}
+
 	method ataqueJefe() {
 		enemigoJefe.atacar()
 	}
+
 }
+
