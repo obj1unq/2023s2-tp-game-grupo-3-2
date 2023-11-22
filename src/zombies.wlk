@@ -14,7 +14,7 @@ class Personaje {
 
 	method impactoDeBala(elemento) {
 		self.perderVida(elemento)
-		game.removeVisual(elemento)
+		elemento.eliminarSiEstoy()
 	}
 
 	method perderVida(elemento) {

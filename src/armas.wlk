@@ -233,7 +233,7 @@ class Fuego {
 		self.eliminarDelTablero()
 	}
 
-	method eliminarDelTablero() { // Elimina fuego si supera supera eje X
+	method eliminarDelTablero() { // Elimina fuego si supera valores fuera del mapa en eje X y eje y
 		if (self.position().x() > 13 or self.position().x() < 1 or self.position().y() < 2) {
 			self.eliminarSiEstoy()
 		}
@@ -245,7 +245,7 @@ class Fuego {
 
 	method eliminarSiEstoy() {
 		if (self.estoyEnElTablero()) {
-			game.removeTickEvent("disparar")
+			//game.removeTickEvent("disparar")
 			game.removeVisual(self)
 		}
 	}
