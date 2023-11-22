@@ -79,13 +79,13 @@ class FuegoAzul inherits Arma(danio = 10, maxDanio = 15, velocidad = 100) {
 	method eliminarSiEstoy() {
 		if (self.estoyEnElTablero()) {
 			game.removeTickEvent("lanzar")
-			administradorFuego.quitar(self)
+			administradorFuegos.quitar(self)
 		}
 	}
 
 }
 
-class FuegoVerde inherits FuegoAzul(danio = 4, maxDanio = 6, velocidad = 100, efectoVelocidad = 50) {
+class FuegoVerde inherits FuegoAzul(danio = 4, maxDanio = 6, velocidad = 150, efectoVelocidad = 50) {
 
 	var contador = 5
 
@@ -98,21 +98,38 @@ class FuegoVerde inherits FuegoAzul(danio = 4, maxDanio = 6, velocidad = 100, ef
 			self.eliminarDelTablero()
 		} else {
 			contador = 5
-			game.removeTickEvent("lanzar")
-			administradorFuego.quitar(self)
+			administradorFuegos.quitar(self)
 		}
 	}
 
 }
+object fuegoAzulFactory {
 
-object administradorFuego {
+	method nuevoFuego() {
+		return new FuegoAzul(position = randomizer.emptyPosition())
+	}
+
+}
+
+object fuegoVerdeFactory {
+
+	method nuevoFuego() {
+		return new FuegoVerde(position = randomizer.emptyPosition())
+	}
+
+}
+object administradorFuegos {
 
 	var property fuegos = []
 	const cantidadMaxima = 3
+	const factoryFuegos = [fuegoAzulFactory,fuegoVerdeFactory]
 
-	method generarFuegoAzul() {
+	method seleccionFactory(){
+		return factoryFuegos.anyOne()
+	}
+	method generarFuegos() {
 		if (fuegos.size() < cantidadMaxima) {
-			const fuego = new FuegoAzul(position = randomizer.emptyPosition())
+			const fuego = self.seleccionFactory().nuevoFuego()
 			game.addVisual(fuego)
 			fuegos.add(fuego)
 		}
@@ -120,6 +137,7 @@ object administradorFuego {
 
 	method quitar(elemento) {
 		fuegos.remove(elemento)
+		game.removeTickEvent("lanzar")
 		game.removeVisual(elemento)
 	}
 

@@ -31,10 +31,7 @@ class Personaje {
 	// agrege este mensaje por sino sale pantalla de error.
 	}
 
-	method impactoDeFuego(elemento) {
-		self.perderVida(elemento)
-		administradorFuego.quitar(elemento) // Necesita conocer el administrador
-	}
+	method impactoDeFuego(elemento) 
 
 	method solido() {
 		return false
@@ -86,8 +83,8 @@ class Enemigo inherits Personaje {
 	// Metodo donde aumenta el movimiento del movimiento.
 	method aumentarMovimientoYAtaque(decreser, _danio) {
 		game.removeTickEvent("PERSEGUIR" + self.identity())
-		const tiempoActual = (moverActual - decreser).max(moverMax)
-		game.onTick(tiempoActual, "PERSEGUIR" + self.identity(), { self.mover()})
+		moverActual = (moverActual - decreser).max(moverMax)
+		game.onTick(moverActual, "PERSEGUIR" + self.identity(), { self.mover()})
 		danio = (danio + _danio).min(danioMax)
 	}
 
@@ -97,13 +94,14 @@ class Enemigo inherits Personaje {
 
 	override method impactoDeFuego(elemento) {
 		self.disminuirMovimiento(elemento.efectoVelocidad())
-		super(elemento)
+		self.perderVida(elemento)
+		administradorFuegos.quitar(elemento) // Necesita conocer el administrador
 	}
 
 	method disminuirMovimiento(aumentar) {
 		game.removeTickEvent("PERSEGUIR" + self.identity())
-		const tiempoActual = (moverActual - aumentar).max(moverMin)
-		game.onTick(tiempoActual, "PERSEGUIR" + self.identity(), { self.mover()})
+		moverActual = (moverActual + aumentar).min(moverMin)
+		game.onTick(moverActual, "PERSEGUIR" + self.identity(), { self.mover()})
 	}
 
 }
@@ -170,7 +168,7 @@ object enemigoMagoFactory {
 object enemigoSoporteFactory {
 
 	method nuevoEnemigo() {
-		return new EnemigoSoporte(position = randomizer.position())
+		return new EnemigoSoporte(position = randomizer.emptyPosition())
 	}
 
 }
@@ -214,7 +212,7 @@ object administradorEnemigos {
 
 }
 
-object enemigoJefe inherits Enemigo(danio = 3, vida = 100, moverActual = 500, moverMax = 100, position = randomizer.position(), movimiento = new MovimientoLibreX()) {
+object enemigoJefe inherits Enemigo(danio = 3, vida = 100, moverActual = 500, moverMax = 100, moverMin = 1000, position = randomizer.emptyPosition(), movimiento = new MovimientoLibreX()) {
 
 	method image() = "orco.png"
 
