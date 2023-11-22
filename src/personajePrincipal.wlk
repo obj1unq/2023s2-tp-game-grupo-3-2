@@ -24,8 +24,7 @@ object mago inherits Personaje {
 
 	method mover(direccion) {
 		ultimaDireccion = direccion
-		if (self.sePuedeMover(direccion)) {
-			// self.validarMover(direccion)
+		if (self.sePuedeMover(direccion)) { //decidimos no usar una validacion 
 			const proxima = direccion.siguiente(self.position())
 			self.irA(proxima)
 		}
@@ -47,7 +46,6 @@ object mago inherits Personaje {
 	}
 
 	override method morir() {
-		//game.stop()
 		escenario.perdiste()
 	}
 
@@ -70,7 +68,6 @@ object mago inherits Personaje {
 	method agarrar() {
 		self.validarPosition()
 		llevando.cambiarEstado(self)
-	// armaDePersonaje.cambioVisualArma(llevando)
 	}
 
 	method cambiarArma() {
