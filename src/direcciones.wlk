@@ -214,7 +214,32 @@ object movimientoVertical {
 	}
 
 }
+object movimientoHorizontal {
+	
+	method mover(enemigo, personaje) {
+		return if (not (self.mismoEjeX(enemigo, personaje))) {
+			self.irACeldaX(enemigo, personaje)
+		} else {
+			enemigo.position()
+		}
+	}
 
+	method irACeldaX(enemigo, personaje) {
+		enemigo.position(self.celdaX(enemigo, personaje))
+	}
+
+	method mismoEjeX(enemigo, personaje) {
+		return enemigo.position().x() == personaje.position().x()
+	}
+
+	method celdaX(enemigo, personaje) {
+		return if (personaje.position().x() > enemigo.position().x()) {
+			enemigo.position().right(1)
+		} else {
+			enemigo.position().left(1)
+		}
+	}	
+}
 object movimientoNulo {
 
 	method mover(enemigo, personaje) {
