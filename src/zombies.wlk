@@ -39,7 +39,7 @@ class Personaje {
 	method solido() {
 		return false
 	}
-	
+
 }
 
 class Enemigo inherits Personaje {
@@ -94,15 +94,18 @@ class Enemigo inherits Personaje {
 	method esUnArma() {
 		return false
 	}
-	override method impactoDeFuego(elemento){
+
+	override method impactoDeFuego(elemento) {
 		self.disminuirMovimiento(elemento.efectoVelocidad())
 		super(elemento)
 	}
-	method disminuirMovimiento(aumentar){
+
+	method disminuirMovimiento(aumentar) {
 		game.removeTickEvent("PERSEGUIR" + self.identity())
 		const tiempoActual = (moverActual - aumentar).max(moverMin)
 		game.onTick(tiempoActual, "PERSEGUIR" + self.identity(), { self.mover()})
 	}
+
 }
 
 class EnemigoNormal inherits Enemigo(danio = 1, movimiento = new MovimientoLibreX()) {
@@ -117,17 +120,17 @@ class EnemigoMago inherits Enemigo(vida = 20, danio = 2, movimiento = movimiento
 
 	override method atacar() {
 		const nuevaBala = new Fuego(position = self.position().left(1), imagenDisparo = charge, danio = danio)
-		nuevaBala.disparar(izquierda,250) // x ahora sera un numero magico
+		nuevaBala.disparar(izquierda, 250) // x ahora sera un numero magico
 	}
 
 }
 
-class EnemigoSoporte inherits Enemigo(danio = 0, movimiento = movimientoNulo) {
+class EnemigoSoporte inherits Enemigo(danio = 0, movimiento = movimientoNulo, vida = 30) {
 
 	const reducirTiempoMovimiento = 100
 	const aumentarDanio = 1
 
-	method image() = "esqueleto2.png"
+	method image() = "mago_soporte.png"
 
 	// Debe conocer los zombies en el mapa directamente para aplicarle su efecto especial.
 	// No es correcto el usar el metodo ataque pero es algo a mejorar.
@@ -169,15 +172,14 @@ object enemigoSoporteFactory {
 object administradorEnemigos {
 
 	var property enemigos = []
-	const cantidadMaxima = 2
-	// const enemigosFactory = [ enemigoNormalFactory, enemigoMagoFactory, enemigoSoporteFactory ]
+	const cantidadMaxima = 4
 
-	// enemigos con cierta probabilidad, ya que el soperte y el mago son dificiles.
+	// Enemigos con cierta probabilidad, ya que el soperte y el mago son dificiles.
 	method ramdomFactoryEnemigo() {
-		const x = (1..100).anyOne() 
-		return if (x < 80 ) {	// un 80% de que sea normal
+		const x = (1 .. 100).anyOne()
+		return if (x < 80) { // un 80% de que sea normal
 			enemigoNormalFactory
-		} else if (x < 95) {	// un 15% de que sea mago
+		} else if (x < 95) { // un 15% de que sea mago
 			enemigoMagoFactory
 		} else {
 			enemigoSoporteFactory // menos del 5% que sea soporte

@@ -7,7 +7,7 @@ class Pocion {
 
 	var property position
 	var vidaOtorgada
-	const imagenPocion // ahora le pasamos la imagen por parametro
+	const imagenPocion
 	const danioAdicional = 0
 	const velocidadAdicional = 0
 
@@ -18,7 +18,6 @@ class Pocion {
 		administradorPociones.quitar(self)
 	}
 
-	// Cada pocion pasara los valores que le asignemos nosotros.
 	method efectoPocion(personaje) {
 		personaje.aumentarVida(vidaOtorgada)
 		personaje.aumentarDanio(danioAdicional)
@@ -46,7 +45,7 @@ class PocionRoja inherits Pocion(imagenPocion = "pocion_salud.png", vidaOtorgada
 
 class PocionAzul inherits Pocion(imagenPocion = "pocion_azul.png", vidaOtorgada = 3, velocidadAdicional = 10) {
 
-// Pocion de ... (hay que proveerle algo)
+// Pocion de velocidad
 }
 
 class PocionAmarilla inherits Pocion(imagenPocion = "pocion_amarilla.png", vidaOtorgada = 1, danioAdicional = 2) {
@@ -78,13 +77,11 @@ object pocionAmarillaFactory {
 
 }
 
-// las pociones factory repiten codigo, tratemos de evitar porque a medida que metamos mas cosas se va hacer un choclo.
 object administradorPociones {
 
 	var property pociones = []
 	const cantidadMaxima = 4
 
-	// const pocionesFactory = [ pocionAzulFactory, pocionRojaFactory, pocionAmarillaFactory ]
 	// Esto sirve para que genere nuevas pociones que nosotros definamos.
 	method ramdomFactoryPociones() {
 		const x = (1 .. 100).anyOne()
@@ -157,7 +154,7 @@ object monedero {
 
 	method textColor() = "FFFFFF"
 
-	method generarMoneda(_position) { // con probabilidad simple de 1 a 10 de valor 
+	method generarMoneda(_position) {
 		const monedaNueva = new Moneda(position = _position, valorMoneda = (1 .. 10).anyOne())
 		self.agregarMoneda(monedaNueva)
 	}
