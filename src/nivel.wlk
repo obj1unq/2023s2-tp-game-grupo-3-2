@@ -13,14 +13,10 @@ object escenario {
 	method inciarNivel(nuevoNivel) {
 		nuevoNivel.iniciarNivel()
 		nivel = nuevoNivel
-		nuevoNivel.vaciarAdministradores()
-		nuevoNivel.administradores()
 	}
 	method pasarNivel() {
 		const segundoNivel = new Nivel(mapa = mapaNivel2, imagenFondo = game.boardGround("background600x480_cueva.png"))
         self.inciarNivel(segundoNivel)
-        segundoNivel.vaciarAdministradores()
-        segundoNivel.administradores()
 	}
 	
 }
@@ -41,10 +37,13 @@ class Nivel {
 	}
 
 	method iniciarNivel() { // Iniciar nivel desde main
+	    monedero.cantidadMonedas(0)
 	    self.removerNivel()
 		self.instanciarObjetosFijos()
 		self.configuracionTeclado()
 		self.configuracionDelJuego()
+		self.vaciarAdministradores()
+		self.administradores()
 	}
 
 	method instanciarObjetosFijos() {
@@ -71,12 +70,34 @@ class Nivel {
     }
 	
 }
-class Nivel2 inherits Nivel {
-	
-	override method administradores(){
-		administradorJefe.generarJefeFinal()
+
+class Nivel1 inherits Nivel (mapa = mapaNivel1, imagenFondo = game.boardGround("background600x480_noche.png")) {
+       
+       override method 	vaciarAdministradores() {
+       	    administradorEnemigos.enemigos().clear()
+    	    administradorPociones.pociones().clear()
+    	    administradorFuego.fuegos().clear()
+       }
+	   override method administradores() {
+	   	   game.onTick(700, "HORDA", {administradorEnemigos.generarEnemigos()})
+           game.onTick(2000, "MORDER", {administradorEnemigos.ataqueEnemigo()})
+           game.onTick(2000, "POCIONES", {administradorPociones.generarPociones()})
+           game.onTick(2000, "LANZAS", {administradorFuego.generarFuegoAzul()})
+	   }
+}
+class Nivel2 inherits Nivel (mapa = mapaNivel2, imagenFondo = game.boardGround("background600x480_cueva.png")) {
+       
+       override method 	vaciarAdministradores() {
+       	    administradorEnemigos.enemigos().clear()
+    	    administradorPociones.pociones().clear()
+    	    administradorFuego.fuegos().clear()
+       }
+	   override method administradores() {
+	   	administradorJefe.generarJefeFinal()
 		game.onTick(1000, "ATAQUEJEFE",{administradorJefe.ataqueJefe()})
 		game.onTick(2000, "POCIONES", {administradorPociones.generarPociones()})
         game.onTick(2000, "LANZAS", {administradorFuego.generarFuegoAzul()})
-	}
+	   }
 }
+
+
