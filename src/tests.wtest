@@ -58,8 +58,8 @@ describe "test del juego" {
         	assert.equals(1, monedero.cantidadMonedas() )
         }
         test "mago agarra arma" {
-        	armaFuego.position(game.at(1,3))
         	mago.position(game.at(1,3))
+        	armaFuego.position(game.at(1,3))
         	assert.equals(libre, mago.llevando() )
         	
         	mago.agarrar()
