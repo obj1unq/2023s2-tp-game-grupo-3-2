@@ -11,7 +11,7 @@
 (agregar)
 
 ## Reglas de Juego / Instrucciones
-Objetivo : lograr que el mago derrote al ogro que se encuentra en la cueva. Para entrar a la cueva hay que juntar cierta cantidad de monedas.
+Objetivo : lograr que el mago derrote al ogro que se encuentra en la cueva. Para entrar a la cueva hay que juntar la cantidad de 25 monedas(las monedas la sueltan los enemigos al derrotarlos).
 
 Objetos del Mapa : 
 * fuego Rojo => disparos ilimitados 
