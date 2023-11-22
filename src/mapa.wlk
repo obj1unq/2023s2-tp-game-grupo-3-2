@@ -47,7 +47,7 @@ object mapaNivel2 inherits Mapa(celdas = [
 		[_,_,_,_,_,_,_,_,_,_,_,_,_,_,_],
 		[_,_,s,_,_,_,_,_,_,_,_,_,_,_,_],
 		[_,_,_,_,_,_,_,_,_,_,_,s,_,_,_],
-		[_,_,_,_,_,_,s,_,_,_,_,_,_,_,_],
+		[_,_,f,_,_,_,s,_,_,_,_,_,_,_,_],
 		[_,_,_,_,_,_,_,_,_,_,_,_,_,_,_],
 		[_,_,_,_,_,_,_,_,_,_,_,_,_,_,_],
 		[_,_,_,s,_,_,_,_,_,_,_,_,_,_,_],
@@ -175,7 +175,8 @@ object c inherits Objeto(position = game.at(11, 9), image = "cueva.png"){  // Cu
 	
 	override method contacto(personaje) {
 		if (monedero.cantidadMonedas() > monedasAJuntar) {
-			const segundoNivel = new Nivel(mapa = mapaNivel2, imagenFondo = game.boardGround("background600x480_cueva.png"))
+			//const segundoNivel = new Nivel(mapa = mapaNivel2, imagenFondo = game.boardGround("background600x480_cueva.png"))
+            const segundoNivel = new Nivel2()
             escenario.inciarNivel(segundoNivel)
 			
 		}else {

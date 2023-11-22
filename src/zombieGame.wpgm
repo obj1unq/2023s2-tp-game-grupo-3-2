@@ -27,8 +27,9 @@ program zombies {
 //	game.showAttributes(mago)
 
 	// Instanciar primer nivel y ejecutarlo
-	const primerNivel = new Nivel(mapa = mapaNivel1, imagenFondo = game.boardGround("background600x480_noche.png"))
+	//const primerNivel = new Nivel(mapa = mapaNivel1, imagenFondo = game.boardGround("background600x480_noche.png"))
 	// const segundoNivel = new Nivel(mapa = mapaNivel2, imagenFondo = "background600x480_cueva.png")	
+	const primerNivel = new Nivel1()
 	escenario.inciarNivel(primerNivel)
 	
 	//mapaNivel1.generar()
