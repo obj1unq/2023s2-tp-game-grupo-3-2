@@ -67,7 +67,6 @@ class Nivel {
     }
 	method configuracionDelJuego() {
     	game.onCollideDo(mago, { elemento => elemento.contacto(mago) })
-        game.onTick(700, "arma", {mago.cambiarArma()})
     }
     method vaciarAdministradores()
     
