@@ -74,13 +74,13 @@ class Nivel1 inherits Nivel (mapa = mapaNivel1) {//, imagenFondo = game.boardGro
        override method 	vaciarAdministradores() {
        	    administradorEnemigos.enemigos().clear()
     	    administradorPociones.pociones().clear()
-    	    administradorFuego.fuegos().clear()
+    	    administradorFuegos.fuegos().clear()
        }
 	   override method administradores() {
 	   	   game.onTick(700, "HORDA", {administradorEnemigos.generarEnemigos()})
            game.onTick(2000, "MORDER", {administradorEnemigos.ataqueEnemigo()})
            game.onTick(2000, "POCIONES", {administradorPociones.generarPociones()})
-           game.onTick(2000, "LANZAS", {administradorFuego.generarFuegoAzul()})
+           game.onTick(2000, "LANZAS", {administradorFuegos.generarFuegos()})
 	   }
 	   override method configuracionFondo(){
 		   game.addVisual(fondoPasto)	
@@ -102,13 +102,13 @@ class Nivel2 inherits Nivel (mapa = mapaNivel2){ //, imagenFondo = game.boardGro
        override method 	vaciarAdministradores() {
        	    administradorEnemigos.enemigos().clear()
     	    administradorPociones.pociones().clear()
-    	    administradorFuego.fuegos().clear()
+    	    administradorFuegos.fuegos().clear()
        }
 	   override method administradores() {
 	   	administradorJefe.generarJefeFinal()
 		game.onTick(1000, "ATAQUEJEFE",{administradorJefe.ataqueJefe()})
 		game.onTick(2000, "POCIONES", {administradorPociones.generarPociones()})
-        game.onTick(2000, "LANZAS", {administradorFuego.generarFuegoAzul()})
+        game.onTick(2000, "LANZAS", {administradorFuegos.generarFuegos()})
 	   }
 	   override method configuracionFondo(){
 		game.addVisual(fondoTierra)	

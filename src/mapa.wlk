@@ -76,7 +76,7 @@ class Objeto {
 		return true
 	}
     method impactoDeFuego(elemento) { // Elimina imagen y evento de disparo si colisiona con objeto
-		administradorFuego.quitar(elemento) // Necesita conocer el administrador
+		administradorFuegos.quitar(elemento) // Necesita conocer el administrador
 		game.removeTickEvent("lanzar")
 	}
 }
