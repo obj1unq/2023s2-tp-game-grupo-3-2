@@ -171,7 +171,7 @@ object enemigoSoporteFactory {
 
 object administradorEnemigos {
 
-	var property enemigos = []
+	var property enemigos = #{}
 	const cantidadMaxima = 4
 
 	// Enemigos con cierta probabilidad, ya que el soperte y el mago son dificiles.

@@ -107,10 +107,10 @@ class FuegoVerde inherits FuegoAzul(danio = 4, maxDanio = 6, velocidad = 100, ef
 
 object administradorFuego {
 
-	var property fuegos = []
+	var property fuegos = #{}
 	const cantidadMaxima = 3
 
-	method generarLanzas() {
+	method generarFuegoAzul() {
 		if (fuegos.size() < cantidadMaxima) {
 			const fuego = new FuegoAzul(position = randomizer.emptyPosition())
 			game.addVisual(fuego)
