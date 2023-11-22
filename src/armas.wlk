@@ -107,7 +107,7 @@ class FuegoVerde inherits FuegoAzul(danio = 4, maxDanio = 6, velocidad = 100, ef
 
 object administradorFuego {
 
-	var property fuegos = #{}
+	var property fuegos = []
 	const cantidadMaxima = 3
 
 	method generarFuegoAzul() {
@@ -180,8 +180,7 @@ object libre {
 	}
 
 	method accion(personaje) {
-	// no deberia hacer nada en el estado libre ??? 
-	// personaje.armaDePersonaje().accion(personaje.ultimaDireccion())
+		personaje.armaDePersonaje().accion(personaje.ultimaDireccion())
 	}
 
 	method validarBalacera() {

@@ -33,7 +33,7 @@ class Personaje {
 
 	method impactoDeFuego(elemento) {
 		self.perderVida(elemento)
-		game.removeVisual(elemento)
+		administradorFuego.quitar(elemento) // Necesita conocer el administrador
 	}
 
 	method solido() {
@@ -207,4 +207,17 @@ object administradorEnemigos {
 	}
 
 }
-
+object enemigoJefe inherits Enemigo(danio = 3,vida = 100,moverActual = 500, moverMax = 100,position = randomizer.position(), movimiento = new MovimientoLibreX()){
+	
+	method image() = "orco.png"
+}
+object administradorJefe{
+	
+	method generarJefeFinal(){
+		game.addVisual(enemigoJefe)
+		enemigoJefe.generarOnTicksPerseguir()
+	}
+	method ataqueJefe() {
+		enemigoJefe.atacar()
+	}
+}

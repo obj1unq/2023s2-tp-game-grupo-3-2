@@ -75,8 +75,8 @@ class Objeto {
 	method solido() {
 		return true
 	}
-    method impactoDeLanza(elemento) { // Elimina imagen y evento de disparo si colisiona con objeto
-		game.removeVisual(elemento)
+    method impactoDeFuego(elemento) { // Elimina imagen y evento de disparo si colisiona con objeto
+		administradorFuego.quitar(elemento) // Necesita conocer el administrador
 		game.removeTickEvent("lanzar")
 	}
 }

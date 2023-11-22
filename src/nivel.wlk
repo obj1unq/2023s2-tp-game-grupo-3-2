@@ -68,8 +68,9 @@ class Nivel {
         game.onTick(2000, "LANZAS", {administradorFuego.generarFuegoAzul()})
     	
     }
-
+	
 }
+
 class Nivel1 inherits Nivel (mapa = mapaNivel1, imagenFondo = game.boardGround("background600x480_noche.png")) {
        
        override method 	vaciarAdministradores() {
@@ -92,10 +93,11 @@ class Nivel2 inherits Nivel (mapa = mapaNivel2, imagenFondo = game.boardGround("
     	    administradorFuego.fuegos().clear()
        }
 	   override method administradores() {
-	   	   game.onTick(700, "HORDA", {administradorEnemigos.generarEnemigos()})
-           game.onTick(2000, "MORDER", {administradorEnemigos.ataqueEnemigo()})
-           game.onTick(2000, "POCIONES", {administradorPociones.generarPociones()})
-           game.onTick(2000, "LANZAS", {administradorFuego.generarFuegoAzul()})
+	   	administradorJefe.generarJefeFinal()
+		game.onTick(1000, "ATAQUEJEFE",{administradorJefe.ataqueJefe()})
+		game.onTick(2000, "POCIONES", {administradorPociones.generarPociones()})
+        game.onTick(2000, "LANZAS", {administradorFuego.generarFuegoAzul()})
 	   }
 }
+
 
