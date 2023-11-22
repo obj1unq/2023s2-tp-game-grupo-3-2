@@ -51,6 +51,7 @@ class Nivel {
 	    mago.llevando(libre)
 	    self.removerNivel()
 	    self.configuracionFondo()
+	    self.configuracionSonido()
 		self.instanciarObjetosFijos()
 		self.configuracionTeclado()
 		self.configuracionDelJuego()
@@ -59,6 +60,11 @@ class Nivel {
 	}
     method configuracionFondo()
     
+    
+    method configuracionSonido() {
+    	const sonido = game.sound("musica.mp3")
+    	game.schedule(200,{sonido.play()})
+    }
 	method instanciarObjetosFijos() {
 		mapa.generar()
 	}

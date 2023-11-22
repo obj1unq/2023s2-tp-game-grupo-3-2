@@ -72,7 +72,7 @@ object mago inherits Personaje {
 
 	method cambiarArma() {
 		const objetos = game.colliders(self)
-		if (not objetos.isEmpty() ) {
+		if (not objetos.isEmpty()  and objetos.all({arma => arma.esUnArma()}) )  {
 			armaDePersonaje = objetos.find({ arma => arma.esUnArma() })
 		}
        
