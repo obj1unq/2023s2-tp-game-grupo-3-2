@@ -75,7 +75,7 @@ class Objeto {
 		return true
 	}
     method impactoDeFuego(elemento) { // Elimina imagen de fuego
-  		administradorFuegos.quitar(elemento) // Necesita conocer el administrador
+  		elemento.eliminarSiEstoy()
 	}
 }
 

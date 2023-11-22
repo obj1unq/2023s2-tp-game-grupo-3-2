@@ -65,9 +65,9 @@ class FuegoAzul inherits Arma(danio = 10, maxDanio = 15, velocidad = 100) {
 		position = direccion.siguiente(self.position())
 		self.eliminarDelTablero()
 	}
-
+    
 	method eliminarDelTablero() {
-		if (self.position().x() > 13 or self.position().x() < 1 or self.position().y() < 1) {
+		if (self.position().x() > 13 or self.position().x() < 1 or self.position().y() < 2) {
 			self.eliminarSiEstoy()
 		}
 	}
@@ -75,10 +75,9 @@ class FuegoAzul inherits Arma(danio = 10, maxDanio = 15, velocidad = 100) {
 	method estoyEnElTablero() {
 		return game.hasVisual(self)
 	}
-
-	method eliminarSiEstoy() {
+    
+    method eliminarSiEstoy() {
 		if (self.estoyEnElTablero()) {
-			game.removeTickEvent("lanzar")
 			administradorFuegos.quitar(self)
 		}
 	}
@@ -245,7 +244,6 @@ class Fuego {
 
 	method eliminarSiEstoy() {
 		if (self.estoyEnElTablero()) {
-			//game.removeTickEvent("disparar")
 			game.removeVisual(self)
 		}
 	}
