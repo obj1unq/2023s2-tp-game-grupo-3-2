@@ -65,7 +65,7 @@ class FuegoAzul inherits Arma(danio = 10, maxDanio = 15, velocidad = 100) {
 		position = direccion.siguiente(self.position())
 		self.eliminarDelTablero()
 	}
-    
+
 	method eliminarDelTablero() {
 		if (self.position().x() > 13 or self.position().x() < 1 or self.position().y() < 2) {
 			self.eliminarSiEstoy()
@@ -75,8 +75,8 @@ class FuegoAzul inherits Arma(danio = 10, maxDanio = 15, velocidad = 100) {
 	method estoyEnElTablero() {
 		return game.hasVisual(self)
 	}
-    
-    method eliminarSiEstoy() {
+
+	method eliminarSiEstoy() {
 		if (self.estoyEnElTablero()) {
 			administradorFuegos.quitar(self)
 		}
@@ -102,6 +102,7 @@ class FuegoVerde inherits FuegoAzul(danio = 4, maxDanio = 6, velocidad = 150, ef
 	}
 
 }
+
 object fuegoAzulFactory {
 
 	method nuevoFuego() {
@@ -117,15 +118,17 @@ object fuegoVerdeFactory {
 	}
 
 }
+
 object administradorFuegos {
 
 	var property fuegos = []
 	const cantidadMaxima = 3
-	const factoryFuegos = [fuegoAzulFactory,fuegoVerdeFactory]
+	const factoryFuegos = [ fuegoAzulFactory, fuegoVerdeFactory ]
 
-	method seleccionFactory(){
+	method seleccionFactory() {
 		return factoryFuegos.anyOne()
 	}
+
 	method generarFuegos() {
 		if (fuegos.size() < cantidadMaxima) {
 			const fuego = self.seleccionFactory().nuevoFuego()
@@ -157,58 +160,48 @@ object armaFuego inherits Arma(danio = 2, maxDanio = 5, velocidad = 250, positio
 		const nuevaBala = new Fuego(position = direccion.siguiente(self.position()), imagenDisparo = fireball, danio = danio)
 		nuevaBala.disparar(direccion, velocidad)
 	}
-	method velocidad(){ // metodo unico para los test
-		return velocidad 
+
+	method velocidad() { // metodo unico para los test
+		return velocidad
 	}
 
 }
 
-object llevada {
+class EstadoLlevando {
 
-	const cambioEstado = libre
+	const property cambioEstado
+	const property poseeArma
 
-	method moverElemento(personaje) {
+	method moverElemento(personaje)
+
+	method cambiarEstado(personaje) {
+		personaje.llevando(cambioEstado)
+	}
+
+	method accion(personaje) {
+		personaje.armaDePersonaje().accion(personaje.ultimaDireccion())
+	}
+
+	method validarBalacera() {
+	}
+
+}
+
+object llevada inherits EstadoLlevando(cambioEstado = libre, poseeArma = true) {
+
+	override method moverElemento(personaje) {
 		return personaje.armaDePersonaje().position(personaje.position())
 	}
 
-	method cambiarEstado(personaje) {
-		personaje.llevando(cambioEstado)
-	}
-
-	method accion(personaje) {
-		personaje.armaDePersonaje().accion(personaje.ultimaDireccion())
-	}
-
-	method validarBalacera() {
-	}
-
-	method poseeArma() {
-		return true
-	}
-
 }
 
-object libre {
+object libre inherits EstadoLlevando(cambioEstado = llevada, poseeArma = false) {
 
-	const cambioEstado = llevada
-
-	method moverElemento(personaje) {
+	override method moverElemento(personaje) {
 	}
 
-	method cambiarEstado(personaje) {
-		personaje.llevando(cambioEstado)
-	}
-
-	method accion(personaje) {
-		personaje.armaDePersonaje().accion(personaje.ultimaDireccion())
-	}
-
-	method validarBalacera() {
+	override method validarBalacera() {
 		self.error("No me esta llevando")
-	}
-
-	method poseeArma() {
-		return false
 	}
 
 }
@@ -262,9 +255,11 @@ class Fuego {
 
 	method contacto(personaje) {
 	}
-    method esUnArma() {
+
+	method esUnArma() {
 		return false // no es un arma es un proyectil
 	}
+
 }
 
 object fireball {
