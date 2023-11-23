@@ -129,7 +129,7 @@ class EnemigoMago inherits Enemigo(vida = 20, danio = 2, movimiento = movimiento
 
 	override method atacar() {
 		const nuevaBala = new Fuego(position = self.position().left(1), imagenDisparo = charge, danio = danio)
-		nuevaBala.disparar(izquierda, velocidadAtaque) 
+		nuevaBala.disparar(izquierda, velocidadAtaque)
 	}
 
 }
@@ -228,7 +228,7 @@ object enemigoJefe inherits Enemigo(danio = 3, danioMax = 5, vida = 40, moverAct
 
 	method image() = "orco.png"
 
-	override method text() = self.vida().toString() + "/100"
+	override method text() = self.vida().toString() + "/40"
 
 	override method morir() {
 		escenario.ganaste()
