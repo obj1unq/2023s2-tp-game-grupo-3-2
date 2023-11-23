@@ -40,17 +40,13 @@ class Personaje {
 
 }
 
-class Enemigo inherits Personaje {
+class EnemigoSuper inherits Personaje {
 
-	var property danio
-	const danioMax = 4
 	var property position
 	const enemigo = mago
 	const property rojo = "FF0000FF" // Color rojo
 	var property movimiento // para que cambie la inteligencia del movimiento.
 	var moverActual = 2000
-	const moverMax = 1000
-	const moverMin = 3000
 
 	method text()
 
@@ -76,37 +72,58 @@ class Enemigo inherits Personaje {
 		}
 	}
 
+	method esUnArma() {
+		return false
+	}
+
 	// Cada zombie tiene su propio onTick para moverse,y asi poder modificar.
 	method generarOnTicksPerseguir() {
 		game.onTick(moverActual, "PERSEGUIR" + self.identity(), { self.mover()})
 	}
 
-	// Metodo donde aumenta el movimiento del movimiento.
+	method moverActual() { // unico metodo para los tests
+		return moverActual
+	}
+
+	override method impactoDeFuego(elemento) {
+		self.perderVida(elemento)
+		administradorFuegos.quitar(elemento) // Necesita conocer el administradorFuego
+	}
+
 	method aumentarMovimientoYAtaque(decreser, _danio) {
+	}
+
+	method disminuirMovimiento(aumentar) {
+	}
+
+}
+
+class Enemigo inherits EnemigoSuper {
+
+	// aca se crean estos valores ya que ciertos enemigos lo necesitan(Normal,Mago,Jefe).
+	var property danio
+	const danioMax = 4
+	const moverMax = 1000
+	const moverMin = 3000
+
+	// Metodo donde aumenta el movimiento del movimiento.
+	override method aumentarMovimientoYAtaque(decreser, _danio) {
 		game.removeTickEvent("PERSEGUIR" + self.identity())
 		moverActual = (moverActual - decreser).max(moverMax)
 		game.onTick(moverActual, "PERSEGUIR" + self.identity(), { self.mover()})
 		danio = (danio + _danio).min(danioMax)
 	}
 
-	method esUnArma() {
-		return false
-	}
-
 	override method impactoDeFuego(elemento) {
 		self.disminuirMovimiento(elemento.efectoVelocidad())
 		self.perderVida(elemento)
-		administradorFuegos.quitar(elemento) // Necesita conocer el administrador
+		administradorFuegos.quitar(elemento) // Necesita conocer el administradorFuego
 	}
 
-	method disminuirMovimiento(aumentar) {
+	override method disminuirMovimiento(aumentar) {
 		game.removeTickEvent("PERSEGUIR" + self.identity())
 		moverActual = (moverActual + aumentar).min(moverMin)
 		game.onTick(moverActual, "PERSEGUIR" + self.identity(), { self.mover()})
-	}
-
-	method moverActual() { // unico metodo para los tests
-		return moverActual
 	}
 
 }
@@ -129,12 +146,12 @@ class EnemigoMago inherits Enemigo(vida = 20, danio = 2, movimiento = movimiento
 
 	override method atacar() {
 		const nuevaBala = new Fuego(position = self.position().left(1), imagenDisparo = charge, danio = danio)
-		nuevaBala.disparar(izquierda, velocidadAtaque) 
+		nuevaBala.disparar(izquierda, velocidadAtaque)
 	}
 
 }
 
-class EnemigoSoporte inherits Enemigo(danio = 0, movimiento = movimientoNulo, vida = 30) {
+class EnemigoSoporte inherits EnemigoSuper(vida = 30, movimiento = movimientoNulo) {
 
 	const reducirTiempoMovimiento = 100
 	const aumentarDanio = 1

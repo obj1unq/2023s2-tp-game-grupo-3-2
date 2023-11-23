@@ -163,51 +163,49 @@ object armaFuego inherits Arma(danio = 2, maxDanio = 5, velocidad = 250, positio
 
 }
 
-object llevada {
-
-	const cambioEstado = libre
-
-	method moverElemento(personaje) {
-		return personaje.armaDePersonaje().position(personaje.position())
-	}
+class EstadoLlevar {
+	
+	const cambioEstado
+	
+	method moverElemento(personaje)
 
 	method cambiarEstado(personaje) {
 		personaje.llevando(cambioEstado)
 	}
 
-	method accion(personaje) {
+	method accion(personaje){
 		personaje.armaDePersonaje().accion(personaje.ultimaDireccion())
+	} 
+
+	method validarBalacera(){
+		
+	} 
+
+	method poseeArma() 
+}
+object llevada inherits EstadoLlevar(cambioEstado = libre){
+
+
+	override method moverElemento(personaje) {
+		return personaje.armaDePersonaje().position(personaje.position())
 	}
 
-	method validarBalacera() {
-	}
-
-	method poseeArma() {
+	override method poseeArma() {
 		return true
 	}
 
 }
 
-object libre {
-
-	const cambioEstado = llevada
-
-	method moverElemento(personaje) {
+object libre inherits EstadoLlevar(cambioEstado = llevada){
+	
+	override method moverElemento(personaje){
+		
 	}
-
-	method cambiarEstado(personaje) {
-		personaje.llevando(cambioEstado)
-	}
-
-	method accion(personaje) {
-		personaje.armaDePersonaje().accion(personaje.ultimaDireccion())
-	}
-
-	method validarBalacera() {
+	override method validarBalacera() {
 		self.error("No me esta llevando")
 	}
 
-	method poseeArma() {
+	override method poseeArma() {
 		return false
 	}
 
