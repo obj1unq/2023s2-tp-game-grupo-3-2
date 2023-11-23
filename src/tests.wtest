@@ -1,6 +1,160 @@
+import enemigos.*
+import elementos.*
+import personajePrincipal.*
+import randomizer.*
+import wollok.game.*
+import direcciones.*
+import armas.*
 
-test "testX" {
-
-	assert.that(true)
-
+describe "test del juego" {	
+		
+		const enemigoNormal = new EnemigoNormal (position=game.at(1,2))
+	    const enemigoMago = new EnemigoMago(position=game.at(17,2))
+	    const enemigoSoporte = new EnemigoSoporte(position = game.at(10,10))
+	    const moneda = new Moneda(position = game.at(2,2),valorMoneda = 1)
+	    const pocionRoja = new PocionRoja(position=game.at(1,2))
+	    const pocionAmarilla = new PocionAmarilla(position = game.at(1,3))
+	    const pocionAzul = new PocionAzul(position = game.at(1,4))
+	    const proyectil = new Fuego(position=game.at(1,2), imagenDisparo="fireball1.png",danio = 2 )
+	    
+	    // Nota: los throwsException en los objetos creados estan porque al no existir el trablero siempre sale error y no deja correrlos bien.
+	    
+        test "movimientos del mago" {
+        	mago.position(game.at(1,2))
+            mago.mover(derecha)
+            assert.equals(game.at(2,2),mago.position())
+            mago.mover(izquierda)
+            assert.equals(game.at(1,2),mago.position())
+            mago.mover(arriba)
+            assert.equals(game.at(1,3),mago.position())
+            mago.mover(abajo)
+            assert.equals(game.at(1,2),mago.position())
+        }
+        test "verificar si el mago sale del tablero" {
+        	mago.position(game.at(18,18))
+        	mago.mover(arriba)
+        	assert.equals(game.at(18,18),mago.position())
+        	mago.mover(derecha)
+        	assert.equals(game.at(18,18),mago.position())
+        	
+        	mago.position(game.at(0,0))
+        	mago.mover(abajo)
+        	assert.equals(game.at(0,0),mago.position())
+        	mago.mover(izquierda)
+        	assert.equals(game.at(0,0),mago.position())
+        }
+        test "mago toma pocion de vida " {
+        	mago.vida(5)
+        	assert.throwsException({pocionRoja.contacto(mago)})
+        	assert.equals(10, mago.vida() )
+        }
+        test "mago valida salud maxima" {
+        	assert.throwsException({pocionRoja.contacto(mago)})
+        	assert.equals(10, mago.vida() )
+        }
+        test "mago agarra la moneda" {
+        	assert.equals(0, monedero.cantidadMonedas() )
+        	assert.throwsException({moneda.contacto(mago)})
+        	assert.equals(1, monedero.cantidadMonedas() )
+        }
+        test "mago agarra arma" {
+        	mago.position(game.at(1,3))
+        	armaFuego.position(game.at(1,3))
+        	assert.equals(libre, mago.llevando() )
+        	
+        	mago.agarrar()
+        	assert.equals(llevada, mago.llevando() )
+        }
+        test "mago valida agarrar arma" {
+        	assert.throwsException({mago.agarrar()})
+        	assert.equals(libre, mago.llevando() )
+        }
+        test "mago verifica si lleva el arma" {
+        	armaFuego.position(game.at(1,2))
+        	mago.agarrar()
+        	mago.mover(derecha)
+        	assert.equals(armaFuego.position(), mago.position() )
+        }
+        test "mago es perseguido por enemigo normal " {
+        	mago.mover(izquierda)
+        	enemigoNormal.mover()
+        	assert.equals(game.at(0,2),enemigoNormal.position())
+        	mago.mover(arriba)
+        	enemigoNormal.mover()
+        	assert.equals(game.at(0,3),enemigoNormal.position())
+        	mago.mover(abajo)
+        	enemigoNormal.mover()
+        	assert.equals(game.at(0,2),enemigoNormal.position())
+        	mago.mover(derecha)
+        	enemigoNormal.mover()
+        	assert.equals(game.at(1,2),enemigoNormal.position())
+        	
+        }
+        test "mago es perseguido por enemigo mago" {
+        	mago.mover(arriba)
+        	enemigoMago.mover()
+        	assert.equals(game.at(17,3),enemigoMago.position())
+        	mago.mover(abajo)
+        	enemigoMago.mover()
+        	assert.equals(game.at(17,2),enemigoMago.position())
+        } 
+        test "mago pierde vida " {
+        	mago.perderVida(enemigoNormal)
+        	assert.equals(9, mago.vida() )
+        } 
+        test "mago es herido por zombie " {
+        	enemigoNormal.atacar()
+        	assert.equals(9, mago.vida() )
+        }
+        test "mago es herido con un proyetil" {
+        	mago.impactoDeBala(proyectil)
+        	assert.equals(8, mago.vida() )
+        }
+        test "enemigo normal es herido con proyectil" {
+        	enemigoNormal.impactoDeBala(proyectil)
+        	assert.equals(8, enemigoNormal.vida() )
+        }
+        test "enemigo mago es herido con proyectil" {
+        	enemigoMago.impactoDeBala(proyectil)
+        	assert.equals(18, enemigoMago.vida() )
+        }
+        test "enemigo normal muere y deja una moneda" {
+        	assert.throwsException({enemigoNormal.morir()})
+        	assert.notThat(game.hasVisual(enemigoNormal))
+        	assert.equals(monedero.monedas() , game.getObjectsIn(game.at(1,2)) )
+        }
+        
+        test "enemigo soporte, aumentar el dañio y decrese el movimiento"{
+        	enemigoNormal.generarOnTicksPerseguir()
+        	enemigoMago.generarOnTicksPerseguir()
+        	enemigoJefe.generarOnTicksPerseguir()
+        	enemigoSoporte.pruebaAtacar(enemigoNormal)
+        	enemigoSoporte.pruebaAtacar(enemigoNormal)
+        	enemigoSoporte.pruebaAtacar(enemigoMago)
+        	enemigoSoporte.pruebaAtacar(enemigoMago)
+        	enemigoSoporte.pruebaAtacar(enemigoJefe)
+        	enemigoSoporte.pruebaAtacar(enemigoJefe)
+        	assert.equals(3,enemigoNormal.danio())
+        	assert.equals(1800,enemigoNormal.moverActual())
+        	assert.equals(4,enemigoMago.danio())
+        	assert.equals(1800,enemigoMago.moverActual())
+        	assert.equals(5,enemigoJefe.danio())
+        	assert.equals(300,enemigoJefe.moverActual())
+        	
+        }
+        
+        test "pocion amarilla,aumenta dañio del arma Fuego y tambien la vida"{
+        	mago.vida(8)
+        	assert.throwsException({pocionAmarilla.contacto(mago)})
+        	assert.throwsException({pocionAmarilla.contacto(mago)})
+        	assert.equals(10,mago.vida())
+        	assert.equals(5,armaFuego.danio())
+        }
+        test "pocion azul, aumenta la velocidad de disparo del arma Fuego y tambien la vida"{
+        	mago.vida(4)
+        	assert.throwsException({pocionAzul.contacto(mago)})
+        	assert.throwsException({pocionAzul.contacto(mago)})
+        	assert.equals(10,mago.vida())
+        	assert.equals(200,armaFuego.velocidad())
+        }
 }

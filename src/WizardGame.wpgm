@@ -1,0 +1,23 @@
+import wollok.game.*
+import personajePrincipal.*
+import direcciones.*
+import enemigos.*
+import elementos.*
+import randomizer.*
+import armas.*
+import nivel.*
+import mapa.*
+
+program wizardsAventure {
+	
+    game.title("wizard's aventure")
+    game.height(12) // 12 celdas de alto
+    game.width(15) // 15 celdas de ancho
+    game.cellSize(40) // celdas de 40x40 px
+	
+    escenario.empezar()
+    escenario.configuracionSonido()
+
+    
+    game.start()
+}
